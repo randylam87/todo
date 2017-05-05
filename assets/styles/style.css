@@ -16,3 +16,8 @@ html{
 .footer p{
 	margin: 0; 
 }
+
+.addBtn,
+.btnLogout {
+	display: none;
+}

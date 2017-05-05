@@ -13,12 +13,82 @@
 <body>
     <div class="container">
         <div id="header" class="row">
-            <h1>Hello World</h1>
+            <h1>Testing stuff here: </h1>
+            <h2 class="test">Stuff goes here</h2>
         </div>
-        <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#todoModal">Add To-Do Item</button>
+        <!-- LOG OUT BUTTON -->
+        <button class='btn btn-primary btnLogout'>Log Out</button>
+        <!-- REGISTER BUTTON -->
+        <button type="button" class="btn btn-info btn-lg regBtn" data-toggle="modal" data-target="#registerModal">Register</button>
+        <!-- REGISTER MODAL-->
+        <div class="modal fade" id="registerModal" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h3 class="modal-title">Register</h3>
+                    </div>
+                    <div class="modal-body">
+                        <form class="login">
+                            <div class="form-group">
+                                <label for="familyReg">Family's Name</label>
+                                <input type="text" class="form-control" id="familyReg" placeholder="Enter Family Name">
+                            </div>
+                            <div class="form-group">
+                                <label for="emailReg">E-mail</label>
+                                <input type="email" class="form-control" id="emailReg">
+                            </div>
+                            <div class="form-group">
+                                <label for="pwReg">Password:</label>
+                                <input type="password" class="form-control" id="pwReg">
+                            </div>
+                            <button type="button" class="btnRegister btn btn-primary">Register</button>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Sign In BUTTON -->
+        <button type="button" class="btn btn-info btn-lg signBtn" data-toggle="modal" data-target="#signInModal">Sign In</button>
+        <!-- Sign In MODAL-->
+        <div class="modal fade" id="signInModal" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h3 class="modal-title">Sign In</h3>
+                    </div>
+                    <div class="modal-body">
+                        <form class="login">
+                            <div class="form-group">
+                                <label for="familySignIn">Family's Name</label>
+                                <input type="text" class="form-control" id="familySignIn" placeholder="Enter Family Name">
+                            </div>
+                            <div class="form-group">
+                                <label for="emailSignIn">E-mail</label>
+                                <input type="email" class="form-control" id="emailSignIn">
+                            </div>
+                            <div class="form-group">
+                                <label for="pwSignIn">Password:</label>
+                                <input type="password" class="form-control" id="pwSignIn">
+                            </div>
+                            <button type="button" class="btnLogin btn btn-primary">Sign In</button>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ADD TODO ITEM BUTTON -->
+        <button type="button" class="btn btn-info btn-lg addBtn" data-toggle="modal" data-target="#todoModal">Add To-Do Item</button>
+        <!-- ADD TODO ITEM MODAL-->
         <div class="modal fade" id="todoModal" role="dialog">
             <div class="modal-dialog">
-                <!-- ADD TODO ITEM MODAL-->
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
