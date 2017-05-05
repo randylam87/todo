@@ -15,10 +15,10 @@
         <div id="header" class="row">
             <h1>Hello World</h1>
         </div>
-        <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
-        <div class="modal fade" id="myModal" role="dialog">
+        <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#todoModal">Add To-Do Item</button>
+        <div class="modal fade" id="todoModal" role="dialog">
             <div class="modal-dialog">
-                <!-- Modal content-->
+                <!-- ADD TODO ITEM MODAL-->
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -51,7 +51,7 @@
                                 <label for="todoComments">Description</label>
                                 <textarea class="form-control" id="todoComments" rows="3"></textarea>
                             </div>
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="submit" class="todoSubmit btn btn-primary">Submit</button>
                         </form>
                     </div>
                     <div class="modal-footer">
