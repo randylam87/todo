@@ -1,26 +1,49 @@
 <!doctype html>
 <html lang="en">
+
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Family To Do List</title>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<link rel="stylesheet" href="assets/styles/style.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Family To Do List</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/styles/style.css">
 </head>
+
 <body>
-	<div class="container">
-		<div id="header" class="row">
-			<h1>Hello World</h1>
-		</div>
-	</div>
-	<div class="footer">
-		<div class="container">
-			<p class="text-center">&copy; Copyright <script>document.write(new Date().getFullYear())</script></p>
-		</div>
-	</div>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-	<script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>  
-	<script src="assets/scripts/app.js"></script>
+  <div class="container">
+    <div id="header" class="row">
+      	<div><h1>Testing stuff here: </h1></div>
+      	<div class='test'>
+      		<h2>Stuff goes here</h2>
+      </div>
+    </div>
+    <div class='login'>
+      <div class="form-group">
+        <label for="family">Family's Name:</label>
+        <input type="text" class="form-control" id="family">
+        <label for="email">E-mail:</label>
+        <input type="email" class="form-control" id="email">
+        <label for="pw">Password:</label>
+        <input type="password" class="form-control" id="pw">
+        <button class='btn btn-primary btnRegister'>Register</button>
+      	<button class='btn btn-primary btnLogin'>Log In</button>
+      	<button class='btn btn-primary btnLogout hide'>Log Out</button>
+        
+      </div>
+    </div>
+    <div class="footer">
+      <div class="container">
+        <p class="text-center">&copy; Copyright
+          <script>
+          document.write(new Date().getFullYear())
+          </script>
+        </p>
+      </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
+    <script src="assets/scripts/app.js"></script>
 </body>
+
 </html>
