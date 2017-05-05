@@ -14,16 +14,12 @@ var familyRef = database.ref();
 //function that hides/removes login/registration buttons
 function changeLogInBtn(firebaseUser) {
     if (firebaseUser) {
-        $(".regBtn").hide();
-        $(".signBtn").hide();
-        $(".btnLogout").show();
-        $(".addBtn").show();
+        $(".loggedIn").show();
+        $(".loggedOut").hide();
         $(".test").html('Welcome ' + firebaseUser.displayName);
     } else {
-        $(".regBtn").show();
-        $(".signBtn").show();
-        $(".btnLogout").hide();
-        $(".addBtn").hide();
+        $(".loggedIn").hide();
+        $(".loggedOut").show();
         $(".test").html('Please log in');
     }
 }
@@ -31,12 +27,57 @@ function changeLogInBtn(firebaseUser) {
 //Firebase listeners
 //Checks if user is logged in or not
 firebase.auth().onAuthStateChanged(function(firebaseUser) {
+    console.log("loaded")
     changeLogInBtn(firebaseUser);
+    listAdd();
+    listRemove();
+    console.log(firebase.auth().currentUser.uid);
 })
 
+function listAdd() {
+    database.ref('/Users/' + firebase.auth().currentUser.uid + '/list').on('child_added', function(snapshot) {
+        var todoInfo = snapshot.val();
+        var id = snapshot.key; //THIS IS THE ID PER LIST ITEM
+        appendList(todoInfo, id);
+    });
+}
+
+function listRemove() {
+    database.ref('/Users/' + firebase.auth().currentUser.uid + '/list').on('child_removed', function(snapshot) {
+        var todoInfo = snapshot.val();
+        var id = snapshot.key; //THIS IS THE ID PER LIST ITEM
+        $("#item" + id).remove();
+    });
+}
+
+function appendList(todoInfo, id) {
+    var todoDiv = $("<div class='todoDiv'>");
+    var name = $("<h4> Task Name: " + todoInfo.Name + "</h4>");
+    var cat = $("<h4> Categorie: " + todoInfo.Categories + "</h4>");
+    var location = $("<h4> Location: " + todoInfo.Location + "</h4>");
+    var description = $("<h4> Description: " + todoInfo.Description + "</h4>");
+    todoDiv.attr("id", "item" + id);
+    todoDiv.append(name);
+    todoDiv.append(cat);
+    todoDiv.append(location);
+    todoDiv.append(description);
+    var todoClose = $("<button>");
+    todoClose.attr("todoID", id);
+    todoClose.addClass("closeTodo");
+    todoClose.append("✓");
+    todoDiv.append(todoClose);
+    $(".todoList").append(todoDiv);
+}
+
+function deleteTodo() {
+    var todoNumber = $(this).attr("todoID");
+    console.log(todoNumber);
+    database.ref('/Users/' + firebase.auth().currentUser.uid + '/list/' + todoNumber).remove();
+}
+
+$(document.body).on("click", ".closeTodo", deleteTodo);
 //Click handler for the register button
 $('.btnRegister').on('click', function() {
-    //Get family name, and email/pw
     var family = $('#familyReg').val()
     var email = $('#emailReg').val();
     var password = $('#pwReg').val();
@@ -51,48 +92,46 @@ $('.btnRegister').on('click', function() {
             })
             //Creates new family based off of the family's name and saves the family's Uid
         database.ref('/Users/' + auth.currentUser.uid).set({
-                family: family,
-                email: email,
-                password: password,
-                uid: auth.currentUser.uid
-            })
-            //Error handler
+            family: family,
+            email: email,
+            password: password,
+            uid: auth.currentUser.uid
+        })
     }).catch(function(error) {
         console.log(error.message)
     });
-     $("#registerModal").modal("hide");
-        $("#form").trigger('reset');
+    $("#registerModal").modal("hide");
+    $("#form").trigger('reset');
 
 });
 //LOGOUT//SIGN OUT BUTTON
 $('.btnLogout').on('click', function() {
-    firebase.auth().signOut().catch(function(error) {
-        console.log('logout ' + error.message);
-    });
-})
-//LOGIN//SIGN IN BUTTON
-$('.btnLogin').on('click', function() {
-    var email = $('#emailSignIn').val();
-    var password = $('#pwSignIn').val();
-    var auth = firebase.auth();
-    var promise = auth.signInWithEmailAndPassword(email, password);
-
-    firebase.auth().signInWithEmailAndPassword(email, password)
-        .catch(function(error) {
-            // Handle Errors here.
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            if (errorCode === 'auth/wrong-password') {
-                alert('Wrong password.');
-            } else {
-                alert(errorMessage);
-            }
-            console.log(error);
+        firebase.auth().signOut().catch(function(error) {
+            console.log('logout ' + error.message);
         });
+    })
+    //LOGIN//SIGN IN BUTTON
+$('.btnLogin').on('click', function() {
+        var email = $('#emailSignIn').val();
+        var password = $('#pwSignIn').val();
+        var auth = firebase.auth();
+        var promise = auth.signInWithEmailAndPassword(email, password);
+
+        firebase.auth().signInWithEmailAndPassword(email, password)
+            .catch(function(error) {
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                if (errorCode === 'auth/wrong-password') {
+                    alert('Wrong password.');
+                } else {
+                    alert(errorMessage);
+                }
+                console.log(error);
+            });
         $("#signInModal").modal("hide");
         $("#form").trigger('reset');
-})
-//TODO SUBMIT BUTTON
+    })
+    //TODO SUBMIT BUTTON
 $(".todoSubmit").on("click", function() {
     event.preventDefault();
     $('#todoModal').modal('hide');

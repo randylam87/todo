@@ -17,7 +17,11 @@ html{
 	margin: 0; 
 }
 
-.addBtn,
-.btnLogout {
+.loggedIn,
+.loggedOut {
 	display: none;
+}
+
+.todoDiv {
+	border: solid red 1px;
 }

@@ -16,10 +16,48 @@
             <h1>Testing stuff here: </h1>
             <h2 class="test">Stuff goes here</h2>
         </div>
+        
+
+
+<div class="col-lg-12 todoList loggedIn">To-Do List</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         <!-- LOG OUT BUTTON -->
-        <button class='btn btn-primary btnLogout'>Log Out</button>
+        <button type="button" class='btn btn-danger btnLogout loggedIn'>Log Out</button>
         <!-- REGISTER BUTTON -->
-        <button type="button" class="btn btn-info btn-lg regBtn" data-toggle="modal" data-target="#registerModal">Register</button>
+        <button type="button" class="btn btn-info btn-lg regBtn loggedOut" data-toggle="modal" data-target="#registerModal">Register</button>
         <!-- REGISTER MODAL-->
         <div class="modal fade" id="registerModal" role="dialog">
             <div class="modal-dialog">
@@ -52,7 +90,7 @@
             </div>
         </div>
         <!-- Sign In BUTTON -->
-        <button type="button" class="btn btn-info btn-lg signBtn" data-toggle="modal" data-target="#signInModal">Sign In</button>
+        <button type="button" class="btn btn-info btn-lg signBtn loggedOut" data-toggle="modal" data-target="#signInModal">Sign In</button>
         <!-- Sign In MODAL-->
         <div class="modal fade" id="signInModal" role="dialog">
             <div class="modal-dialog">
@@ -85,7 +123,7 @@
             </div>
         </div>
         <!-- ADD TODO ITEM BUTTON -->
-        <button type="button" class="btn btn-info btn-lg addBtn" data-toggle="modal" data-target="#todoModal">Add To-Do Item</button>
+        <button type="button" class="btn btn-info btn-lg addBtn loggedIn" data-toggle="modal" data-target="#todoModal">Add To-Do Item</button>
         <!-- ADD TODO ITEM MODAL-->
         <div class="modal fade" id="todoModal" role="dialog">
             <div class="modal-dialog">
