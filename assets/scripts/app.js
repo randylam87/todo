@@ -1,7 +1,7 @@
 // Initialize Firebase
 var config = {
     apiKey: "AIzaSyBfTYa8j8QJw6aDJoshnn5dVEWDBf5HS9Y",
-    authDomain: "family-to-do-list.firebaseapp.com",
+    atuhDomain: "family-to-do-list.firebaseapp.com",
     databaseURL: "https://family-to-do-list.firebaseio.com",
     projectId: "family-to-do-list",
     storageBucket: "family-to-do-list.appspot.com",
@@ -16,7 +16,7 @@ function changeLogInBtn(firebaseUser) {
     if (firebaseUser) {
         $(".loggedIn").show();
         $(".loggedOut").hide();
-        $(".test").html('Welcome ' + firebaseUser.displayName);
+        $(".test").html('Welcome ' + firebaseUser.displayName + " Family");
     } else {
         $(".loggedIn").hide();
         $(".loggedOut").show();
@@ -27,11 +27,9 @@ function changeLogInBtn(firebaseUser) {
 //Firebase listeners
 //Checks if user is logged in or not
 firebase.auth().onAuthStateChanged(function(firebaseUser) {
-    console.log("loaded")
     changeLogInBtn(firebaseUser);
     listAdd();
     listRemove();
-    console.log(firebase.auth().currentUser.uid);
 })
 
 function listAdd() {
@@ -53,7 +51,7 @@ function listRemove() {
 function appendList(todoInfo, id) {
     var todoDiv = $("<div class='todoDiv'>");
     var name = $("<h4> Task Name: " + todoInfo.Name + "</h4>");
-    var cat = $("<h4> Categorie: " + todoInfo.Categories + "</h4>");
+    var cat = $("<h4> Category: " + todoInfo.Categories + "</h4>");
     var location = $("<h4> Location: " + todoInfo.Location + "</h4>");
     var description = $("<h4> Description: " + todoInfo.Description + "</h4>");
     todoDiv.attr("id", "item" + id);
@@ -71,7 +69,6 @@ function appendList(todoInfo, id) {
 
 function deleteTodo() {
     var todoNumber = $(this).attr("todoID");
-    console.log(todoNumber);
     database.ref('/Users/' + firebase.auth().currentUser.uid + '/list/' + todoNumber).remove();
 }
 
