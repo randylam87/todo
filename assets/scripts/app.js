@@ -24,6 +24,7 @@ console.log("state change");
 		console.log("im logged in");
 		ftdl.listAdd();
 		ftdl.listRemove();
+		ftdl.membersAdd();
 	}
 })
 
@@ -41,6 +42,15 @@ var ftdl = {
 		}
 	},
 
+	membersAdd : function() {
+		console.log("members list running");
+		database.ref('/Users/' + firebase.auth().currentUser.uid + '/members').on('child_added', function(snapshot) {
+				var members = snapshot.val();
+				var id = snapshot.key; //THIS IS THE ID PER LIST ITEM
+				ftdl.appendMembers(members, id);
+			});
+	},
+
 	listAdd : function() {
 		console.log("list add running");
 		database.ref('/Users/' + firebase.auth().currentUser.uid + '/list').on('child_added', function(snapshot) {
@@ -56,6 +66,12 @@ var ftdl = {
 				var id = snapshot.key; //THIS IS THE ID PER LIST ITEM
 				$("#item" + id).remove();
 			});
+	},
+
+	appendMembers : function(members, id){
+		var memberButton = $("<button>" + members.member + "</button>");
+		$(".memberSelect").append(memberButton);
+
 	},
 
 	appendList : function(todoInfo, id) {
@@ -164,7 +180,14 @@ $('.btnLogin').on('click', function() {
 	$("#signInModal").modal("hide");
 	$("#form").trigger('reset');
 });
-		//TODO SUBMIT BUTTON
+//ADD MEMBER BUTTON
+$('.btnAddMember').on('click', function() {
+	var member = $("#memberAdd").val();
+	database.ref('/Users/' + firebase.auth().currentUser.uid + '/members').push({
+            member: member
+        })
+});
+//TODO SUBMIT BUTTON
 $(".todoSubmit").on("click", function() {
 	event.preventDefault();
 	$('#todoModal').modal('hide');

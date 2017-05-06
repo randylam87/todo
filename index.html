@@ -12,120 +12,79 @@
 
 <body>
     <div class="container">
-
-
-    <nav class="navbar navbar-default">
-          <div class="container-fluid">
-            <div class="navbar-header">
-              <a class="navbar-brand" href="#">
-                <!-- <img alt="Family" src=""> -->
-                Family Shared List
-              </a>
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">
+                        <!-- <img alt="Family" src=""> -->
+                        Family Shared List
+                    </a>
+                </div>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#">Amir</a></li>
+                    <li><a href="#">Dennis</a></li>
+                    <li><a href="#">Randy</a></li>
+                    <li><a href="#">Trong</a></li>
             </div>
-
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">Amir</a></li>
-                <li><a href="#">Dennis</a></li>
-                <li><a href="#">Randy</a></li>
-                <li><a href="#">Trong</a></li>
-
-          </div>
         </nav>
-
-
-
-
-        <!-- TEST DIV FOR TODO ITEMS -->
-<!--     <div class="col-lg-12 todoList loggedIn">To-Do List</div> -->
-
-     <div class="row">
-
-            <div class="col-md-8">
-
+        <!-- MEMBER SELECTION -->
+        <div class="row">
+            <div class="col-md-12">
                 <div class="panel panel-default">
-
+                    <div class="panel-heading">
+                        <h1 class="panel-title">Members <button type="button" class="pull-right addMember" data-toggle="modal" data-target="#memberModal">Add Member</button></h1>
+                    </div>
+                    <div class="panel-body">
+                        <div class="memberSelect">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- PAGE AFTER FULL LOGIN -->
+        <div class="row">
+            <div class="col-md-8">
+                <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title">Today List</h3>
                     </div>
-                     
                     <div class="panel-body">
-
-                        <div class="today-event-items">                        
-
+                        <div class="today-event-items">
                         </div>
-
                         <div class="todoList loggedIn">
-                            
                         </div>
-
                     </div>
-
-
                 </div>
-
             </div>
-
             <div class="col-md-4">
-
                 <div class="row">
-                    
                     <div class="col-md-12">
-
                         <div class="panel panel-default">
-
                             <div class="panel-heading">
                                 <h3 class="panel-title">Up Comming List</h3>
                             </div>
-                             
-                            <div class="panel-body">         
-
+                            <div class="panel-body">
                                 <div class="future-items">
-                                    
                                 </div>
-
                             </div>
-
-
                         </div>
-
                     </div>
-
                 </div>
-
                 <div class="row">
-                    
                     <div class="col-md-12">
-
                         <div class="panel panel-default">
-
                             <div class="panel-heading">
                                 <h3 class="panel-title">Stats Corner</h3>
                             </div>
-                             
-                            <div class="panel-body">         
-
+                            <div class="panel-body">
                                 <div class="stats-members">
-                                    
                                 </div>
-
                             </div>
-
-
                         </div>
-
-
-
                     </div>
-
                 </div>
-
             </div>
-
         </div>
-
-
-        
-
         <!-- LOG OUT BUTTON -->
         <button type="button" class='btn btn-danger btnLogout loggedIn'>Log Out</button>
         <!-- REGISTER BUTTON -->
@@ -240,6 +199,31 @@
                 </div>
             </div>
         </div>
+
+<!-- ADD MEMBER MODAL-->
+        <div class="modal fade" id="memberModal" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h3 class="modal-title">Add a Family Member</h3>
+                    </div>
+                    <div class="modal-body">
+                        <form class="login">
+                            <div class="form-group">
+                                <label for="memberAdd">Family Member's Name</label>
+                                <input type="text" class="form-control" id="memberAdd" placeholder="Enter Family Name">
+                            </div>
+                            <button type="button" class="btnAddMember btn btn-primary">Add Member</button>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
     <div class="footer">
         <div class="container">
