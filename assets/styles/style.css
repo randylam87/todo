@@ -16,3 +16,12 @@ html{
 .footer p{
 	margin: 0; 
 }
+
+.loggedIn,
+.loggedOut {
+	display: none;
+}
+
+.todoDiv {
+	border: solid red 1px;
+}
