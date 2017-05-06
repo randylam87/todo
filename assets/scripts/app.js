@@ -22,11 +22,13 @@ function changeLogInBtn(firebaseUser) {
         $(".loggedOut").show();
         $(".test").html('Please log in');
     }
+
 }
 
 //Firebase listeners
 //Checks if user is logged in or not
 firebase.auth().onAuthStateChanged(function(firebaseUser) {
+
     changeLogInBtn(firebaseUser);
     console.log("state change");
     // console.log(firebase.auth().currentUser.uid);
@@ -152,4 +154,5 @@ $(".todoSubmit").on("click", function() {
         Description: comments
     });
     $("#form").trigger('reset');
+
 })
