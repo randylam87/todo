@@ -59,22 +59,42 @@ var ftdl = {
 	},
 
 	appendList : function(todoInfo, id) {
+
 		var todoDiv = $("<div class='todoDiv'>");
-		var name = $("<h4> Task Name: " + todoInfo.Name + "</h4>");
-		var cat = $("<h4> Category: " + todoInfo.Categories + "</h4>");
-		var location = $("<h4> Location: " + todoInfo.Location + "</h4>");
-		var description = $("<h4> Description: " + todoInfo.Description + "</h4>");
+	  //  var name = $("<h4>" + todoInfo.Name + "</h4>");
+
+		var catIcon;
+
+		if (todoInfo.Categories == 'Timed Event') {
+
+			catIcon = 'assets/images/timed_event.jpg';
+
+		}
+
+		var name = $('<h4 class="left">' + '<img src='+catIcon+'></img><img src="assets/images/location.png"></img>' + 
+		  '<img src="assets/images/check.png"></img>' +
+		  '<img src="assets/images/delete.png" todoID="'+id+'" class="closeTodo">'+ '</img>' +
+			todoInfo.Name +  "</h4>");
+
+	   // var cat = $("<h4> Category: " + todoInfo.Categories + "</h4>");
+	   // var location = $('<p class="left">' + todoInfo.Location + "</p>");
+		var description = $('<p class="clear"> Description: ' + todoInfo.Description + "</p>");
 		todoDiv.attr("id", "item" + id);
+		// var todoClose = $("<button>");
+		// todoClose.attr("todoID", id);
+		// todoClose.addClass("closeTodo");
+		// todoClose.append("✓");
+		// todoDiv.append(todoClose);
 		todoDiv.append(name);
-		todoDiv.append(cat);
-		todoDiv.append(location);
+
+	   // todoDiv.append(cat);
+	   // todoDiv.append(location);
+
 		todoDiv.append(description);
-		var todoClose = $("<button>");
-		todoClose.attr("todoID", id);
-		todoClose.addClass("closeTodo");
-		todoClose.append("✓");
-		todoDiv.append(todoClose);
+
+		
 		$(".todoList").append(todoDiv);
+		
 	},
 
 	deleteTodo : function() {
