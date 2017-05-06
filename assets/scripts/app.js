@@ -10,7 +10,7 @@ var config = {
 firebase.initializeApp(config);
 var database = firebase.database();
 var familyRef = database.ref();
-
+var noDuplicates = 0;
 //function that hides/removes login/registration buttons
 function changeLogInBtn(firebaseUser) {
     if (firebaseUser) {
@@ -28,8 +28,18 @@ function changeLogInBtn(firebaseUser) {
 //Checks if user is logged in or not
 firebase.auth().onAuthStateChanged(function(firebaseUser) {
     changeLogInBtn(firebaseUser);
-    listAdd();
-    listRemove();
+    console.log("state change");
+    console.log(firebase.auth().currentUser.uid);
+    if (firebaseUser && noDuplicates === 0) {
+        console.log("im running"); 
+        noDuplicates++;
+        listAdd();
+        listRemove();
+    } 
+    else if(firebaseUser === false) {
+        console.log("logged out");
+        noDuplicates = 0;
+    }
 })
 
 function listAdd() {
