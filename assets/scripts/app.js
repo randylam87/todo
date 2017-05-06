@@ -187,7 +187,7 @@ $('.btnAddMember').on('click', function() {
             member: member
         })
 });
-//TODO SUBMIT BUTTON
+//TODO SUBMIT BUTTON3
 $(".todoSubmit").on("click", function() {
 	event.preventDefault();
 	$('#todoModal').modal('hide');
