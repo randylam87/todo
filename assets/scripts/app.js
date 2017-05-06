@@ -16,18 +16,18 @@ var duplicate = 0;
 //Checks if user is logged in or not
 firebase.auth().onAuthStateChanged(function(firebaseUser) {
 
-ftdn.changeLogInBtn(firebaseUser);
+ftdl.changeLogInBtn(firebaseUser);
 console.log("state change");
 	// console.log(firebase.auth().currentUser.uid);
 	if (firebaseUser && duplicate == 0) {
 		duplicate++;
 		console.log("im logged in");
-		ftdn.listAdd();
-		ftdn.listRemove();
+		ftdl.listAdd();
+		ftdl.listRemove();
 	}
 })
 
-var ftdn = {
+var ftdl = {
 	//function that hides/removes login/registration buttons
 	changeLogInBtn : function(firebaseUser) {
 		if (firebaseUser) {
@@ -46,7 +46,7 @@ var ftdn = {
 		database.ref('/Users/' + firebase.auth().currentUser.uid + '/list').on('child_added', function(snapshot) {
 			var todoInfo = snapshot.val();
 				var id = snapshot.key; //THIS IS THE ID PER LIST ITEM
-				ftdn.appendList(todoInfo, id);
+				ftdl.appendList(todoInfo, id);
 			});
 	},
 
@@ -83,7 +83,7 @@ var ftdn = {
 	}
 };
 
-$(document.body).on("click", ".closeTodo", ftdn.deleteTodo);
+$(document.body).on("click", ".closeTodo", ftdl.deleteTodo);
 
 //Click handler for the register button
 $('.btnRegister').on('click', function() {
