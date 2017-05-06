@@ -10,7 +10,7 @@ var config = {
 firebase.initializeApp(config);
 var database = firebase.database();
 var familyRef = database.ref();
-var noDuplicates = 0;
+var duplicate = 0;
 //function that hides/removes login/registration buttons
 function changeLogInBtn(firebaseUser) {
     if (firebaseUser) {
@@ -29,20 +29,17 @@ function changeLogInBtn(firebaseUser) {
 firebase.auth().onAuthStateChanged(function(firebaseUser) {
     changeLogInBtn(firebaseUser);
     console.log("state change");
-    console.log(firebase.auth().currentUser.uid);
-    if (firebaseUser && noDuplicates === 0) {
-        console.log("im running"); 
-        noDuplicates++;
+    // console.log(firebase.auth().currentUser.uid);
+    if (firebaseUser && duplicate == 0) {
+        duplicate++;
+        console.log("im logged in");
         listAdd();
         listRemove();
-    } 
-    else if(firebaseUser === false) {
-        console.log("logged out");
-        noDuplicates = 0;
     }
 })
 
 function listAdd() {
+    console.log("list add running");
     database.ref('/Users/' + firebase.auth().currentUser.uid + '/list').on('child_added', function(snapshot) {
         var todoInfo = snapshot.val();
         var id = snapshot.key; //THIS IS THE ID PER LIST ITEM
@@ -113,11 +110,13 @@ $('.btnRegister').on('click', function() {
 });
 //LOGOUT//SIGN OUT BUTTON
 $('.btnLogout').on('click', function() {
+        $(".todoList").empty();
+        duplicate--;
         firebase.auth().signOut().catch(function(error) {
             console.log('logout ' + error.message);
         });
     })
-    //LOGIN//SIGN IN BUTTON
+//LOGIN//SIGN IN BUTTON
 $('.btnLogin').on('click', function() {
         var email = $('#emailSignIn').val();
         var password = $('#pwSignIn').val();
