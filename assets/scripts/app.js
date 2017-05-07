@@ -120,7 +120,7 @@ var ftdl = {
 
   //LOGIN//SIGN IN BUTTON
   loginSubmit: function() {
-    // event.preventDefault();
+    event.preventDefault();
     var email = $('#emailSignIn').val();
     var password = $('#pwSignIn').val();
     var auth = firebase.auth();
@@ -143,6 +143,7 @@ var ftdl = {
 
   //REGISTER BUTTON
   registerSubmit: function() {
+    event.preventDefault();
     var family = $('#familyReg').val()
     var email = $('#emailReg').val();
     var password = $('#pwReg').val();
@@ -192,6 +193,7 @@ var ftdl = {
 
   //ADD MEMBER BUTTON
   btnAddMember: function() {
+    event.preventDefault();
     var member = $("#memberAdd").val();
     database.ref('/Users/' + firebase.auth().currentUser.uid + '/members').push({
       member: member
