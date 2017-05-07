@@ -120,7 +120,7 @@ var ftdl = {
 
   //LOGIN//SIGN IN BUTTON
   loginSubmit: function() {
-    // event.preventDefault();
+    event.preventDefault();
     var email = $('#emailSignIn').val();
     var password = $('#pwSignIn').val();
     var auth = firebase.auth();
