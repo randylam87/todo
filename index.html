@@ -11,7 +11,7 @@
 </head>
 
 <body>
-<!-- FIRST PAGE -->
+  <!-- FIRST PAGE -->
   <div class="container-fluid page page-registration">
     <!-- INITIAL JUMBOTRON SCREEN -->
     <div class="jumbotron text-center loggedOut">
@@ -85,7 +85,7 @@
       </div>
     </div>
   </div>
-<!-- SECOND PAGE -->
+  <!-- SECOND PAGE -->
   <div class="container-fluid page page-members">
     <!-- MEMBER SELECTION -->
     <div class="row memberDiv">
@@ -102,14 +102,37 @@
       </div>
     </div>
   </div>
-<!-- THIRD PAGE -->
+  <!-- ADD MEMBER MODAL-->
+  <div class="modal fade" id="memberModal" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h3 class="modal-title">Add a Family Member</h3>
+        </div>
+        <div class="modal-body">
+          <form class="addMember" onsubmit='ftdl.btnAddMember()'>
+            <div class="form-group">
+              <label for="memberAdd">Family Member's Name</label>
+              <input type="text" class="form-control" id="memberAdd" placeholder="Enter Family Name" required>
+            </div>
+            <button type="submit" class="btnAddMember btn btn-primary">Add Member</button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- THIRD PAGE -->
   <div class="container page page-main">
     <nav class="navbar navbar-default loggedIn">
       <div class="container-fluid">
         <div class="navbar-header">
-        	<h1 class='currentMemberHeader'>
+          <h1 class='currentMemberHeader'>
         	</h1>
-<!--           <a class="navbar-brand" href="#">
+          <!--           <a class="navbar-brand" href="#">
             <img alt="Family" src="">
             Family Shared List
           </a> -->
@@ -134,7 +157,7 @@
             <div class="today-event-items">
             </div>
             <div class="todoList loggedIn">
-<!-- TODO ITEMS APPENDED HERE -->
+              <!-- TODO ITEMS APPENDED HERE -->
             </div>
           </div>
         </div>
@@ -212,29 +235,6 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-      <!-- ADD MEMBER MODAL-->
-      <div class="modal fade" id="memberModal" role="dialog">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
-              <h3 class="modal-title">Add a Family Member</h3>
-            </div>
-            <div class="modal-body">
-              <form class="addMember" onsubmit='ftdl.btnAddMember()'>
-                <div class="form-group">
-                  <label for="memberAdd">Family Member's Name</label>
-                  <input type="text" class="form-control" id="memberAdd" placeholder="Enter Family Name" required>
-                </div>
-                <button type="submit" class="btnAddMember btn btn-primary">Add Member</button>
-              </form>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-          </div>
         </div>
       </div>
     </div>

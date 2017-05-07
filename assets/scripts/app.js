@@ -10,7 +10,7 @@ var config = {
 firebase.initializeApp(config);
 var database = firebase.database();
 var familyRef = database.ref();
-var currentMember = "";
+var currentMember;
 var loggedIn = false;
 // $(".loggedOut").show();
 //Firebase listeners
@@ -243,3 +243,4 @@ $('.btnLogout').on('click', function() {
   });
 });
 
+ftdl.changeLogInBtn();
