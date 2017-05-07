@@ -70,3 +70,7 @@ body {
   align-items: center;
   height: 100%;
 }
+
+.firstPagejumbo {
+  display: none;
+}
