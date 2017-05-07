@@ -18,7 +18,8 @@ html{
 }
 
 .loggedIn,
-.loggedOut {
+.loggedOut,
+.memberDiv {
 	display: none;
 }
 

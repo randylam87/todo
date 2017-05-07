@@ -12,7 +12,7 @@
 
 <body>
     <div class="container">
-        <nav class="navbar navbar-default">
+        <nav class="navbar navbar-default loggedIn">
             <div class="container-fluid">
                 <div class="navbar-header">
                     <a class="navbar-brand" href="#">
@@ -27,8 +27,18 @@
                     <li><a href="#">Trong</a></li>
             </div>
         </nav>
+        <!-- INITIAL JUMBOTRON SCREEN -->
+        <div class="jumbotron text-center loggedOut">
+            <h1>UCI Family To-Do Web App</h1>
+            <p>
+                <!-- REGISTER BUTTON -->
+                <button type="button" class="btn btn-info btn-lg regBtn" data-toggle="modal" data-target="#registerModal">Register</button>
+                <!-- Sign In BUTTON -->
+                <button type="button" class="btn btn-info btn-lg signBtn" data-toggle="modal" data-target="#signInModal">Sign In</button>
+            </p>
+        </div>
         <!-- MEMBER SELECTION -->
-        <div class="row">
+        <div class="row memberDiv">
             <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -42,7 +52,7 @@
             </div>
         </div>
         <!-- PAGE AFTER FULL LOGIN -->
-        <div class="row">
+        <div class="row loggedIn">
             <div class="col-md-8">
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -87,8 +97,6 @@
         </div>
         <!-- LOG OUT BUTTON -->
         <button type="button" class='btn btn-danger btnLogout loggedIn'>Log Out</button>
-        <!-- REGISTER BUTTON -->
-        <button type="button" class="btn btn-info btn-lg regBtn loggedOut" data-toggle="modal" data-target="#registerModal">Register</button>
         <!-- REGISTER MODAL-->
         <div class="modal fade" id="registerModal" role="dialog">
             <div class="modal-dialog">
@@ -124,8 +132,6 @@
                 </div>
             </div>
         </div>
-        <!-- Sign In BUTTON -->
-        <button type="button" class="btn btn-info btn-lg signBtn loggedOut" data-toggle="modal" data-target="#signInModal">Sign In</button>
         <!-- Sign In MODAL-->
         <div class="modal fade" id="signInModal" role="dialog">
             <div class="modal-dialog">
@@ -135,7 +141,7 @@
                         <h3 class="modal-title">Sign In</h3>
                     </div>
                     <div class="modal-body">
-                        <form id="login"  onsubmit='ftdl.loginSubmit()'>
+                        <form id="login" onsubmit='ftdl.loginSubmit()'>
                             <div class="form-group">
                                 <label for="emailSignIn">E-mail</label>
                                 <input type="email" class="form-control" id="emailSignIn" required>
@@ -199,8 +205,7 @@
                 </div>
             </div>
         </div>
-
-<!-- ADD MEMBER MODAL-->
+        <!-- ADD MEMBER MODAL-->
         <div class="modal fade" id="memberModal" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -223,7 +228,6 @@
                 </div>
             </div>
         </div>
-
     </div>
     <div class="footer">
         <div class="container">

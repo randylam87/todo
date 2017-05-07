@@ -10,18 +10,21 @@ var config = {
 firebase.initializeApp(config);
 var database = firebase.database();
 var familyRef = database.ref();
-var duplicate = 0;
-
+var currentMember = "";
+var loggedIn = false;
+$(".loggedOut").show();
 //Firebase listeners
 //Checks if user is logged in or not
 firebase.auth().onAuthStateChanged(function(firebaseUser) {
 
-  ftdl.changeLogInBtn(firebaseUser);
+  // ftdl.changeLogInBtn(firebaseUser);
   console.log("state change");
   // console.log(firebase.auth().currentUser.uid);
-  if (firebaseUser && duplicate == 0) {
-    duplicate++;
+  if (firebaseUser && loggedIn === false) {
+    loggedIn = true;
     console.log("im logged in");
+    $(".memberDiv").show();
+    $(".jumbotron").hide();
     ftdl.listAdd();
     ftdl.listRemove();
     ftdl.membersAdd();
@@ -30,11 +33,12 @@ firebase.auth().onAuthStateChanged(function(firebaseUser) {
 
 var ftdl = {
   //function that hides/removes login/registration buttons
-  changeLogInBtn: function(firebaseUser) {
-    if (firebaseUser) {
+  changeLogInBtn: function(currentMember) {
+    if (currentMember.length > 0) {
+      $(".memberDiv").hide();
       $(".loggedIn").show();
       $(".loggedOut").hide();
-      $(".test").html('Welcome ' + firebaseUser.displayName + " Family");
+      $(".test").html('Welcome ' + currentMember + "!");
     } else {
       $(".loggedIn").hide();
       $(".loggedOut").show();
@@ -44,6 +48,7 @@ var ftdl = {
 
   membersAdd: function() {
     console.log("members list running");
+    $(".memberSelect").empty();
     database.ref('/Users/' + firebase.auth().currentUser.uid + '/members').on('child_added', function(snapshot) {
       var members = snapshot.val();
       var id = snapshot.key; //THIS IS THE ID PER LIST ITEM
@@ -69,7 +74,7 @@ var ftdl = {
   },
 
   appendMembers: function(members, id) {
-    var memberButton = $("<button class='btn btn-primary'>" + members.member + "</button>");
+    var memberButton = $("<button class='chooseMember btn btn-primary'>" + members.member + "</button>");
     $(".memberSelect").append(memberButton);
 
   },
@@ -198,17 +203,28 @@ var ftdl = {
     database.ref('/Users/' + firebase.auth().currentUser.uid + '/members').push({
       member: member
     })
+  },
+
+  //CHOOSE MEMBER
+  chooseMember: function() {
+    event.preventDefault();
+    currentMember = $(this).text();
+    ftdl.changeLogInBtn(currentMember);
   }
+
 };
 
 $(document.body).on("click", ".closeTodo", ftdl.deleteTodo);
-
+$(document.body).on("click", ".chooseMember", ftdl.chooseMember);
 
 //LOGOUT//SIGN OUT BUTTON
 $('.btnLogout').on('click', function() {
   $(".todoList").empty();
-  duplicate--;
+  currentMember = "";
+  ftdl.changeLogInBtn(currentMember);
+  loggedIn = false;
   firebase.auth().signOut().catch(function(error) {
     console.log('logout ' + error.message);
   });
 });
+
