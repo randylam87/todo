@@ -39,7 +39,7 @@ var ftdl = {
     if (currentMember.length > 0) {
       ftdl.showPage3();
       console.log('page3')
-      $(".test").html('Welcome ' + currentMember + "!");
+      $(".currentMemberHeader").html('Welcome ' + currentMember + "!");
     }
   },
 
@@ -188,7 +188,8 @@ var ftdl = {
       Name: name,
       Categories: cat,
       Location: location,
-      Description: comments
+      Description: comments,
+      Creator: currentMember
     });
     $("#form").trigger('reset');
   },
@@ -205,7 +206,8 @@ var ftdl = {
   //CHOOSE MEMBER
   chooseMember: function() {
     event.preventDefault();
-    currentMember = $(this).text();
+    localStorage.setItem('currentMember', $(this).text());
+    currentMember = localStorage.getItem('currentMember');
     ftdl.changeLogInBtn(currentMember);
   },
 
@@ -233,7 +235,7 @@ $(document.body).on("click", ".chooseMember", ftdl.chooseMember);
 //LOGOUT//SIGN OUT BUTTON need to review if we can store this function in the object
 $('.btnLogout').on('click', function() {
   $(".todoList").empty();
-  currentMember = "";
+  localStorage.removeItem('currentMember');
   ftdl.changeLogInBtn(currentMember);
   loggedIn = false;
   firebase.auth().signOut().catch(function(error) {
