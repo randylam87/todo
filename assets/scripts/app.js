@@ -230,7 +230,7 @@ var ftdl = {
 $(document.body).on("click", ".closeTodo", ftdl.deleteTodo);
 $(document.body).on("click", ".chooseMember", ftdl.chooseMember);
 
-//LOGOUT//SIGN OUT BUTTON
+//LOGOUT//SIGN OUT BUTTON need to review if we can store this function in the object
 $('.btnLogout').on('click', function() {
   $(".todoList").empty();
   currentMember = "";
