@@ -12,7 +12,7 @@ var database = firebase.database();
 var familyRef = database.ref();
 var currentMember = "";
 var loggedIn = false;
-$(".loggedOut").show();
+// $(".loggedOut").show();
 //Firebase listeners
 //Checks if user is logged in or not
 firebase.auth().onAuthStateChanged(function(firebaseUser) {
@@ -28,6 +28,8 @@ firebase.auth().onAuthStateChanged(function(firebaseUser) {
     ftdl.listAdd();
     ftdl.listRemove();
     ftdl.membersAdd();
+  } else if(firebaseUser === null) {
+    $(".loggedOut").show();
   }
 })
 
