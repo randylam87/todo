@@ -1,71 +1,71 @@
 html {
-    height: 100%;
-    /*background: #f4f4f4 url(../images/bg.jpg) repeat top left;*/
-    background: #f4f4f4 url(../images/family2.jpeg);
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-}
-
-.footer {
-    background-color: #666;
-    color: #ccc;
-    position: fixed;
-    width: 100%;
-    bottom: 0;
-    line-height: 40px;
-    border-top: 2px solid #000066;
-    text-align: center;
-    font-size: 14px
-}
-
-.footer p {
-    margin: 0;
-}
-
-.loggedIn,
-.loggedOut,
-.memberDiv {
-    display: none;
-}
-
-img {
-    width: 25px;
-    height: 25px;
-    margin: 3px;
-}
-
-.left {
-    float: left;
-}
-
-.clear {
-    clear: both;
+  height: 100%;
+  /*background: #f4f4f4 url(../images/bg.jpg) repeat top left;*/
+  /*background: #f4f4f4 url(../images/family2.jpeg);
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: cover;*/
 }
 
 body {
-    background-color: transparent;
+  height: 100%;
+  /*background: #f4f4f4 url(../images/bg.jpg) repeat top left;*/
+  background: #f4f4f4 url(../images/family2.jpeg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.footer {
+  background-color: #666;
+  color: #ccc;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  line-height: 40px;
+  border-top: 2px solid #000066;
+  text-align: center;
+  font-size: 14px
+}
+
+.footer p {
+  margin: 0;
+}
+
+
+img {
+  width: 25px;
+  height: 25px;
+  margin: 3px;
+}
+
+.left {
+  float: left;
+}
+
+.clear {
+  clear: both;
+}
+
+body {
+  background-color: transparent;
 }
 
 .jumbotron {
-   background: rgb(200, 54, 54); /* This is for ie8 and below */
-   background: rgba(255, 255, 255, 0.5); 
+  background: rgb(200, 54, 54);
+  /* This is for ie8 and below */
+  background: rgba(255, 255, 255, 0.5);
 }
 
-html, body {
+html,
+body {
   height: 100%;
 }
 
-.parent {
+.page-registration, .page-members {
   display: flex;
   justify-content: center;
   text-align: center;
   align-items: center;
   height: 100%;
-  
-}
-
-.child {
-  background: grey;
-
 }

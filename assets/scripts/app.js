@@ -22,14 +22,14 @@ firebase.auth().onAuthStateChanged(function(firebaseUser) {
   // console.log(firebase.auth().currentUser.uid);
   if (firebaseUser && loggedIn === false) {
     loggedIn = true;
-    console.log("im logged in");
-    $(".memberDiv").show();
-    $(".jumbotron").hide();
+    console.log("im logged in page2");
+    ftdl.showPage2();
     ftdl.listAdd();
     ftdl.listRemove();
     ftdl.membersAdd();
   } else if(firebaseUser === null) {
-    $(".loggedOut").show();
+    console.log('page1')
+    ftdl.showPage1();
   }
 })
 
@@ -37,14 +37,9 @@ var ftdl = {
   //function that hides/removes login/registration buttons
   changeLogInBtn: function(currentMember) {
     if (currentMember.length > 0) {
-      $(".memberDiv").hide();
-      $(".loggedIn").show();
-      $(".loggedOut").hide();
+      ftdl.showPage3();
+      console.log('page3')
       $(".test").html('Welcome ' + currentMember + "!");
-    } else {
-      $(".loggedIn").hide();
-      $(".loggedOut").show();
-      $(".test").html('Please log in');
     }
   },
 
@@ -212,7 +207,23 @@ var ftdl = {
     event.preventDefault();
     currentMember = $(this).text();
     ftdl.changeLogInBtn(currentMember);
-  }
+  },
+
+  showPage1: function() {
+    $('.page').hide();
+    $('.page-registration').show();
+  },
+
+  showPage2: function() {
+    $('.page').hide();
+    $('.page-members').show();
+  },
+
+  showPage3: function() {
+    $('.page').hide();
+    $('.page-main').show();
+  },
+
 
 };
 
