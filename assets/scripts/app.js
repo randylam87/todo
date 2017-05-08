@@ -13,6 +13,7 @@ var familyRef = database.ref();
 var currentMember;
 var loggedIn = false;
 var photoArray = [];
+// $(".loggedOut").show();
 //Firebase listeners
 //Checks if user is logged in or not
 firebase.auth().onAuthStateChanged(function(firebaseUser) {
@@ -79,20 +80,42 @@ var ftdl = {
     },
 
     appendList: function(todoInfo, id) {
+
         var todoDiv = $("<div class='todoDiv'>");
+        //  var name = $("<h4>" + todoInfo.Name + "</h4>");
+
         var catIcon;
+
         if (todoInfo.Categories == 'Timed Event') {
+
             catIcon = 'assets/images/timed_event.jpg';
+
         }
+
         var name = $('<h4 class="left">' + '<img src=' + catIcon + '></img><img src="assets/images/location.png"></img>' +
             '<img src="assets/images/check.png" todoID="' + id + '" class="completeTodo"></img>' +
             '<img src="assets/images/delete.png" todoID="' + id + '" class="closeTodo">' + '</img>' +
             todoInfo.Name + "</h4>");
+
+        // var cat = $("<h4> Category: " + todoInfo.Categories + "</h4>");
+        // var location = $('<p class="left">' + todoInfo.Location + "</p>");
         var description = $('<p class="clear"> Description: ' + todoInfo.Description + "</p>");
         todoDiv.attr("id", "item" + id);
+        // var todoClose = $("<button>");
+        // todoClose.attr("todoID", id);
+        // todoClose.addClass("closeTodo");
+        // todoClose.append("✓");
+        // todoDiv.append(todoClose);
         todoDiv.append(name);
+
+        // todoDiv.append(cat);
+        // todoDiv.append(location);
+
         todoDiv.append(description);
+
+
         $(".todoList").append(todoDiv);
+
     },
 
     deleteTodo: function() {
@@ -207,6 +230,20 @@ var ftdl = {
         $('.page-main').show();
     },
 
+    completeTodo: function () {
+      var todoNumber = $(this).attr("todoID");
+        database.ref('/Users/' + firebase.auth().currentUser.uid + '/list/' + todoNumber).push({
+          completedBy: currentMember
+        });
+        // database.ref('/Users/' + firebase.auth().currentUser.uid + '/list/' + todoNumber).on('child_added', function(snapshot) {
+        //     var completedByInfo = snapshot.val();
+        //     var completedByid = snapshot.key; 
+        //     ftdl.appendList(todoInfo, id);
+        // });
+        // var completedBy = 
+        // $('#id-' + todoNumber).append()
+    },
+
     findPhotoID: function() {
         $.ajax({
             url: "https://api.flickr.com/services/rest/?",
@@ -222,7 +259,6 @@ var ftdl = {
 
                 ftdl.getPhotoFromID(response.photos.photo[i].id);
             }
-            // console.log(photoArray);
         });
     },
 
@@ -249,7 +285,7 @@ var ftdl = {
             var current = 0;
 
             function nextBackground() {
-                body.animate("background-image", photoArray[current = ++current % photoArray.length]);
+                body.css("background-image", photoArray[current = ++current % photoArray.length]);
                 setTimeout(nextBackground, 10000);
             }
 
@@ -257,20 +293,6 @@ var ftdl = {
             body.css('background-image', photoArray[0]);
 
         }
-    }
-
-    completeTodo: function () {
-      var todoNumber = $(this).attr("todoID");
-        database.ref('/Users/' + firebase.auth().currentUser.uid + '/list/' + todoNumber).push({
-          completedBy: currentMember
-        });
-        // database.ref('/Users/' + firebase.auth().currentUser.uid + '/list/' + todoNumber).on('child_added', function(snapshot) {
-        //     var completedByInfo = snapshot.val();
-        //     var completedByid = snapshot.key; 
-        //     ftdl.appendList(todoInfo, id);
-        // });
-        // var completedBy = 
-        // $('#id-' + todoNumber).append()
     }
 
 };
