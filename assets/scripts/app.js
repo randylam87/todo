@@ -13,6 +13,7 @@ var familyRef = database.ref();
 var currentMember;
 var loggedIn = false;
 var photoArray = [];
+var currentPhoto = 0;
 // $(".loggedOut").show();
 //Firebase listeners
 //Checks if user is logged in or not
@@ -31,17 +32,17 @@ firebase.auth().onAuthStateChanged(function(firebaseUser) {
         currentMember = localStorage.getItem('currentMember');
         ftdl.changeLogInBtn(currentMember);
     } else if (firebaseUser === null) {
-        console.log('page1')
+        console.log('page1');
         ftdl.showPage1();
     }
-})
+});
 
 var ftdl = {
     //function that hides/removes login/registration buttons
     changeLogInBtn: function(currentMember) {
         if (currentMember.length > 0) {
             ftdl.showPage3();
-            console.log('page3')
+            console.log('page3');
             $(".currentMemberHeader").html('Welcome ' + currentMember + "!");
         }
     },
@@ -149,7 +150,7 @@ var ftdl = {
     //REGISTER BUTTON
     registerSubmit: function() {
         event.preventDefault();
-        var family = $('#familyReg').val()
+        var family = $('#familyReg').val();
         var email = $('#emailReg').val();
         var password = $('#pwReg').val();
         var member = $('#memberReg').val();
@@ -160,20 +161,20 @@ var ftdl = {
         promise.then(function() {
             //Updates the authentication to the family's name
             auth.currentUser.updateProfile({
-                    displayName: family
-                })
-                //Creates new family based off of the family's name and saves the family's Uid
+                displayName: family
+            });
+            //Creates new family based off of the family's name and saves the family's Uid
             database.ref('/Users/' + auth.currentUser.uid).set({
                 family: family,
                 email: email,
                 password: password,
                 uid: auth.currentUser.uid
-            })
+            });
             database.ref('/Users/' + auth.currentUser.uid + '/members').push({
                 member: member
-            })
+            });
         }).catch(function(error) {
-            console.log(error.message)
+            console.log(error.message);
         });
         $("#registerModal").modal("hide");
         $("#form").trigger('reset');
@@ -203,7 +204,7 @@ var ftdl = {
         var member = $("#memberAdd").val();
         database.ref('/Users/' + firebase.auth().currentUser.uid + '/members').push({
             member: member
-        })
+        });
     },
 
     //CHOOSE MEMBER
@@ -230,10 +231,10 @@ var ftdl = {
         $('.page-main').show();
     },
 
-    completeTodo: function () {
-      var todoNumber = $(this).attr("todoID");
+    completeTodo: function() {
+        var todoNumber = $(this).attr("todoID");
         database.ref('/Users/' + firebase.auth().currentUser.uid + '/list/' + todoNumber).push({
-          completedBy: currentMember
+            completedBy: currentMember
         });
         // database.ref('/Users/' + firebase.auth().currentUser.uid + '/list/' + todoNumber).on('child_added', function(snapshot) {
         //     var completedByInfo = snapshot.val();
@@ -282,17 +283,16 @@ var ftdl = {
     setPhotoAsBG: function() {
         if (photoArray.length > 4) {
             var body = $('body');
-            var current = 0;
-
-            function nextBackground() {
-                body.css("background-image", photoArray[current = ++current % photoArray.length]);
-                setTimeout(nextBackground, 10000);
-            }
-
-            setTimeout(nextBackground, 10000);
+            setInterval(ftdl.nextBackground, 10000);
             body.css('background-image', photoArray[0]);
 
         }
+    },
+
+    nextBackground: function() {
+        var body = $('body');
+        body.css("background-image", photoArray[currentPhoto = ++currentPhoto % photoArray.length]);
+        // setTimeout(this.nextBackground, 10000);
     }
 
 };
