@@ -85,7 +85,7 @@ var ftdl = {
             catIcon = 'assets/images/timed_event.jpg';
         }
         var name = $('<h4 class="left">' + '<img src=' + catIcon + '></img><img src="assets/images/location.png"></img>' +
-            '<img src="assets/images/check.png"></img>' +
+            '<img src="assets/images/check.png" todoID="' + id + '" class="completeTodo"></img>' +
             '<img src="assets/images/delete.png" todoID="' + id + '" class="closeTodo">' + '</img>' +
             todoInfo.Name + "</h4>");
         var description = $('<p class="clear"> Description: ' + todoInfo.Description + "</p>");
@@ -259,11 +259,26 @@ var ftdl = {
         }
     }
 
+    completeTodo: function () {
+      var todoNumber = $(this).attr("todoID");
+        database.ref('/Users/' + firebase.auth().currentUser.uid + '/list/' + todoNumber).push({
+          completedBy: currentMember
+        });
+        // database.ref('/Users/' + firebase.auth().currentUser.uid + '/list/' + todoNumber).on('child_added', function(snapshot) {
+        //     var completedByInfo = snapshot.val();
+        //     var completedByid = snapshot.key; 
+        //     ftdl.appendList(todoInfo, id);
+        // });
+        // var completedBy = 
+        // $('#id-' + todoNumber).append()
+    }
+
 };
 
 ftdl.findPhotoID();
 $(document.body).on("click", ".closeTodo", ftdl.deleteTodo);
 $(document.body).on("click", ".chooseMember", ftdl.chooseMember);
+$(document.body).on("click", ".completeTodo", ftdl.completeTodo);
 
 //LOGOUT//SIGN OUT BUTTON need to review if we can store this function in the object
 $('.btnLogout').on('click', function() {
