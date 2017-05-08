@@ -12,7 +12,7 @@ var database = firebase.database();
 var familyRef = database.ref();
 var currentMember;
 var loggedIn = false;
-// $(".loggedOut").show();
+var photoArray = [];
 //Firebase listeners
 //Checks if user is logged in or not
 firebase.auth().onAuthStateChanged(function(firebaseUser) {
@@ -79,42 +79,20 @@ var ftdl = {
     },
 
     appendList: function(todoInfo, id) {
-
         var todoDiv = $("<div class='todoDiv'>");
-        //  var name = $("<h4>" + todoInfo.Name + "</h4>");
-
         var catIcon;
-
         if (todoInfo.Categories == 'Timed Event') {
-
             catIcon = 'assets/images/timed_event.jpg';
-
         }
-
         var name = $('<h4 class="left">' + '<img src=' + catIcon + '></img><img src="assets/images/location.png"></img>' +
             '<img src="assets/images/check.png"></img>' +
             '<img src="assets/images/delete.png" todoID="' + id + '" class="closeTodo">' + '</img>' +
             todoInfo.Name + "</h4>");
-
-        // var cat = $("<h4> Category: " + todoInfo.Categories + "</h4>");
-        // var location = $('<p class="left">' + todoInfo.Location + "</p>");
         var description = $('<p class="clear"> Description: ' + todoInfo.Description + "</p>");
         todoDiv.attr("id", "item" + id);
-        // var todoClose = $("<button>");
-        // todoClose.attr("todoID", id);
-        // todoClose.addClass("closeTodo");
-        // todoClose.append("✓");
-        // todoDiv.append(todoClose);
         todoDiv.append(name);
-
-        // todoDiv.append(cat);
-        // todoDiv.append(location);
-
         todoDiv.append(description);
-
-
         $(".todoList").append(todoDiv);
-
     },
 
     deleteTodo: function() {
@@ -229,9 +207,61 @@ var ftdl = {
         $('.page-main').show();
     },
 
+    findPhotoID: function() {
+        $.ajax({
+            url: "https://api.flickr.com/services/rest/?",
+            data: {
+                method: "flickr.photos.search",
+                api_key: "5a14553fa4191a526048889fe5a012bf",
+                format: "json",
+                user_id: "154480674@N02",
+                nojsoncallback: "?"
+            }
+        }).done(function(response) {
+            for (i = 0; i < 5; i++) {
+
+                ftdl.getPhotoFromID(response.photos.photo[i].id);
+            }
+            // console.log(photoArray);
+        });
+    },
+
+    getPhotoFromID: function(photoID) {
+
+        $.ajax({
+            url: "https://api.flickr.com/services/rest/?",
+            data: {
+                method: "flickr.photos.getSizes",
+                api_key: "5a14553fa4191a526048889fe5a012bf",
+                format: "json",
+                photo_id: photoID,
+                nojsoncallback: "?"
+            }
+        }).done(function(response) {
+            photoArray.push("url(" + response.sizes.size[9].source + ")");
+            ftdl.setPhotoAsBG();
+        });
+    },
+
+    setPhotoAsBG: function() {
+        if (photoArray.length > 4) {
+            var body = $('body');
+            var current = 0;
+
+            function nextBackground() {
+                body.animate("background-image", photoArray[current = ++current % photoArray.length]);
+                setTimeout(nextBackground, 10000);
+            }
+
+            setTimeout(nextBackground, 10000);
+            body.css('background-image', photoArray[0]);
+
+        }
+    }
 
 };
 
+ftdl.findPhotoID();
 $(document.body).on("click", ".closeTodo", ftdl.deleteTodo);
 $(document.body).on("click", ".chooseMember", ftdl.chooseMember);
 
