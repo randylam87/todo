@@ -86,3 +86,7 @@ img {
 .footer p {
   margin: 0;
 }
+
+.completedList {
+  opacity: 0.5;
+}

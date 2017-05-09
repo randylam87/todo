@@ -19,25 +19,27 @@ var currentPhoto = 0;
 //Checks if user is logged in or not
 firebase.auth().onAuthStateChanged(function(firebaseUser) {
 
-	// ftdl.changeLogInBtn(firebaseUser);
-	console.log("state change");
-	// console.log(firebase.auth().currentUser.uid);
-	if (firebaseUser && loggedIn === false) {
-		loggedIn = true;
-		console.log("im logged in page2");
-		ftdl.showPage2();
-		ftdl.listAdd();
-		ftdl.listRemove();
-		ftdl.eventAdd();
-		ftdl.eventRemove();
-		ftdl.membersAdd();
-		currentMember = $('#current-member').val();
-		ftdl.changeLogInBtn(currentMember);
-	} else if (firebaseUser === null) {
-		console.log('page1');
-		ftdl.showPage1();
-	}
+    // ftdl.changeLogInBtn(firebaseUser);
+    console.log("state change");
+    // console.log(firebase.auth().currentUser.uid);
+    if (firebaseUser && loggedIn === false) {
+        loggedIn = true;
+        console.log("im logged in page2");
+        ftdl.showPage2();
+        ftdl.listAdd();
+        ftdl.listRemove();
+        ftdl.completeAdd();
+        ftdl.eventAdd();
+        ftdl.eventRemove();
+        ftdl.membersAdd();
+        currentMember = $('#current-member').val();
+        ftdl.changeLogInBtn(currentMember);
+    } else if (firebaseUser === null) {
+        console.log('page1');
+        ftdl.showPage1();
+    }
 });
+
 
 var ftdl = {
 	//function that hides/removes login/registration buttons
@@ -64,7 +66,12 @@ var ftdl = {
 		database.ref('/Users/' + firebase.auth().currentUser.uid + '/list').on('child_added', function(snapshot) {
 			var todoInfo = snapshot.val();
 			var id = snapshot.key; //THIS IS THE ID PER LIST ITEM
-			ftdl.appendList(todoInfo, id);
+			if (todoInfo.Status == "not complete") {
+				ftdl.appendList(todoInfo, id);
+			} else if(todoInfo.Status == "completed"){
+				ftdl.appendComplete(todoInfo);
+			}
+
 		});
 	},
 
@@ -72,16 +79,26 @@ var ftdl = {
 		database.ref('/Users/' + firebase.auth().currentUser.uid + '/list').on('child_removed', function(snapshot) {
 			var todoInfo = snapshot.val();
 			var id = snapshot.key; //THIS IS THE ID PER LIST ITEM
+			console.log(todoInfo.Status);
 			$("#item" + id).remove();
+		});
+	},
+
+	completeAdd: function() {
+		database.ref('/Users/' + firebase.auth().currentUser.uid + '/list').on('child_changed', function(snapshot) {
+			var completeInfo = snapshot.val();
+			var id = snapshot.key; //THIS IS THE ID PER LIST ITEM
+			$("#item" + id).remove();
+			ftdl.appendComplete(completeInfo, id);
 		});
 	},
 
 	eventAdd: function() {
 		console.log("event add running");
 		database.ref('/Users/' + firebase.auth().currentUser.uid + '/event').on('child_added', function(snapshot) {
-			var todoInfo = snapshot.val();
+			var eventInfo = snapshot.val();
 			var id = snapshot.key; //THIS IS THE ID PER LIST ITEM
-			ftdl.appendEvent(todoInfo, id);
+			ftdl.appendEvent(eventInfo, id);
 		});
 	},
 
@@ -101,7 +118,6 @@ var ftdl = {
 		var memberLi = $('<li><a href="#">'+ members.member +'</a></li>');
 		$(".memberSelect").append(memberButton);
 		$("#header-members").append(memberLi);
-
 	},
 
 	appendList: function(todoInfo, id) {
@@ -140,28 +156,53 @@ var ftdl = {
 
 
 		$(".todoList").append(todoDiv);
-
 	},
 
-	appendEvent: function(todoInfo, id) {
+	appendComplete: function(completeInfo, id) {
+		var completeDiv = $("<div class='eventDiv'>");
+		var name = $('<h4 class="left">' + '<img src="assets/images/check.png" todoID="' + id + '"></img>' + completeInfo.Name + "</h4>");
+		var description = $('<p class="clear"> Completed By: ' + completeInfo.CompletedBy + "</p>");
+		if (Date.now() > completeInfo.Time + 172800) { //Deletes Item if over 2 days since completion.
+			database.ref('/Users/' + firebase.auth().currentUser.uid + '/complete/' + id).remove();
+		} else {
+			completeDiv.attr("id", "item" + id);
+			completeDiv.append(name);
+			completeDiv.append(description);
+			$(".completedList").append(completeDiv);
+		}
+	},
 
+	appendEvent: function(eventInfo, id) {
 		var eventDiv = $("<div class='eventDiv'>");
 		var catIcon;
 		var name = $('<h4 class="left">' + '</img><img src="assets/images/location.png"></img>' +
 			'<img src="assets/images/delete.png" todoID="' + id + '" class="closeTodo">' + '</img>' +
-			todoInfo.Name + "</h4>");
-		var description = $('<p class="clear"> Description: ' + todoInfo.Description + "</p>");
-		eventDiv.attr("id", "item" + id);
-		eventDiv.append(name);
-		eventDiv.append(description);
-		$(".future-items").append(eventDiv);
+			eventInfo.Name + "</h4>");
+		var description = $('<p class="clear"> Description: ' + eventInfo.Description + "</p>");
 
+		// if ((eventInfo.Time + 86400) > Date.now()) {
+		//     database.ref('/Users/' + firebase.auth().currentUser.uid + '/event/' + id).remove();
+		if (Date.now() > eventInfo.Time + 604800) { //Deletes Event if over 7 days since posting.
+			database.ref('/Users/' + firebase.auth().currentUser.uid + '/event/' + id).remove();
+		} else {
+			eventDiv.attr("id", "item" + id);
+			eventDiv.append(name);
+			eventDiv.append(description);
+			$(".future-items").append(eventDiv);
+			console.log(eventInfo.Time);
+		}
 	},
 
 	deleteTodo: function() {
 		var todoNumber = $(this).attr("todoID");
 		database.ref('/Users/' + firebase.auth().currentUser.uid + '/list/' + todoNumber).remove();
 		database.ref('/Users/' + firebase.auth().currentUser.uid + '/event/' + todoNumber).remove();
+	},
+
+	completeTodo: function() {
+		var todoNumber = $(this).attr("todoID");
+		database.ref('/Users/' + firebase.auth().currentUser.uid + '/list/' + todoNumber).update({ "Status": "completed",
+		"CompletedBy": currentMember });
 	},
 
 	//LOGIN//SIGN IN BUTTON
@@ -173,16 +214,16 @@ var ftdl = {
 		var promise = auth.signInWithEmailAndPassword(email, password);
 
 		firebase.auth().signInWithEmailAndPassword(email, password)
-		.catch(function(error) {
-			var errorCode = error.code;
-			var errorMessage = error.message;
-			if (errorCode === 'auth/wrong-password') {
-				alert('Wrong password.');
-			} else {
-				alert(errorMessage);
-			}
-			console.log(error);
-		});
+			.catch(function(error) {
+				var errorCode = error.code;
+				var errorMessage = error.message;
+				if (errorCode === 'auth/wrong-password') {
+					alert('Wrong password.');
+				} else {
+					alert(errorMessage);
+				}
+				console.log(error);
+			});
 		$("#signInModal").modal("hide");
 		$("#form").trigger('reset');
 	},
@@ -233,7 +274,8 @@ var ftdl = {
 			Categories: cat,
 			Location: location,
 			Description: comments,
-			Creator: currentMember
+			Creator: currentMember,
+			Status: "not complete"
 		});
 		$("#form").trigger('reset');
 	},
@@ -251,8 +293,21 @@ var ftdl = {
 			Categories: cat,
 			Location: location,
 			Description: comments,
-			Creator: currentMember
+			Time: firebase.database.ServerValue.TIMESTAMP,
+			Creator: currentMember,
+			CompletedBy: ""
+
 		});
+
+		// database.ref("/time").set({
+		//     time: firebase.database.ServerValue.TIMESTAMP
+		// })
+
+		// database.ref("/time").on("value", function(snap) {
+		//      currentDate = snap.val().time;
+		//      console.log(currentDate);
+
+
 		$("#form").trigger('reset');
 	},
 
@@ -290,19 +345,19 @@ var ftdl = {
 		$('.page-main').show();
 	},
 
-	completeTodo: function() {
-		var todoNumber = $(this).attr("todoID");
-		database.ref('/Users/' + firebase.auth().currentUser.uid + '/list/' + todoNumber).push({
-			completedBy: currentMember
-		});
-		// database.ref('/Users/' + firebase.auth().currentUser.uid + '/list/' + todoNumber).on('child_added', function(snapshot) {
-		//     var completedByInfo = snapshot.val();
-		//     var completedByid = snapshot.key; 
-		//     ftdl.appendList(todoInfo, id);
-		// });
-		// var completedBy = 
-		// $('#id-' + todoNumber).append()
-	},
+	// completeTodo: function() {
+	//     var todoNumber = $(this).attr("todoID");
+	//     database.ref('/Users/' + firebase.auth().currentUser.uid + '/list/' + todoNumber).push({
+	//         completedBy: currentMember
+	//     });
+	//     // database.ref('/Users/' + firebase.auth().currentUser.uid + '/list/' + todoNumber).on('child_added', function(snapshot) {
+	//     //     var completedByInfo = snapshot.val();
+	//     //     var completedByid = snapshot.key; 
+	//     //     ftdl.appendList(todoInfo, id);
+	//     // });
+	//     // var completedBy = 
+	//     // $('#id-' + todoNumber).append()
+	// },
 
 	findPhotoID: function() {
 		$.ajax({
@@ -353,12 +408,10 @@ var ftdl = {
 		body.css("background-image", photoArray[currentPhoto = ++currentPhoto % photoArray.length]);
 		// setTimeout(this.nextBackground, 10000);
 	}
-
 };
 
 ftdl.findPhotoID();
 $(document.body).on("click", ".closeTodo", ftdl.deleteTodo);
-// $(document.body).on("click", ".chooseMember", ftdl.chooseMember);
 $(document.body).on("click", ".completeTodo", ftdl.completeTodo);
 
 //LOGOUT//SIGN OUT BUTTON need to review if we can store this function in the object
