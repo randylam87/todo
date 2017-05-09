@@ -69,7 +69,7 @@ var ftdl = {
 			if (todoInfo.Status == "not complete") {
 				ftdl.appendList(todoInfo, id);
 			} else if(todoInfo.Status == "completed"){
-				ftdl.appendComplete(todoInfo);
+				ftdl.appendComplete(todoInfo, id);
 			}
 
 		});
