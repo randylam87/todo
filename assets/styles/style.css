@@ -75,6 +75,6 @@ body {
   display: none;
 }
 
-/*.completeTodo {
-	border: 2px red solid;
-}*/
+.completedList {
+  opacity: 0.5;
+}
