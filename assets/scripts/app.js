@@ -201,17 +201,6 @@ var ftdl = {
         "CompletedBy": currentMember });
     },
 
-    completeToDatabase: function(todoInfo) {
-        database.ref('/Users/' + firebase.auth().currentUser.uid + '/complete').push({
-            Name: todoInfo.Name,
-            Categories: todoInfo.Categories,
-            Location: todoInfo.Location,
-            Description: todoInfo.Description,
-            CompletedBy: currentMember,
-            Time: firebase.database.ServerValue.TIMESTAMP
-        });
-    },
-
     //LOGIN//SIGN IN BUTTON
     loginSubmit: function() {
         event.preventDefault();
