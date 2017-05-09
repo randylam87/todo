@@ -90,3 +90,7 @@ img {
 .completedList {
   opacity: 0.5;
 }
+
+.link-icon{
+  cursor: pointer;
+}
