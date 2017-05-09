@@ -1,6 +1,6 @@
 html {
   height: 100%;
-  
+  min-width: 320px;
   /*background: #f4f4f4 url(../images/bg.jpg) repeat top left;*/
   /*background: #f4f4f4 url(../images/family2.jpeg);
 	background-position: center;
@@ -15,24 +15,8 @@ body {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  background-color: transparent;
 }
-
-.footer {
-  background-color: #666;
-  color: #ccc;
-  position: fixed;
-  width: 100%;
-  bottom: 0;
-  line-height: 40px;
-  border-top: 2px solid #000066;
-  text-align: center;
-  font-size: 14px
-}
-
-.footer p {
-  margin: 0;
-}
-
 
 img {
   width: 25px;
@@ -48,27 +32,32 @@ img {
   clear: both;
 }
 
-body {
-  background-color: transparent;
-}
-
 .jumbotron {
   background: rgb(200, 54, 54);
   /* This is for ie8 and below */
   background: rgba(255, 255, 255, 0.5);
 }
 
-html,
-body {
-  height: 100%;
-}
-
-.page-registration, .page-members {
+.page-registration {
   display: flex;
   justify-content: center;
   text-align: center;
   align-items: center;
   height: 100%;
+}
+
+.page-members {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.btn{
+  margin-right: 5px;
+}
+.chooseMember{
+  margin: 0 5px 5px;
 }
 
 .firstPagejumbo {
@@ -78,3 +67,22 @@ body {
 /*.completeTodo {
 	border: 2px red solid;
 }*/
+.panel-default>.panel-heading{
+  line-height: 32px;
+}
+
+.footer {
+  background-color: #666;
+  color: #ccc;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  line-height: 40px;
+  border-top: 1px solid #ccc;
+  text-align: center;
+  font-size: 14px
+}
+
+.footer p {
+  margin: 0;
+}
