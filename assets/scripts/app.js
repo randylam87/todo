@@ -28,6 +28,8 @@ firebase.auth().onAuthStateChanged(function(firebaseUser) {
         ftdl.showPage2();
         ftdl.listAdd();
         ftdl.listRemove();
+        ftdl.eventAdd();
+        ftdl.eventRemove();
         ftdl.membersAdd();
         currentMember = localStorage.getItem('currentMember');
         ftdl.changeLogInBtn(currentMember);
@@ -68,6 +70,23 @@ var ftdl = {
 
     listRemove: function() {
         database.ref('/Users/' + firebase.auth().currentUser.uid + '/list').on('child_removed', function(snapshot) {
+            var todoInfo = snapshot.val();
+            var id = snapshot.key; //THIS IS THE ID PER LIST ITEM
+            $("#item" + id).remove();
+        });
+    },
+
+    eventAdd: function() {
+        console.log("event add running");
+        database.ref('/Users/' + firebase.auth().currentUser.uid + '/event').on('child_added', function(snapshot) {
+            var todoInfo = snapshot.val();
+            var id = snapshot.key; //THIS IS THE ID PER LIST ITEM
+            ftdl.appendEvent(todoInfo, id);
+        });
+    },
+
+    eventRemove: function() {
+        database.ref('/Users/' + firebase.auth().currentUser.uid + '/event').on('child_removed', function(snapshot) {
             var todoInfo = snapshot.val();
             var id = snapshot.key; //THIS IS THE ID PER LIST ITEM
             $("#item" + id).remove();
@@ -119,9 +138,25 @@ var ftdl = {
 
     },
 
+    appendEvent: function(todoInfo, id) {
+
+        var eventDiv = $("<div class='eventDiv'>");
+        var catIcon;
+        var name = $('<h4 class="left">' + '</img><img src="assets/images/location.png"></img>' +
+            '<img src="assets/images/delete.png" todoID="' + id + '" class="closeTodo">' + '</img>' +
+            todoInfo.Name + "</h4>");
+        var description = $('<p class="clear"> Description: ' + todoInfo.Description + "</p>");
+        eventDiv.attr("id", "item" + id);
+        eventDiv.append(name);
+        eventDiv.append(description);
+        $(".future-items").append(eventDiv);
+
+    },
+
     deleteTodo: function() {
         var todoNumber = $(this).attr("todoID");
         database.ref('/Users/' + firebase.auth().currentUser.uid + '/list/' + todoNumber).remove();
+        database.ref('/Users/' + firebase.auth().currentUser.uid + '/event/' + todoNumber).remove();
     },
 
     //LOGIN//SIGN IN BUTTON
@@ -189,6 +224,24 @@ var ftdl = {
         var location = $("#locationInput").val();
         var comments = $("#todoComments").val();
         database.ref('/Users/' + firebase.auth().currentUser.uid + '/list').push({
+            Name: name,
+            Categories: cat,
+            Location: location,
+            Description: comments,
+            Creator: currentMember
+        });
+        $("#form").trigger('reset');
+    },
+
+    //EVENT SUBMIT BUTTON
+    eventSubmit: function() {
+        event.preventDefault();
+        $('#eventModal').modal('hide');
+        var name = $("#eventName").val();
+        var cat = $("#eventCatInput").val();
+        var location = $("#eventLocationInput").val();
+        var comments = $("#eventComments").val();
+        database.ref('/Users/' + firebase.auth().currentUser.uid + '/event').push({
             Name: name,
             Categories: cat,
             Location: location,

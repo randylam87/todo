@@ -2,258 +2,306 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Family To Do List</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link rel="stylesheet" href="assets/styles/style.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Family To Do List</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="assets/styles/style.css">
 </head>
 
 <body>
-  <!-- FIRST PAGE -->
-  <div class="container-fluid page page-registration">
-    <!-- INITIAL JUMBOTRON SCREEN -->
-    <div class="jumbotron text-center loggedOut firstPagejumbo">
-      <h1>UCI Family To-Do Web App</h1>
-      <p>"Family is not an important thing. It's everything."</p>
-      <!-- REGISTER BUTTON -->
-      <button type="button" class="btn btn-info btn-lg regBtn" data-toggle="modal" data-target="#registerModal">Register</button>
-      <!-- Sign In BUTTON -->
-      <button type="button" class="btn btn-info btn-lg signBtn" data-toggle="modal" data-target="#signInModal">Sign In</button>
+    <!-- FIRST PAGE -->
+    <div class="container-fluid page page-registration">
+        <!-- INITIAL JUMBOTRON SCREEN -->
+        <div class="jumbotron text-center loggedOut firstPagejumbo">
+            <h1>UCI Family To-Do Web App</h1>
+            <p>"Family is not an important thing. It's everything."</p>
+            <!-- REGISTER BUTTON -->
+            <button type="button" class="btn btn-info btn-lg regBtn" data-toggle="modal" data-target="#registerModal">Register</button>
+            <!-- Sign In BUTTON -->
+            <button type="button" class="btn btn-info btn-lg signBtn" data-toggle="modal" data-target="#signInModal">Sign In</button>
+        </div>
     </div>
-  </div>
-  <!-- FIRST PAGE MODALS -->
-  <div class="modal fade" id="registerModal" role="dialog">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h3 class="modal-title">Register</h3>
+    <!-- FIRST PAGE MODALS -->
+    <div class="modal fade" id="registerModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h3 class="modal-title">Register</h3>
+                </div>
+                <div class="modal-body">
+                    <form id="register" onsubmit="ftdl.registerSubmit()">
+                        <div class="form-group">
+                            <label for="familyReg">Family's Name</label>
+                            <input type="text" class="form-control" id="familyReg" placeholder="Enter Family Name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="memberReg">Your Name</label>
+                            <input type="text" class="form-control" id="memberReg" placeholder="Enter Your Name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="emailReg">E-mail</label>
+                            <input type="email" class="form-control" id="emailReg" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="pwReg">Password:</label>
+                            <input type="password" class="form-control" id="pwReg" required>
+                        </div>
+                        <input type="submit" class="btnRegister btn btn-primary" value="Register">
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
         </div>
-        <div class="modal-body">
-          <form id="register" onsubmit='ftdl.registerSubmit()'>
-            <div class="form-group">
-              <label for="familyReg">Family's Name</label>
-              <input type="text" class="form-control" id="familyReg" placeholder="Enter Family Name" required>
-            </div>
-            <div class="form-group">
-              <label for="memberReg">Your Name</label>
-              <input type="text" class="form-control" id="memberReg" placeholder="Enter Your Name" required>
-            </div>
-            <div class="form-group">
-              <label for="emailReg">E-mail</label>
-              <input type="email" class="form-control" id="emailReg" required>
-            </div>
-            <div class="form-group">
-              <label for="pwReg">Password:</label>
-              <input type="password" class="form-control" id="pwReg" required>
-            </div>
-            <input type="submit" class="btnRegister btn btn-primary" value='Register'></input>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
     </div>
-  </div>
-  <!-- Sign In MODAL-->
-  <div class="modal fade" id="signInModal" role="dialog">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h3 class="modal-title">Sign In</h3>
-        </div>
-        <div class="modal-body">
-          <form id="login" onsubmit='ftdl.loginSubmit()'>
-            <div class="form-group">
-              <label for="emailSignIn">E-mail</label>
-              <input type="email" class="form-control" id="emailSignIn" required>
+    <!-- Sign In MODAL-->
+    <div class="modal fade" id="signInModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h3 class="modal-title">Sign In</h3>
+                </div>
+                <div class="modal-body">
+                    <form id="login" onsubmit='ftdl.loginSubmit()'>
+                        <div class="form-group">
+                            <label for="emailSignIn">E-mail</label>
+                            <input type="email" class="form-control" id="emailSignIn" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="pwSignIn">Password:</label>
+                            <input type="password" class="form-control" id="pwSignIn" required>
+                        </div>
+                        <button type="submit" class="btnLogin btn btn-primary">Sign In</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
             </div>
-            <div class="form-group">
-              <label for="pwSignIn">Password:</label>
-              <input type="password" class="form-control" id="pwSignIn" required>
-            </div>
-            <button type="submit" class="btnLogin btn btn-primary">Sign In</button>
-          </form>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
     </div>
-  </div>
-  <!-- SECOND PAGE -->
-  <div class="container-fluid page page-members">
-    <!-- MEMBER SELECTION -->
-    <div class="row memberDiv">
-      <div class="col-md-12">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h1 class="panel-title">Members <button type="button" class="pull-right addMember btn btn-primary" data-toggle="modal" data-target="#memberModal">Add Member</button></h1>
-          </div>
-          <div class="panel-body">
-            <div class="memberSelect">
+    <!-- SECOND PAGE -->
+    <div class="container-fluid page page-members">
+        <!-- MEMBER SELECTION -->
+        <div class="row memberDiv">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h1 class="panel-title">Members <button type="button" class="pull-right addMember btn btn-primary" data-toggle="modal" data-target="#memberModal">Add Member</button></h1>
+                    </div>
+                    <div class="panel-body">
+                        <div class="memberSelect">
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
     </div>
-  </div>
-  <!-- ADD MEMBER MODAL-->
-  <div class="modal fade" id="memberModal" role="dialog">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h3 class="modal-title">Add a Family Member</h3>
-        </div>
-        <div class="modal-body">
-          <form class="addMember" onsubmit='ftdl.btnAddMember()'>
-            <div class="form-group">
-              <label for="memberAdd">Family Member's Name</label>
-              <input type="text" class="form-control" id="memberAdd" placeholder="Enter Family Name" required>
+    <!-- ADD MEMBER MODAL-->
+    <div class="modal fade" id="memberModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h3 class="modal-title">Add a Family Member</h3>
+                </div>
+                <div class="modal-body">
+                    <form class="addMember" onsubmit='ftdl.btnAddMember()'>
+                        <div class="form-group">
+                            <label for="memberAdd">Family Member's Name</label>
+                            <input type="text" class="form-control" id="memberAdd" placeholder="Enter Family Name" required>
+                        </div>
+                        <button type="submit" class="btnAddMember btn btn-primary">Add Member</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
             </div>
-            <button type="submit" class="btnAddMember btn btn-primary">Add Member</button>
-          </form>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
     </div>
-  </div>
-  <!-- THIRD PAGE -->
-  <div class="container page page-main">
-    <nav class="navbar navbar-default loggedIn">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <h1 class='currentMemberHeader'>
-        	</h1>
-          <!--           <a class="navbar-brand" href="#">
+    <!-- THIRD PAGE -->
+    <div class="container page page-main">
+        <nav class="navbar navbar-default loggedIn">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <h1 class="currentMemberHeader"></h1>
+                    <!--           <a class="navbar-brand" href="#">
             <img alt="Family" src="">
             Family Shared List
           </a> -->
-        </div>
-        <ul class="nav navbar-nav navbar-right">
-          <li><a href="#">Amir</a></li>
-          <li><a href="#">Dennis</a></li>
-          <li><a href="#">Randy</a></li>
-          <li><a href="#">Trong</a></li>
-      </div>
-    </nav>
-    <!-- PAGE AFTER FULL LOGIN -->
-    <div class="row loggedIn">
-      <div class="col-md-8">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title">Today List</h3>
-            <!-- ADD TODO ITEM BUTTON -->
-            <button type="button" class="btn btn-info btn-sm addBtn loggedIn" data-toggle="modal" data-target="#todoModal">Add To-Do Item</button>
-          </div>
-          <div class="panel-body">
-            <div class="today-event-items">
-            </div>
-            <div class="todoList loggedIn">
-              <!-- TODO ITEMS APPENDED HERE -->
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <h3 class="panel-title">Up Comming List</h3>
-              </div>
-              <div class="panel-body">
-                <div class="future-items">
                 </div>
-              </div>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#">Amir</a></li>
+                    <li><a href="#">Dennis</a></li>
+                    <li><a href="#">Randy</a></li>
+                    <li><a href="#">Trong</a></li>
+                </ul>
             </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <h3 class="panel-title">Stats Corner</h3>
-              </div>
-              <div class="panel-body">
-                <div class="stats-members">
+        </nav>
+        <!-- PAGE AFTER FULL LOGIN -->
+        <div class="row loggedIn">
+            <div class="col-md-8">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Today List</h3>
+                        <!-- ADD TODO ITEM BUTTON -->
+                        <button type="button" class="btn btn-info btn-sm addBtn loggedIn" data-toggle="modal" data-target="#todoModal">Add To-Do Item</button>
+                    </div>
+                    <div class="panel-body">
+                        <div class="today-event-items">
+                        </div>
+                        <div class="todoList loggedIn">
+                            <!-- TODO ITEMS APPENDED HERE -->
+                        </div>
+                    </div>
                 </div>
-              </div>
             </div>
-          </div>
+            <div class="col-md-4">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Up Coming List</h3>
+                                <!-- ADD EVENT BUTTON -->
+                                <button type="button" class="btn btn-info btn-sm addEventBtn loggedIn" data-toggle="modal" data-target="#eventModal">Add Event Item</button>
+                            </div>
+                            <div class="panel-body">
+                                <div class="future-items">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Stats Corner</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="stats-members">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
+        <!-- LOG OUT BUTTON -->
+        <button type="button" class='btn btn-danger btnLogout loggedIn'>Log Out</button>
     </div>
-    <!-- LOG OUT BUTTON -->
-    <button type="button" class='btn btn-danger btnLogout loggedIn'>Log Out</button>
-  </div>
-  <!-- PAGE 3 MODALS -->
-  <!-- ADD TODO ITEM MODAL-->
-  <div class="modal fade" id="todoModal" role="dialog">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h3 class="modal-title">Add To-Do Item</h3>
+    <!-- PAGE 3 MODALS -->
+    <!-- ADD TODO ITEM MODAL-->
+    <div class="modal fade" id="todoModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h3 class="modal-title">Add To-Do Item</h3>
+                </div>
+                <div class="modal-body">
+                    <form id='submitTodo' onsubmit='ftdl.todoSubmit()'>
+                        <div class="form-group">
+                            <label for="todoName">To-Do Name</label>
+                            <input type="text" class="form-control" id="todoName" placeholder="Enter To-Do Task Name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="todoCatInput">Categories</label>
+                            <select class="form-control" id="todoCatInput">
+                                <option>Timed Event</option>
+                                <option>Shopping</option>
+                                <option>Pick Up</option>
+                                <option>Drop Off</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="locationInput">Enter Location</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="locationInput" placeholder="Enter Location">
+                                <div class="input-group-addon"><i class="material-icons" style="font-size:14px">directions</i></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="todoComments">Description</label>
+                            <textarea class="form-control" id="todoComments" rows="3"></textarea>
+                        </div>
+                        <button type="submit" class="todoSubmit btn btn-primary">Submit</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
         </div>
-        <div class="modal-body">
-          <form id='submitTodo' onsubmit='ftdl.todoSubmit()'>
-            <div class="form-group">
-              <label for="todoName">To-Do Name</label>
-              <input type="text" class="form-control" id="todoName" placeholder="Enter To-Do Task Name" required>
+    </div>
+    <!-- ADD EVENT MODAL-->
+    <div class="modal fade" id="eventModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h3 class="modal-title">Add Event Item</h3>
+                </div>
+                <div class="modal-body">
+                    <form id='submitEvent' onsubmit='ftdl.eventSubmit()'>
+                        <div class="form-group">
+                            <label for="eventName">To-Do Name</label>
+                            <input type="text" class="form-control" id="eventName" placeholder="Enter Event Name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="eventCatInput">Categories</label>
+                            <select class="form-control" id="eventCatInput">
+                                <option>Birthday</option>
+                                <option>Wedding</option>
+                                <option>Anniversary</option>
+                                <option>Holiday</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="eventLocationInput">Enter Location</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="eventLocationInput" placeholder="Enter Location">
+                                <div class="input-group-addon"><i class="material-icons" style="font-size:14px">directions</i></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="eventComments">Description</label>
+                            <textarea class="form-control" id="eventComments" rows="3"></textarea>
+                        </div>
+                        <button type="submit" class="eventSubmit btn btn-primary">Submit</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
             </div>
-            <div class="form-group">
-              <label for="todoCatInput">Categories</label>
-              <select class="form-control" id="todoCatInput">
-                <option>Timed Event</option>
-                <option>Shopping</option>
-                <option>Pick Up</option>
-                <option>Drop Off</option>
-                <option>Other</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="locationInput">Enter Location</label>
-              <div class="input-group">
-                <input type="text" class="form-control" id="locationInput" placeholder="Enter Location">
-                <div class="input-group-addon"><i class="material-icons" style="font-size:14px">directions</i></div>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="todoComments">Description</label>
-              <textarea class="form-control" id="todoComments" rows="3"></textarea>
-            </div>
-            <button type="submit" class="todoSubmit btn btn-primary">Submit</button>
-          </form>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
     </div>
     <div class="footer">
-      <div class="container">
-        <p class="text-center">&copy; Copyright
-          <script>
-          document.write(new Date().getFullYear())
-          </script>
-        </p>
-      </div>
-<!--       GOOGLE MAPS API WITH KEY -->
-<!--       <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBbUoOuhQ_VjMAlqD-X7m-13S39sjL89Eg&callback=initMap"
+        <div class="container">
+            <p class="text-center">&copy; Copyright
+                <script>
+                document.write(new Date().getFullYear())
+                </script>
+            </p>
+        </div>
+    </div>
+    <!--       GOOGLE MAPS API WITH KEY -->
+    <!--       <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBbUoOuhQ_VjMAlqD-X7m-13S39sjL89Eg&callback=initMap"
     async defer></script> -->
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-      <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-      <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
-      <script src="assets/scripts/app.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
+    <script src="assets/scripts/app.js"></script>
 </body>
 
 </html>
