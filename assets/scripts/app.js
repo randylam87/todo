@@ -129,7 +129,10 @@ var ftdl = {
 		var $img1 = $('<img>').attr('src', 'assets/images/timed_event.jpg')
 			.addClass('link-icon');
 
-		var $img2 = $('<img>').attr('src', 'assets/images/location.png')
+		var $img2 = $('<img>').attr({
+			'src': 'assets/images/location.png',
+			'data-toggle': 'modal',
+			'data-target': '#mapModal'})
 			.addClass('link-icon');
 
 		var $img3 = $('<img>').attr({'src': 'assets/images/check.png', 'todoID': id})
@@ -202,7 +205,7 @@ var ftdl = {
 
 	//LOGIN//SIGN IN BUTTON
 	loginSubmit: function() {
-		event.preventDefault();
+		// event.preventDefault();
 		var email = $('#emailSignIn').val();
 		var password = $('#pwSignIn').val();
 		var auth = firebase.auth();
@@ -402,19 +405,31 @@ var ftdl = {
 		var body = $('body');
 		body.css("background-image", photoArray[currentPhoto = ++currentPhoto % photoArray.length]);
 		// setTimeout(this.nextBackground, 10000);
+	},
+
+	initMap: function() {
+	  var uluru = {lat: 33.644906, lng: -117.834748};
+	  var map = new google.maps.Map(document.getElementById('map'), {
+	    zoom: 10,
+	    center: uluru
+	  });
+	  var marker = new google.maps.Marker({
+	    position: uluru,
+	    map: map
+	  });
+	},
+
+	logOut: function() {
+		$(".todoList").empty();
+		ftdl.changeLogInBtn(currentMember);
+		loggedIn = false;
+		firebase.auth().signOut().catch(function(error) {
+			console.log('logout ' + error.message);
+		});
 	}
 };
 
 ftdl.findPhotoID();
-$(document.body).on("click", ".closeTodo", ftdl.deleteTodo);
-$(document.body).on("click", ".completeTodo", ftdl.completeTodo);
-
-//LOGOUT//SIGN OUT BUTTON need to review if we can store this function in the object
-$('.btnLogout').on('click', function() {
-	$(".todoList").empty();
-	ftdl.changeLogInBtn(currentMember);
-	loggedIn = false;
-	firebase.auth().signOut().catch(function(error) {
-		console.log('logout ' + error.message);
-	});
-});
+$(document.body).on('click', '.closeTodo', ftdl.deleteTodo);
+$(document.body).on('click', '.completeTodo', ftdl.completeTodo);
+$('.btnLogout').bind('click', ftdl.logOut);
