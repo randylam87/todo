@@ -25,68 +25,7 @@
 		<button type="button" class="btn btn-info btn-lg signBtn" data-toggle="modal" data-target="#signInModal">Sign In</button>
 	</div>
 </div>
-<!-- Register MODAL -->
-<div class="modal fade" id="registerModal" role="dialog">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				<h3 class="modal-title">Register</h3>
-			</div>
-			<div class="modal-body">
-				<form id="register" onsubmit="ftdl.registerSubmit()">
-					<div class="form-group">
-						<label for="familyReg">Family's Name</label>
-						<input type="text" class="form-control" id="familyReg" placeholder="Enter Family Name" required>
-					</div>
-					<div class="form-group">
-						<label for="memberReg">Your Name</label>
-						<input type="text" class="form-control" id="memberReg" placeholder="Enter Your Name" required>
-					</div>
-					<div class="form-group">
-						<label for="emailReg">E-mail</label>
-						<input type="email" class="form-control" id="emailReg" required>
-					</div>
-					<div class="form-group">
-						<label for="pwReg">Password:</label>
-						<input type="password" class="form-control" id="pwReg" required>
-					</div>
-					<input type="submit" class="btnRegister btn btn-primary" value="Register">
-				</form>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			</div>
-		</div>
-	</div>
-</div>
-<!-- Sign In MODAL-->
-<div class="modal fade" id="signInModal" role="dialog">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				<h3 class="modal-title">Sign In</h3>
-			</div>
-			<div class="modal-body">
-				<form id="login" onsubmit='ftdl.loginSubmit()'>
-					<div class="form-group">
-						<label for="emailSignIn">E-mail</label>
-						<input type="email" class="form-control" id="emailSignIn" required>
-					</div>
-					<div class="form-group">
-						<label for="pwSignIn">Password:</label>
-						<input type="password" class="form-control" id="pwSignIn" required>
-					</div>
-					<button type="submit" class="btnLogin btn btn-primary">Sign In</button>
-				</form>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			</div>
-		</div>
-	</div>
-</div>
+
 <!-- SECOND PAGE (Add/Select Member) -->
 <div class="container-fluid page page-members">
 	<!-- MEMBER SELECTION -->
@@ -109,29 +48,7 @@
 		</div>
 	</div>
 </div>
-<!-- ADD MEMBER MODAL-->
-<div class="modal fade" id="membermodal" role="dialog">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				<h3 class="modal-title">Add a Family Member</h3>
-			</div>
-			<div class="modal-body">
-				<form class="add-member">
-					<div class="form-group">
-						<label for="memberAdd">Family Member's Name</label>
-						<input type="text" class="form-control" id="memberAdd" placeholder="Enter Family Name" required>
-					</div>
-					<button type="button" class="btn btn-primary" onclick="ftdl.btnAddMember()">Add Member</button>
-				</form>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			</div>
-		</div>
-	</div>
-</div>
+
 <!-- THIRD PAGE (Main Page) -->
 <div class="page page-main">
 	<input type="hidden" id="current-member" value="">
@@ -211,8 +128,82 @@
 		</div> <!-- loggedIn row -->
 	</div> <!-- container -->
 </div> <!-- page-main -->
-<!-- PAGE 3 MODALS -->
 
+<!-- Footer -->
+<div class="footer">
+	<div class="container">
+		<p class="text-center">&copy; Copyright
+			<script>
+				document.write(new Date().getFullYear())
+			</script>
+		</p>
+	</div>
+</div>
+
+<!-- Register MODAL -->
+<div class="modal fade" id="registerModal" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h3 class="modal-title">Register</h3>
+			</div>
+			<div class="modal-body">
+				<form id="register" onsubmit="ftdl.registerSubmit()">
+					<div class="form-group">
+						<label for="familyReg">Family's Name</label>
+						<input type="text" class="form-control" id="familyReg" placeholder="Enter Family Name" required>
+					</div>
+					<div class="form-group">
+						<label for="memberReg">Your Name</label>
+						<input type="text" class="form-control" id="memberReg" placeholder="Enter Your Name" required>
+					</div>
+					<div class="form-group">
+						<label for="emailReg">E-mail</label>
+						<input type="email" class="form-control" id="emailReg" required>
+					</div>
+					<div class="form-group">
+						<label for="pwReg">Password:</label>
+						<input type="password" class="form-control" id="pwReg" required>
+					</div>
+					<input type="submit" class="btnRegister btn btn-primary" value="Register">
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Sign In MODAL-->
+<div class="modal fade" id="signInModal" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h3 class="modal-title">Sign In</h3>
+			</div>
+			<div class="modal-body">
+				<form id="login" onsubmit='ftdl.loginSubmit()'>
+					<div class="form-group">
+						<label for="emailSignIn">E-mail</label>
+						<input type="email" class="form-control" id="emailSignIn" required>
+					</div>
+					<div class="form-group">
+						<label for="pwSignIn">Password:</label>
+						<input type="password" class="form-control" id="pwSignIn" required>
+					</div>
+					<button type="submit" class="btnLogin btn btn-primary">Sign In</button>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- PAGE 3 MODALS -->
 <!-- ADD TODO ITEM MODAL-->
 <div class="modal fade" id="todoModal" role="dialog">
 	<div class="modal-dialog">
@@ -257,6 +248,7 @@
 		</div>
 	</div>
 </div>
+
 <!-- ADD EVENT MODAL-->
 <div class="modal fade" id="eventModal" role="dialog">
 	<div class="modal-dialog">
@@ -301,23 +293,53 @@
 		</div>
 	</div>
 </div>
-<div class="footer">
-	<div class="container">
-		<p class="text-center">&copy; Copyright
-			<script>
-				document.write(new Date().getFullYear())
-			</script>
-		</p>
+
+<!-- ADD MEMBER MODAL-->
+<div class="modal fade" id="membermodal" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h3 class="modal-title">Add a Family Member</h3>
+			</div>
+			<div class="modal-body">
+				<form class="add-member">
+					<div class="form-group">
+						<label for="memberAdd">Family Member's Name</label>
+						<input type="text" class="form-control" id="memberAdd" placeholder="Enter Family Name" required>
+					</div>
+					<button type="button" class="btn btn-primary" onclick="ftdl.btnAddMember()">Add Member</button>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
 	</div>
 </div>
-<!--       GOOGLE MAPS API WITH KEY -->
-	<!--       <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBbUoOuhQ_VjMAlqD-X7m-13S39sjL89Eg&callback=initMap"
-	async defer></script> -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
-	<script src="assets/scripts/app.js"></script>
+
+<!-- ADD MAP MODAL-->
+<div class="modal fade" id="mapModal" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h3 class="modal-title">Location</h3>
+			</div>
+			<div class="modal-body">
+				<h3>Location</h3>
+				<div id="map"></div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBbUoOuhQ_VjMAlqD-X7m-13S39sjL89Eg&callback=ftdl.initMap" async defer></script>
+<script src="assets/scripts/app.js"></script>
 </body>
 
 </html>
