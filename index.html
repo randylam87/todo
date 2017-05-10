@@ -149,7 +149,7 @@
 				<h3 class="modal-title">Register</h3>
 			</div>
 			<div class="modal-body">
-				<form id="register" onsubmit="ftdl.registerSubmit()">
+				<form id="register">
 					<div class="form-group">
 						<label for="familyReg">Family's Name</label>
 						<input type="text" class="form-control" id="familyReg" placeholder="Enter Family Name" required>
@@ -166,7 +166,7 @@
 						<label for="pwReg">Password:</label>
 						<input type="password" class="form-control" id="pwReg" required>
 					</div>
-					<input type="submit" class="btnRegister btn btn-primary" value="Register">
+					<button id="registerbtn" type="button" class="btnRegister btn btn-primary" value="Register">
 				</form>
 			</div>
 			<div class="modal-footer">
@@ -185,7 +185,7 @@
 				<h3 class="modal-title">Sign In</h3>
 			</div>
 			<div class="modal-body">
-				<form id="login" onsubmit='ftdl.loginSubmit()'>
+				<form id="login">
 					<div class="form-group">
 						<label for="emailSignIn">E-mail</label>
 						<input type="email" class="form-control" id="emailSignIn" required>
@@ -194,7 +194,7 @@
 						<label for="pwSignIn">Password:</label>
 						<input type="password" class="form-control" id="pwSignIn" required>
 					</div>
-					<button type="submit" class="btnLogin btn btn-primary">Sign In</button>
+					<button id="loginbtn" type="button" class="btnLogin btn btn-primary">Sign In</button>
 				</form>
 			</div>
 			<div class="modal-footer">
@@ -213,7 +213,7 @@
 				<h3 class="modal-title">Add To-Do Item</h3>
 			</div>
 			<div class="modal-body">
-				<form id='submitTodo' onsubmit='ftdl.todoSubmit()'>
+				<form id='submitTodo'>
 					<div class="form-group">
 						<label for="todoName">To-Do Name</label>
 						<input type="text" class="form-control" id="todoName" placeholder="Enter To-Do Task Name" required>
@@ -239,7 +239,7 @@
 						<label for="todoComments">Description</label>
 						<textarea class="form-control" id="todoComments" rows="3"></textarea>
 					</div>
-					<button type="submit" class="todoSubmit btn btn-primary">Submit</button>
+					<button id="todobtn" type="button" class="todoSubmit btn btn-primary">Submit</button>
 				</form>
 			</div>
 			<div class="modal-footer">
@@ -258,7 +258,7 @@
 				<h3 class="modal-title">Add Event Item</h3>
 			</div>
 			<div class="modal-body">
-				<form id='submitEvent' onsubmit='ftdl.eventSubmit()'>
+				<form id='submitEvent'>
 					<div class="form-group">
 						<label for="eventName">To-Do Name</label>
 						<input type="text" class="form-control" id="eventName" placeholder="Enter Event Name" required>
@@ -284,7 +284,7 @@
 						<label for="eventComments">Description</label>
 						<textarea class="form-control" id="eventComments" rows="3"></textarea>
 					</div>
-					<button type="submit" class="eventSubmit btn btn-primary">Submit</button>
+					<button id="eventbtn" type="button" class="eventSubmit btn btn-primary">Submit</button>
 				</form>
 			</div>
 			<div class="modal-footer">
@@ -308,7 +308,7 @@
 						<label for="memberAdd">Family Member's Name</label>
 						<input type="text" class="form-control" id="memberAdd" placeholder="Enter Family Name" required>
 					</div>
-					<button type="button" class="btn btn-primary" onclick="ftdl.btnAddMember()">Add Member</button>
+					<button id="memberbtn" type="button" class="btn btn-primary">Add Member</button>
 				</form>
 			</div>
 			<div class="modal-footer">
@@ -327,7 +327,6 @@
 				<h3 class="modal-title">Location</h3>
 			</div>
 			<div class="modal-body">
-				<h3>Location</h3>
 				<div id="map"></div>
 			</div>
 		</div>
@@ -338,7 +337,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBbUoOuhQ_VjMAlqD-X7m-13S39sjL89Eg&callback=ftdl.initMap" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBfTYa8j8QJw6aDJoshnn5dVEWDBf5HS9Y&callback=ftdl.initMap" async defer></script>
 <script src="assets/scripts/app.js"></script>
 </body>
 
