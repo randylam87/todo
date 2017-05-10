@@ -332,12 +332,14 @@
 				  <div class="form-group">
 				    <div class="input-group">
 				      <div class="input-group-addon"><span class="fa fa-map-signs"></span></div>
-				      <input type="text" class="form-control" id="exampleInputAmount" placeholder="Address">
+				      <input type="text" class="form-control" id="addresstext" placeholder="Address">
 				    </div>
-				  	<button type="button" class="btn btn-primary"><span class="fa fa-map-marker"></span></button>
+				  	<button id="findlocation" type="button" class="btn btn-primary"><span class="fa fa-map-marker"></span></button>
 				  </div>
 				</form>
 				<div id="map"></div>
+				<p>Lat: <span id="clicklat"></span></p>
+				<p>Long: <span id="clicklng"></span></p>
 			</div>
 		</div>
 	</div>
