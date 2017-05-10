@@ -14,6 +14,7 @@ var currentMember = "";
 var loggedIn = false;
 var photoArray = [];
 var currentPhoto = 0;
+var myLatLong = {lat: 33.644906, lng: -117.834748};
 // $(".loggedOut").show();
 //Firebase listeners
 //Checks if user is logged in or not
@@ -407,7 +408,6 @@ var ftdl = {
 	},
 
 	initMap: function() {
-	  var myLatLong = {lat: 33.644906, lng: -117.834748};
 	  var map = new google.maps.Map(document.getElementById('map'), {
 	    zoom: 15,
 	    center: myLatLong
@@ -416,6 +416,26 @@ var ftdl = {
 	    position: myLatLong,
 	    map: map
 	  });
+
+    map.addListener('center_changed', function() {
+      // 3 seconds after the center of the map has changed, pan back to the marker.
+      window.setTimeout(function() {
+        map.panTo(marker.getPosition());
+      }, 3000);
+    });
+
+    marker.addListener('click', function() {
+      map.setZoom(20);
+      map.setCenter(marker.getPosition());
+    });
+
+		google.maps.event.addListener(map, 'click', function( event ){
+			myLatLong.lat = event.latLng.lat();
+			myLatLong.lng = event.latLng.lng();
+			ftdl.initMap();
+			$('#clicklat').text(myLatLong.lat);
+			$('#clicklng').text(myLatLong.lng);
+		});
 	},
 
 	logOut: function() {
@@ -439,3 +459,24 @@ $('#eventbtn').on('click', function(event){ftdl.eventSubmit(event)});
 $('#memberbtn').on('click', function(event){ftdl.btnAddMember(event)});
 
 $('#mapModal').on('shown.bs.modal', function(){ftdl.initMap()});
+$('#findlocation').on('click', function(){
+	var address = $('#addresstext').val().trim();
+	if (address.length > 0){
+		address = address.replace(/ /g, '+');
+		var url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + address +'&key=AIzaSyDlqM5HOhxP8DcUtTclMRu0RSvWy9t59qk'
+		$.getJSON( url, function() {
+			  console.log( 'success' );
+			})
+		  .done(function(data) {
+		  	var loc = data.results;
+				var locAdd = loc[0].formatted_address;
+				myLatLong.lat = loc[0].geometry.location.lat;
+				myLatLong.lng = loc[0].geometry.location.lng;
+				$('#addresstext').val(locAdd);
+				ftdl.initMap();
+		  })
+		  .fail(function(error) {
+		    console.log(error);
+		  });
+		}
+});
