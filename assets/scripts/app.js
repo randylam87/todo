@@ -455,14 +455,14 @@ var ftdl = {
         var todoNumber = $(this).attr("todoID"); //THIS IS THE ID PER LIST ITEM
         database.ref('/Users/' + firebase.auth().currentUser.uid + '/list/' + todoNumber).on('value', function(snapshot) {
             var todoInfo = snapshot.val();
-            // $('.note-title').text(todoInfo.Description);
+            $('.note-title').html('<h1>' + todoInfo.Name + ' notes:</h1> <br> <span class="creator">Created by: ' + todoInfo.Creator + '</span>');
+            $(".note-display").empty();
             //Check with team if we want to show the list item creator too.
         })
         $('#btn-note').attr("todoID", todoNumber) //SAVES THE ITEM'S ID PER LIST ITEM
         if (database.ref('/Users/' + firebase.auth().currentUser.uid + '/list/' + todoNumber + '/note')) { //Checks if notes already exist
             //Chat listener
             database.ref('/Users/' + firebase.auth().currentUser.uid + '/list/' + todoNumber + '/note').on("child_added", function(snapshot) {
-                $(".note-display").empty();
                 var noteMessage = snapshot.val().note;
                 var userName = snapshot.val().name;
                 var noteDiv = $("<div>");
