@@ -458,11 +458,11 @@ var ftdl = {
             // $('.note-title').text(todoInfo.Description);
             //Check with team if we want to show the list item creator too.
         })
-        $('.btn-note').attr("todoID", todoNumber) //SAVES THE ITEM'S ID PER LIST ITEM
+        $('#btn-note').attr("todoID", todoNumber) //SAVES THE ITEM'S ID PER LIST ITEM
         if (database.ref('/Users/' + firebase.auth().currentUser.uid + '/list/' + todoNumber + '/note')) { //Checks if notes already exist
             //Chat listener
-            database.ref('/Users/' + firebase.auth().currentUser.uid + '/list/' + todoNumber + '/note').once("child_added", function(snapshot) {
-                console.log(snapshot.val());
+            database.ref('/Users/' + firebase.auth().currentUser.uid + '/list/' + todoNumber + '/note').on("child_added", function(snapshot) {
+                $(".note-display").empty();
                 var noteMessage = snapshot.val().note;
                 var userName = snapshot.val().name;
                 var noteDiv = $("<div>");
@@ -474,12 +474,12 @@ var ftdl = {
     },
 
     saveNote: function(e) {
+        e.preventDefault();
         var note = $("#note").val();
         var todoNumber = $(this).attr("todoID");
-        console.log($(this).attr());
-        console.log(firebase.auth().currentUser.uid)
-        console.log(todoNumber);
+        console.log(todoNumber)
         if (note.length > 0) { //ONLY TAKES INPUT GREATER THAN 1 CHAR
+            console.log(note)
             database.ref('/Users/' + firebase.auth().currentUser.uid + '/list/' + todoNumber + '/note').push({ "note": note, "name": currentMember });
         }
     }
@@ -489,13 +489,14 @@ ftdl.findPhotoID();
 $(document.body).on('click', '.closeTodo', ftdl.deleteTodo);
 $(document.body).on('click', '.completeTodo', ftdl.completeTodo);
 $(document.body).on('click', '.noteTodo', ftdl.appendNote);
+$(document.body).on('click', '#btn-note', ftdl.saveNote);
 $('.btnLogout').bind('click', ftdl.logOut);
 $('#loginbtn').on('click', function(event) { ftdl.loginSubmit(event) });
 $('#registerbtn').on('click', function(event) { ftdl.registerSubmit(event) });
 $('#todobtn').on('click', function(event) { ftdl.todoSubmit(event) });
 $('#eventbtn').on('click', function(event) { ftdl.eventSubmit(event) });
 $('#memberbtn').on('click', function(event) { ftdl.btnAddMember(event) });
-$('#btn-note').on('click', function(event) { ftdl.saveNote(event) });
+// $('#btn-note').on('click', function(event) { ftdl.saveNote(event) });
 
 
 
