@@ -437,3 +437,5 @@ $('#registerbtn').on('click', function(event){ftdl.registerSubmit(event)});
 $('#todobtn').on('click', function(event){ftdl.todoSubmit(event)});
 $('#eventbtn').on('click', function(event){ftdl.eventSubmit(event)});
 $('#memberbtn').on('click', function(event){ftdl.btnAddMember(event)});
+
+$('#mapModal').on('shown.bs.modal', function(){ftdl.initMap()});
