@@ -204,8 +204,8 @@ var ftdl = {
 	},
 
 	//LOGIN//SIGN IN BUTTON
-	loginSubmit: function() {
-		// event.preventDefault();
+	loginSubmit: function(e) {
+		e.preventDefault();
 		var email = $('#emailSignIn').val();
 		var password = $('#pwSignIn').val();
 		var auth = firebase.auth();
@@ -227,8 +227,8 @@ var ftdl = {
 	},
 
 	//REGISTER BUTTON
-	registerSubmit: function() {
-		event.preventDefault();
+	registerSubmit: function(e) {
+		e.preventDefault();
 		var family = $('#familyReg').val();
 		var email = $('#emailReg').val();
 		var password = $('#pwReg').val();
@@ -260,8 +260,8 @@ var ftdl = {
 	},
 
 	//TODO SUBMIT BUTTON
-	todoSubmit: function() {
-		event.preventDefault();
+	todoSubmit: function(e) {
+		e.preventDefault();
 		$('#todoModal').modal('hide');
 		var name = $("#todoName").val();
 		var cat = $("#todoCatInput").val();
@@ -279,8 +279,8 @@ var ftdl = {
 	},
 
 	//EVENT SUBMIT BUTTON
-	eventSubmit: function() {
-		event.preventDefault();
+	eventSubmit: function(e) {
+		e.preventDefault();
 		$('#eventModal').modal('hide');
 		var name = $("#eventName").val();
 		var cat = $("#eventCatInput").val();
@@ -310,8 +310,8 @@ var ftdl = {
 	},
 
 	//ADD MEMBER BUTTON
-	btnAddMember: function() {
-		event.preventDefault();
+	btnAddMember: function(e) {
+		e.preventDefault();
 		var member = $("#memberAdd").val();
 		database.ref('/Users/' + firebase.auth().currentUser.uid + '/members').push({
 			member: member
@@ -321,7 +321,6 @@ var ftdl = {
 
 	//CHOOSE MEMBER
 	chooseMember: function() {
-		event.preventDefault();
 		currentMember = $(this).attr('data-member');
 		$('#current-member').val(currentMember);
 		ftdl.changeLogInBtn(currentMember);
@@ -408,13 +407,13 @@ var ftdl = {
 	},
 
 	initMap: function() {
-	  var uluru = {lat: 33.644906, lng: -117.834748};
+	  var myLatLong = {lat: 33.644906, lng: -117.834748};
 	  var map = new google.maps.Map(document.getElementById('map'), {
-	    zoom: 10,
-	    center: uluru
+	    zoom: 15,
+	    center: myLatLong
 	  });
 	  var marker = new google.maps.Marker({
-	    position: uluru,
+	    position: myLatLong,
 	    map: map
 	  });
 	},
@@ -433,3 +432,8 @@ ftdl.findPhotoID();
 $(document.body).on('click', '.closeTodo', ftdl.deleteTodo);
 $(document.body).on('click', '.completeTodo', ftdl.completeTodo);
 $('.btnLogout').bind('click', ftdl.logOut);
+$('#loginbtn').on('click', function(event){ftdl.loginSubmit(event)});
+$('#registerbtn').on('click', function(event){ftdl.registerSubmit(event)});
+$('#todobtn').on('click', function(event){ftdl.todoSubmit(event)});
+$('#eventbtn').on('click', function(event){ftdl.eventSubmit(event)});
+$('#memberbtn').on('click', function(event){ftdl.btnAddMember(event)});
