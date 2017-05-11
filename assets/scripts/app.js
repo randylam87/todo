@@ -35,6 +35,7 @@ firebase.auth().onAuthStateChanged(function(firebaseUser) {
         ftdl.eventAdd();
         ftdl.eventRemove();
         ftdl.membersAdd();
+        ftdl.calStats();
         currentMember = $('#current-member').val();
         ftdl.changeLogInBtn(currentMember);
     } else if (firebaseUser === null) {
@@ -45,6 +46,133 @@ firebase.auth().onAuthStateChanged(function(firebaseUser) {
 
 
 var ftdl = {
+
+    calStats: function() {
+
+            database.ref('/Users/' + firebase.auth().currentUser.uid + '/list').on('value', function(snapshot) {
+
+            var todoInfo = snapshot.val();
+
+            var creatorList = {};
+            var workerList = {};
+
+            // Getting an array of each key In the snapshot object
+            var listKeyArr = Object.keys(todoInfo);
+            //console.log(listKeyArr.length);
+
+            for (var i = 0; i < listKeyArr.length; i++) {
+
+                var currentKey = listKeyArr[i];
+                var currentObject = todoInfo[currentKey];
+
+                //console.log(currentObject);
+
+                var worker = currentObject.CompletedBy;
+
+                var creator = currentObject.Creator;
+
+                if (!(workerList[worker])) {
+
+                    workerList[worker] = 1;
+
+                }
+                else {
+
+                    workerList[worker] ++;
+
+                 }
+                
+                if (!(creatorList[creator])) {
+
+                    creatorList[creator] = 1;
+
+                }
+                else{
+
+                    creatorList[creator] ++;
+
+                }
+
+            }
+
+            console.log(creatorList);
+            console.log(workerList);
+
+            ftdl.appendStats(creatorList,workerList);
+
+        });
+
+    },
+
+    appendStats: function(creatorList,workerList) {
+
+        var creatorList = creatorList;
+        var workerList = workerList;
+        var creatorListSorted = [];
+        var workerListSorted = [];
+
+        var sortUser = function(listUser,userSorted) {
+
+            for (var user in listUser) {
+
+                userSorted.push([user, listUser[user]]);
+            }
+
+            userSorted.sort(function(a, b) {
+            
+                return b[1] - a[1];
+
+            });
+           
+        };
+
+        sortUser(creatorList,creatorListSorted);
+        sortUser(workerList,workerListSorted);
+        var totalTodo = 0;
+        var totalCompleted = 0;
+
+        for (var i = 0;i<creatorListSorted.length;i++ ) {
+
+            var currentElement = creatorListSorted[i];
+
+            var name = currentElement[0];
+
+            var value = currentElement[1];
+
+            if (name != 'undefined') {
+
+                totalTodo += value; 
+
+                // $(".member-stats").append('<li>' + currentKey + ': ' + creatorList[currentKey] + ' errands</li>');
+
+            }
+            
+            console.log(name + ': ' + value);
+        }
+
+        for (var i = 0;i<workerListSorted.length;i++ ) {
+
+            var currentElement = workerListSorted[i];
+
+            var name = currentElement[0];
+
+            var value = currentElement[1];
+
+            if (name != 'undefined') {
+
+                totalCompleted += value; 
+
+                // $(".member-stats").append('<li>' + currentKey + ': ' + creatorList[currentKey] + ' errands</li>');
+
+            }
+            
+            console.log(name + ': ' + value);
+        }
+
+        $(".totalStats").text("Total: "+totalTodo);
+        $(".completedStats").text("Completed: "+totalCompleted);
+
+    },
 
     //function that hides/removes login/registration buttons
     changeLogInBtn: function(currentMember) {
