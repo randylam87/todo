@@ -71,6 +71,10 @@ var ftdl = {
 
                 var creator = currentObject.Creator;
 
+                var todoName = currentObject.Name;
+
+
+
                 if (!(workerList[worker])) {
 
                     workerList[worker] = 1;
@@ -150,6 +154,8 @@ var ftdl = {
             console.log(name + ': ' + value);
         }
 
+        $(".member-stats").html('');
+
         for (var i = 0;i<workerListSorted.length;i++ ) {
 
             var currentElement = workerListSorted[i];
@@ -162,7 +168,9 @@ var ftdl = {
 
                 totalCompleted += value; 
 
-                // $(".member-stats").append('<li>' + currentKey + ': ' + creatorList[currentKey] + ' errands</li>');
+                //<a href="#" class=" totalStats" ></a>
+
+                $(".member-stats").append('<a href="#" class="list-group-item">' + name + ': completed ' + value + ' errands</a>');
 
             }
             
@@ -171,6 +179,8 @@ var ftdl = {
 
         $(".totalStats").text("Total: "+totalTodo);
         $(".completedStats").text("Completed: "+totalCompleted);
+
+        //Create modal for total and complete
 
     },
 
@@ -699,3 +709,18 @@ $('#findlocation').on('click', function() {
             });
     }
 });
+
+$(".general-stats").on("click","a",function() {
+
+    //update modal information
+
+
+
+
+});
+
+
+
+
+
+
