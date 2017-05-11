@@ -98,6 +98,18 @@ img {
 #map {
   height: 400px;
   width: 100%;
+  margin: 10px 0;
+}
+
+#mapinfo{
+  color: #000066;
+  background-color: #ccc;
+  border-radius: 5px;
+  padding: 5px;  
+}
+
+#mapinfo>p:nth-child(2){
+  margin: 0;
 }
 
 #page-main{
