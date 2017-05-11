@@ -103,3 +103,13 @@ img {
 #page-main{
   padding-bottom: 40px;
 }
+
+.note-title {
+  text-align: center;
+  line-height: 0.25;
+}
+
+.creator {
+  font-size: 10px;
+}
+

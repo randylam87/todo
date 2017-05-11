@@ -1,11 +1,11 @@
 // Initialize Firebase
 var config = {
-	apiKey: "AIzaSyBfTYa8j8QJw6aDJoshnn5dVEWDBf5HS9Y",
-	atuhDomain: "family-to-do-list.firebaseapp.com",
-	databaseURL: "https://family-to-do-list.firebaseio.com",
-	projectId: "family-to-do-list",
-	storageBucket: "family-to-do-list.appspot.com",
-	messagingSenderId: "824898029703"
+    apiKey: "AIzaSyBfTYa8j8QJw6aDJoshnn5dVEWDBf5HS9Y",
+    atuhDomain: "family-to-do-list.firebaseapp.com",
+    databaseURL: "https://family-to-do-list.firebaseio.com",
+    projectId: "family-to-do-list",
+    storageBucket: "family-to-do-list.appspot.com",
+    messagingSenderId: "824898029703"
 };
 firebase.initializeApp(config);
 var database = firebase.database();
@@ -43,6 +43,7 @@ firebase.auth().onAuthStateChanged(function(firebaseUser) {
 
 
 var ftdl = {
+
 	//function that hides/removes login/registration buttons
 	changeLogInBtn: function(currentMember) {
 		if (currentMember.length > 0) {
@@ -142,13 +143,16 @@ var ftdl = {
 		var $img4 = $('<img>').attr({'src': 'assets/images/delete.png', 'todoID': id})
 			.addClass('link-icon closeTodo');
 
+        var $img5 = $('<img>').attr({ 'src': 'assets/images/notes.png', 'todoID': id, 'data-toggle': 'modal', 'data-target': '#noteModal' })
+            .addClass('link-icon noteTodo')
+
 		var $span = $('<span>').text(todoInfo.Name);
 
 		if (todoInfo.Categories != 'Timed Event') {
 			$img1.addClass('hide');
 		}
 
-		$name.append($img1, $img2, $img3, $img4, $span);
+		$name.append($img1, $img2, $img3, $img4, $img5, $span);
 
 		var $description = $('<p>').addClass('clear').text('Description: ' + todoInfo.Description);		
 
@@ -445,18 +449,56 @@ var ftdl = {
 		firebase.auth().signOut().catch(function(error) {
 			console.log('logout ' + error.message);
 		});
-	}
+	},
+
+    appendNote: function(todoInfo, id) {
+        var todoNumber = $(this).attr("todoID"); //THIS IS THE ID PER LIST ITEM
+        database.ref('/Users/' + firebase.auth().currentUser.uid + '/list/' + todoNumber).on('value', function(snapshot) {
+            var todoInfo = snapshot.val();
+            $('.note-title').html('<h1>' + todoInfo.Name + ' notes:</h1> <br> <span class="creator">Created by: ' + todoInfo.Creator + '</span>');
+            $(".note-display").empty();
+            //Check with team if we want to show the list item creator too.
+        })
+        $('#btn-note').attr("todoID", todoNumber) //SAVES THE ITEM'S ID PER LIST ITEM
+        if (database.ref('/Users/' + firebase.auth().currentUser.uid + '/list/' + todoNumber + '/note')) { //Checks if notes already exist
+            //Chat listener
+            database.ref('/Users/' + firebase.auth().currentUser.uid + '/list/' + todoNumber + '/note').on("child_added", function(snapshot) {
+                var noteMessage = snapshot.val().note;
+                var userName = snapshot.val().name;
+                var noteDiv = $("<div>");
+                noteDiv.append(userName + ": " + noteMessage);
+                $(".note-display").append(noteDiv);
+            })
+        }
+        
+    },
+
+    saveNote: function(e) {
+        e.preventDefault();
+        var note = $("#note").val();
+        var todoNumber = $(this).attr("todoID");
+        console.log(todoNumber)
+        if (note.length > 0) { //ONLY TAKES INPUT GREATER THAN 1 CHAR
+            console.log(note)
+            database.ref('/Users/' + firebase.auth().currentUser.uid + '/list/' + todoNumber + '/note').push({ "note": note, "name": currentMember });
+        }
+    }
 };
 
 ftdl.findPhotoID();
 $(document.body).on('click', '.closeTodo', ftdl.deleteTodo);
 $(document.body).on('click', '.completeTodo', ftdl.completeTodo);
+$(document.body).on('click', '.noteTodo', ftdl.appendNote);
+$(document.body).on('click', '#btn-note', ftdl.saveNote);
 $('.btnLogout').bind('click', ftdl.logOut);
-$('#loginbtn').on('click', function(event){ftdl.loginSubmit(event)});
-$('#registerbtn').on('click', function(event){ftdl.registerSubmit(event)});
-$('#todobtn').on('click', function(event){ftdl.todoSubmit(event)});
-$('#eventbtn').on('click', function(event){ftdl.eventSubmit(event)});
-$('#memberbtn').on('click', function(event){ftdl.btnAddMember(event)});
+$('#loginbtn').on('click', function(event) { ftdl.loginSubmit(event) });
+$('#registerbtn').on('click', function(event) { ftdl.registerSubmit(event) });
+$('#todobtn').on('click', function(event) { ftdl.todoSubmit(event) });
+$('#eventbtn').on('click', function(event) { ftdl.eventSubmit(event) });
+$('#memberbtn').on('click', function(event) { ftdl.btnAddMember(event) });
+// $('#btn-note').on('click', function(event) { ftdl.saveNote(event) });
+
+
 
 $('#mapModal').on('shown.bs.modal', function(){ftdl.initMap()});
 $('#findlocation').on('click', function(){
