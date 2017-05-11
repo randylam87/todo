@@ -331,31 +331,38 @@
             </div>
         </div>
     </div>
-    <!-- ADD MAP MODAL-->
-    <div class="modal fade" id="mapModal" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h3 class="modal-title">Location</h3>
-                </div>
-                <div class="modal-body">
-                    <form class="form-inline">
-                        <div class="form-group">
-                            <div class="input-group">
-                                <div class="input-group-addon"><span class="fa fa-map-signs"></span></div>
-                                <input type="text" class="form-control" id="addresstext" placeholder="Address">
-                            </div>
-                            <button id="findlocation" type="button" class="btn btn-primary"><span class="fa fa-map-marker"></span></button>
-                        </div>
-                    </form>
-                    <div id="map"></div>
-                    <p>Lat: <span id="clicklat"></span></p>
-                    <p>Long: <span id="clicklng"></span></p>
-                </div>
-            </div>
-        </div>
-    </div>
+	<!-- MAP MODAL-->
+	<div class="modal fade" id="mapModal" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h3 class="modal-title">Location</h3>
+				</div>
+				<div class="modal-body">
+					<form class="form-inline">
+						<div class="form-group">
+							<div class="input-group">
+								<div class="input-group-addon"><span class="fa fa-map-signs"></span></div>
+								<input type="text" class="form-control" id="addresstext" placeholder="Address">
+							</div>
+							<button id="findlocation" type="button" class="btn btn-primary"><span class="fa fa-map-marker" title="Find on map"></span></button>
+							<button id="recenter" type="button" class="btn btn-primary" title="Recenter"><span class="fa fa-dot-circle-o"></span></button>
+							<button id="loc-confirm" type="button" class="btn btn-primary" title="Confirm location"><span class="fa fa-check"></span></button>
+						</div>
+					</form>
+					<div id="map"></div>
+					<div id="mapinfo">
+						<p id="address"></p>
+						<p>
+							<font>Lat: <span id="clicklat"></span>&nbsp;,
+							&nbsp;Long: <span id="clicklng"></span></font>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
     <!-- NOTE MODAL-->
     <div class="modal fade" id="noteModal" role="dialog">
         <div class="modal-dialog">
