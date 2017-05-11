@@ -90,8 +90,10 @@ var ftdl = {
 		database.ref('/Users/' + firebase.auth().currentUser.uid + '/list').on('child_changed', function(snapshot) {
 			var completeInfo = snapshot.val();
 			var id = snapshot.key; //THIS IS THE ID PER LIST ITEM
-			$("#item" + id).remove();
-			ftdl.appendComplete(completeInfo, id);
+			if (completeInfo.Status == "completed") {
+                $("#item" + id).remove();
+                ftdl.appendComplete(completeInfo, id);
+            }
 		});
 	},
 
@@ -280,7 +282,10 @@ var ftdl = {
 			Creator: currentMember,
 			Status: "not complete"
 		});
-		$("#form").trigger('reset');
+		var name = $("#todoName").val('');
+		var cat = $("#todoCatInput").val('');
+		var location = $("#locationInput").val('');
+		var comments = $("#todoComments").val('');
 	},
 
 	//EVENT SUBMIT BUTTON
@@ -443,7 +448,7 @@ var ftdl = {
 	},
 
 	logOut: function() {
-		$(".todoList").empty();
+		ftdl.logOutReset();
 		ftdl.changeLogInBtn(currentMember);
 		loggedIn = false;
 		firebase.auth().signOut().catch(function(error) {
@@ -452,16 +457,18 @@ var ftdl = {
 	},
 
     appendNote: function(todoInfo, id) {
+    	$('#note').val('');
         var todoNumber = $(this).attr("todoID"); //THIS IS THE ID PER LIST ITEM
+        $(".note-display").html('<h2>Please enter notes here</h2>');
         database.ref('/Users/' + firebase.auth().currentUser.uid + '/list/' + todoNumber).on('value', function(snapshot) {
             var todoInfo = snapshot.val();
-            $('.note-title').html('<h1>' + todoInfo.Name + ' notes:</h1> <br> <span class="creator">Created by: ' + todoInfo.Creator + '</span>');
-            $(".note-display").empty();
-            //Check with team if we want to show the list item creator too.
+            $('.note-title').html('<h1>' + todoInfo.Name + ' notes:</h1> <br> <span class="creator">Created by: ' + todoInfo.Creator + '</span>');        
+            //Check with team if we want to show the list item creator/timestamp too.
         })
         $('#btn-note').attr("todoID", todoNumber) //SAVES THE ITEM'S ID PER LIST ITEM
         if (database.ref('/Users/' + firebase.auth().currentUser.uid + '/list/' + todoNumber + '/note')) { //Checks if notes already exist
             //Chat listener
+            database.ref('/Users/' + firebase.auth().currentUser.uid + '/list/' + todoNumber + '/note').off(); //Removes any pre-existing listners
             database.ref('/Users/' + firebase.auth().currentUser.uid + '/list/' + todoNumber + '/note').on("child_added", function(snapshot) {
                 var noteMessage = snapshot.val().note;
                 var userName = snapshot.val().name;
@@ -477,11 +484,15 @@ var ftdl = {
         e.preventDefault();
         var note = $("#note").val();
         var todoNumber = $(this).attr("todoID");
-        console.log(todoNumber)
         if (note.length > 0) { //ONLY TAKES INPUT GREATER THAN 1 CHAR
-            console.log(note)
             database.ref('/Users/' + firebase.auth().currentUser.uid + '/list/' + todoNumber + '/note').push({ "note": note, "name": currentMember });
         }
+        $('#note').val('');
+    },
+
+    logOutReset: function() {
+    	$(".completedList").empty();
+    	$(".todoList").empty();
     }
 };
 
