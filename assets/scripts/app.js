@@ -17,14 +17,11 @@ var loggedIn = false;
 var photoArray = [];
 var currentPhoto = 0;
 var myLatLong = { lat: 33.644906, lng: -117.834748 };
-// $(".loggedOut").show();
+
 //Firebase listeners
 //Checks if user is logged in or not
 firebase.auth().onAuthStateChanged(function(firebaseUser) {
 
-    // ftdl.changeLogInBtn(firebaseUser);
-    console.log("state change");
-    // console.log(firebase.auth().currentUser.uid);
     if (firebaseUser && loggedIn === false) {
         loggedIn = true;
         ftdl.showPage2();
@@ -39,7 +36,6 @@ firebase.auth().onAuthStateChanged(function(firebaseUser) {
         currentMember = $('#current-member').val();
         ftdl.changeLogInBtn(currentMember);
     } else if (firebaseUser === null) {
-        console.log('page1');
         ftdl.showPage1();
     }
 });
@@ -186,7 +182,6 @@ var ftdl = {
     changeLogInBtn: function(currentMember) {
         if (currentMember.length > 0) {
             ftdl.showPage3();
-            console.log('page3');
             $(".currentMemberHeader").html('Welcome ' + currentMember + "!");
         }
     },
@@ -212,11 +207,12 @@ var ftdl = {
         database.ref('/Users/' + firebase.auth().currentUser.uid + '/list').orderByChild("Index").once('value', function(snapshot) {
             $(".todoList").empty();
             $(".completedList").empty();
+            $(".timedEvents").empty();
             snapshot.forEach(function(childSnapshot) {
                 if (childSnapshot.val().Status == "completed") {
                     ftdl.appendComplete(childSnapshot.val(), childSnapshot.key);
-                    // } else if (childSnapshot.val().Timed.length > 0) {
-                    //     ftdl.appendList(childSnapshot.val(), childSnapshot.key, true);
+                } else if (childSnapshot.val().Timed.length > 0) {
+                    ftdl.appendList(childSnapshot.val(), childSnapshot.key, true);
                 } else if (childSnapshot.val().Status == "not complete") {
                     ftdl.appendList(childSnapshot.val(), childSnapshot.key, false);
                 }
@@ -236,7 +232,6 @@ var ftdl = {
 
     completeAdd: function() {
         database.ref('/Users/' + firebase.auth().currentUser.uid).on('child_changed', function(snapshot) {
-            console.log("complete add trigger")
             var completeInfo = snapshot.val();
             var id = snapshot.key; //THIS IS THE ID PER LIST ITEM
             ftdl.listAdd();
@@ -244,7 +239,6 @@ var ftdl = {
     },
 
     eventAdd: function() {
-        console.log("event add running");
         database.ref('/Users/' + firebase.auth().currentUser.uid + '/event').on('child_added', function(snapshot) {
             var eventInfo = snapshot.val();
             var id = snapshot.key; //THIS IS THE ID PER LIST ITEM
@@ -324,10 +318,10 @@ var ftdl = {
         //     console.log("if statement remove")
         //     database.ref('/Users/' + firebase.auth().currentUser.uid + '/list/' + id).remove();
         // } else {
-            completeDiv.attr("id", id);
-            completeDiv.append(name);
-            completeDiv.append(description);
-            $(".completedList").append(completeDiv);
+        completeDiv.attr("id", id);
+        completeDiv.append(name);
+        completeDiv.append(description);
+        $(".completedList").append(completeDiv);
         // }
     },
 
@@ -344,11 +338,10 @@ var ftdl = {
         // if (Date.now() > eventInfo.TimeCreated + 604800) { //Deletes Event if over 7 days since posting.
         //     database.ref('/Users/' + firebase.auth().currentUser.uid + '/event/' + id).remove();
         // } else {
-            eventDiv.attr("id", id);
-            eventDiv.append(name);
-            eventDiv.append(description);
-            $(".future-items").append(eventDiv);
-            console.log(eventInfo.Time);
+        eventDiv.attr("id", id);
+        eventDiv.append(name);
+        eventDiv.append(description);
+        $(".future-items").append(eventDiv);
         // }
     },
 
@@ -430,10 +423,12 @@ var ftdl = {
         var cat = $("#todoCatInput").val();
         var location = $("#locationInput").val();
         var comments = $("#todoComments").val();
+        var todoTime = $("#todo-dtpicker").val();
         database.ref('/Users/' + firebase.auth().currentUser.uid + '/list').push({
             Name: name,
             Categories: cat,
             Location: location,
+            Timed: todoTime,
             TimeCreated: Date.now(),
             Description: comments,
             Creator: currentMember,
@@ -485,7 +480,6 @@ var ftdl = {
     },
 
     showPage1: function() {
-        console.log("page 1 showing")
         $('.page').hide();
         $('.page-registration').show();
         $('.firstPagejumbo').show();
@@ -502,8 +496,6 @@ var ftdl = {
         clearInterval(bgInterval);
         bgInterval = undefined;
         photoArray = [];
-        
-        console.log("CLEARING INTERVAL")
         $('body').css("background-image", "none");
     },
 
@@ -519,7 +511,6 @@ var ftdl = {
             }
         }).done(function(response) {
             for (i = 0; i < 5; i++) {
-                console.log("findphotid")
                 ftdl.getPhotoFromID(response.photos.photo[i].id);
             }
         });
@@ -538,7 +529,6 @@ var ftdl = {
             }
         }).done(function(response) {
             if (photoArray.length < 6) {
-                console.log("getphotid")
                 photoArray.push("url(" + response.sizes.size[9].source + ")");
                 ftdl.setPhotoAsBG();
             }
@@ -547,16 +537,14 @@ var ftdl = {
 
     setPhotoAsBG: function() {
         if (photoArray.length == 5) {
-            console.log("setPhotoAsBG");
             var body = $('body');
-            bgInterval = setInterval(ftdl.nextBackground, 1000);
+            bgInterval = setInterval(ftdl.nextBackground, 10000);
             body.css('background-image', photoArray[0]);
 
         }
     },
 
     nextBackground: function() {
-        console.log("next bg")
         var body = $('body');
         body.css("background-image", photoArray[currentPhoto = ++currentPhoto % photoArray.length]);
         // setTimeout(this.nextBackground, 10000);
@@ -650,10 +638,12 @@ var ftdl = {
     logOut: function() {
         ftdl.logOutReset();
         ftdl.changeLogInBtn(currentMember);
-        photoArray = [];
-        ftdl.findPhotoID();
+        if (currentMember.length > 0) {
+            photoArray = [];
+            ftdl.findPhotoID();
+            currentPhoto = 0;
+        }
         currentMember = "";
-        currentPhoto = 0;
         loggedIn = false;
         firebase.auth().signOut().catch(function(error) {
             console.log('logout ' + error.message);
@@ -712,7 +702,6 @@ var ftdl = {
             var todoID = $($(".todoDiv")[i]).attr("id");
             myData[todoID]["Index"] = i;
         }
-        console.log("todoInex running")
         database.ref('/Users/' + firebase.auth().currentUser.uid).update({
             "list": myData
         });
@@ -760,17 +749,17 @@ $(".general-stats").on("click", "a", function() {
 });
 
 
-$('.dtpicker input[type=radio]').change(function(){
-	if($(this).val() === 'timed'){
-		$('#todo-dtpicker').removeClass('hide');
-	} else {
-		$('#todo-dtpicker').addClass('hide');
-	};
+$('.dtpicker input[type=radio]').change(function() {
+    if ($(this).val() === 'timed') {
+        $('#todo-dtpicker').removeClass('hide');
+    } else {
+        $('#todo-dtpicker').addClass('hide');
+    };
 })
 
 $('#todo-dtpicker').datetimepicker({
-	lang:'en',
-	format: 'D, d M Y - H:i:s',
-	dayOfWeekStart : 1,
-	step: 15
+    lang: 'en',
+    format: 'D, d M Y - H:i:s',
+    dayOfWeekStart: 1,
+    step: 15
 });
