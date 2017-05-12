@@ -12,6 +12,7 @@ var database = firebase.database();
 var familyRef = database.ref();
 var currentMember = "";
 var myData;
+var bgInterval;
 var loggedIn = false;
 var photoArray = [];
 var currentPhoto = 0;
@@ -26,7 +27,6 @@ firebase.auth().onAuthStateChanged(function(firebaseUser) {
     // console.log(firebase.auth().currentUser.uid);
     if (firebaseUser && loggedIn === false) {
         loggedIn = true;
-        console.log("im logged in page2");
         ftdl.showPage2();
         ftdl.initialAdd();
         ftdl.listAdd();
@@ -49,7 +49,7 @@ var ftdl = {
 
     calStats: function() {
 
-            database.ref('/Users/' + firebase.auth().currentUser.uid + '/list').on('value', function(snapshot) {
+        database.ref('/Users/' + firebase.auth().currentUser.uid + '/list').on('value', function(snapshot) {
 
             var todoInfo = snapshot.val();
 
@@ -79,21 +79,19 @@ var ftdl = {
 
                     workerList[worker] = 1;
 
+                } else {
+
+                    workerList[worker]++;
+
                 }
-                else {
 
-                    workerList[worker] ++;
-
-                 }
-                
                 if (!(creatorList[creator])) {
 
                     creatorList[creator] = 1;
 
-                }
-                else{
+                } else {
 
-                    creatorList[creator] ++;
+                    creatorList[creator]++;
 
                 }
 
@@ -102,20 +100,20 @@ var ftdl = {
             console.log(creatorList);
             console.log(workerList);
 
-            ftdl.appendStats(creatorList,workerList);
+            ftdl.appendStats(creatorList, workerList);
 
         });
 
     },
 
-    appendStats: function(creatorList,workerList) {
+    appendStats: function(creatorList, workerList) {
 
         var creatorList = creatorList;
         var workerList = workerList;
         var creatorListSorted = [];
         var workerListSorted = [];
 
-        var sortUser = function(listUser,userSorted) {
+        var sortUser = function(listUser, userSorted) {
 
             for (var user in listUser) {
 
@@ -123,19 +121,19 @@ var ftdl = {
             }
 
             userSorted.sort(function(a, b) {
-            
+
                 return b[1] - a[1];
 
             });
-           
+
         };
 
-        sortUser(creatorList,creatorListSorted);
-        sortUser(workerList,workerListSorted);
+        sortUser(creatorList, creatorListSorted);
+        sortUser(workerList, workerListSorted);
         var totalTodo = 0;
         var totalCompleted = 0;
 
-        for (var i = 0;i<creatorListSorted.length;i++ ) {
+        for (var i = 0; i < creatorListSorted.length; i++) {
 
             var currentElement = creatorListSorted[i];
 
@@ -145,18 +143,18 @@ var ftdl = {
 
             if (name != 'undefined') {
 
-                totalTodo += value; 
+                totalTodo += value;
 
                 // $(".member-stats").append('<li>' + currentKey + ': ' + creatorList[currentKey] + ' errands</li>');
 
             }
-            
+
             console.log(name + ': ' + value);
         }
 
         $(".member-stats").html('');
 
-        for (var i = 0;i<workerListSorted.length;i++ ) {
+        for (var i = 0; i < workerListSorted.length; i++) {
 
             var currentElement = workerListSorted[i];
 
@@ -166,19 +164,19 @@ var ftdl = {
 
             if (name != 'undefined') {
 
-                totalCompleted += value; 
+                totalCompleted += value;
 
                 //<a href="#" class=" totalStats" ></a>
 
                 $(".member-stats").append('<a href="#" class="list-group-item">' + name + ': completed ' + value + ' errands</a>');
 
             }
-            
+
             console.log(name + ': ' + value);
         }
 
-        $(".totalStats").text("Total: "+totalTodo);
-        $(".completedStats").text("Completed: "+totalCompleted);
+        $(".totalStats").text("Total: " + totalTodo);
+        $(".completedStats").text("Completed: " + totalCompleted);
 
         //Create modal for total and complete
 
@@ -203,7 +201,7 @@ var ftdl = {
     },
 
     initialAdd: function() {
-        database.ref('/Users/' + firebase.auth().currentUser.uid + '/list').on('child_added', function(snapshot) {
+        database.ref('/Users/' + firebase.auth().currentUser.uid + '/list').limitToFirst(1).on('child_added', function(snapshot) {
             var completeInfo = snapshot.val();
             var id = snapshot.key; //THIS IS THE ID PER LIST ITEM
             ftdl.listAdd(completeInfo, id);
@@ -215,10 +213,12 @@ var ftdl = {
             $(".todoList").empty();
             $(".completedList").empty();
             snapshot.forEach(function(childSnapshot) {
-                if (childSnapshot.val().Status == "not complete") {
-                    ftdl.appendList(childSnapshot.val(), childSnapshot.key);
-                } else if (childSnapshot.val().Status == "completed") {
+                if (childSnapshot.val().Status == "completed") {
                     ftdl.appendComplete(childSnapshot.val(), childSnapshot.key);
+                    // } else if (childSnapshot.val().Timed.length > 0) {
+                    //     ftdl.appendList(childSnapshot.val(), childSnapshot.key, true);
+                } else if (childSnapshot.val().Status == "not complete") {
+                    ftdl.appendList(childSnapshot.val(), childSnapshot.key, false);
                 }
             });
             ftdl.getData();
@@ -270,7 +270,7 @@ var ftdl = {
         $("#header-members").append(memberLi);
     },
 
-    appendList: function(todoInfo, id) {
+    appendList: function(todoInfo, id, timed) {
 
         var $todoDiv = $('<div>').addClass('todoDiv').attr("id", id);
 
@@ -307,21 +307,28 @@ var ftdl = {
 
         $todoDiv.append($name, $description);
 
-        $(".todoList").append($todoDiv);
+        if (timed === true) {
+            $(".timedEvents").append($todoDiv);
+        }
+
+        if (timed === false) {
+            $(".todoList").append($todoDiv);
+        }
     },
 
     appendComplete: function(completeInfo, id) {
         var completeDiv = $("<div class='eventDiv'>");
         var name = $('<h4 class="left">' + '<img src="assets/images/check.png" todoID="' + id + '"></img>' + completeInfo.Name + "</h4>");
         var description = $('<p class="clear"> Completed By: ' + completeInfo.CompletedBy + "</p>");
-        if (Date.now() > completeInfo.Time + 172800) { //Deletes Item if over 2 days since completion.
-            database.ref('/Users/' + firebase.auth().currentUser.uid + '/complete/' + id).remove();
-        } else {
+        // if (Date.now() > completeInfo.TimeCreated + 20) { //Deletes Item if over 2 days since completion.
+        //     console.log("if statement remove")
+        //     database.ref('/Users/' + firebase.auth().currentUser.uid + '/list/' + id).remove();
+        // } else {
             completeDiv.attr("id", id);
             completeDiv.append(name);
             completeDiv.append(description);
             $(".completedList").append(completeDiv);
-        }
+        // }
     },
 
     appendEvent: function(eventInfo, id) {
@@ -334,15 +341,15 @@ var ftdl = {
 
         // if ((eventInfo.Time + 86400) > Date.now()) {
         //     database.ref('/Users/' + firebase.auth().currentUser.uid + '/event/' + id).remove();
-        if (Date.now() > eventInfo.Time + 604800) { //Deletes Event if over 7 days since posting.
-            database.ref('/Users/' + firebase.auth().currentUser.uid + '/event/' + id).remove();
-        } else {
+        // if (Date.now() > eventInfo.TimeCreated + 604800) { //Deletes Event if over 7 days since posting.
+        //     database.ref('/Users/' + firebase.auth().currentUser.uid + '/event/' + id).remove();
+        // } else {
             eventDiv.attr("id", id);
             eventDiv.append(name);
             eventDiv.append(description);
             $(".future-items").append(eventDiv);
             console.log(eventInfo.Time);
-        }
+        // }
     },
 
     deleteTodo: function() {
@@ -427,6 +434,7 @@ var ftdl = {
             Name: name,
             Categories: cat,
             Location: location,
+            TimeCreated: Date.now(),
             Description: comments,
             Creator: currentMember,
             Status: "not complete"
@@ -450,20 +458,11 @@ var ftdl = {
             Categories: cat,
             Location: location,
             Description: comments,
-            Time: firebase.database.ServerValue.TIMESTAMP,
+            TimeCreated: Date.now(),
             Creator: currentMember,
             CompletedBy: ""
 
         });
-
-        // database.ref("/time").set({
-        //     time: firebase.database.ServerValue.TIMESTAMP
-        // })
-
-        // database.ref("/time").on("value", function(snap) {
-        //      currentDate = snap.val().time;
-        //      console.log(currentDate);
-
 
         $("#form").trigger('reset');
     },
@@ -486,6 +485,7 @@ var ftdl = {
     },
 
     showPage1: function() {
+        console.log("page 1 showing")
         $('.page').hide();
         $('.page-registration').show();
         $('.firstPagejumbo').show();
@@ -499,21 +499,13 @@ var ftdl = {
     showPage3: function() {
         $('.page').hide();
         $('.page-main').show();
+        clearInterval(bgInterval);
+        bgInterval = undefined;
+        photoArray = [];
+        
+        console.log("CLEARING INTERVAL")
+        $('body').css("background-image", "none");
     },
-
-    // completeTodo: function() {
-    //     var todoNumber = $(this).attr("todoID");
-    //     database.ref('/Users/' + firebase.auth().currentUser.uid + '/list/' + todoNumber).push({
-    //         completedBy: currentMember
-    //     });
-    //     // database.ref('/Users/' + firebase.auth().currentUser.uid + '/list/' + todoNumber).on('child_added', function(snapshot) {
-    //     //     var completedByInfo = snapshot.val();
-    //     //     var completedByid = snapshot.key; 
-    //     //     ftdl.appendList(todoInfo, id);
-    //     // });
-    //     // var completedBy = 
-    //     // $('#id-' + todoNumber).append()
-    // },
 
     findPhotoID: function() {
         $.ajax({
@@ -527,7 +519,7 @@ var ftdl = {
             }
         }).done(function(response) {
             for (i = 0; i < 5; i++) {
-
+                console.log("findphotid")
                 ftdl.getPhotoFromID(response.photos.photo[i].id);
             }
         });
@@ -545,118 +537,128 @@ var ftdl = {
                 nojsoncallback: "?"
             }
         }).done(function(response) {
-            photoArray.push("url(" + response.sizes.size[9].source + ")");
-            ftdl.setPhotoAsBG();
+            if (photoArray.length < 6) {
+                console.log("getphotid")
+                photoArray.push("url(" + response.sizes.size[9].source + ")");
+                ftdl.setPhotoAsBG();
+            }
         });
     },
 
     setPhotoAsBG: function() {
-        if (photoArray.length > 4) {
+        if (photoArray.length == 5) {
+            console.log("setPhotoAsBG");
             var body = $('body');
-            setInterval(ftdl.nextBackground, 10000);
+            bgInterval = setInterval(ftdl.nextBackground, 1000);
             body.css('background-image', photoArray[0]);
 
         }
     },
 
     nextBackground: function() {
+        console.log("next bg")
         var body = $('body');
         body.css("background-image", photoArray[currentPhoto = ++currentPhoto % photoArray.length]);
         // setTimeout(this.nextBackground, 10000);
     },
 
-	initMap: function() {
-		var map = new google.maps.Map(document.getElementById('map'), {
-			zoom: 15,
-			center: myLatLong
-		});
-		var marker = new google.maps.Marker({
-			position: myLatLong,
-			map: map
-		});
+    initMap: function() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 15,
+            center: myLatLong
+        });
+        var marker = new google.maps.Marker({
+            position: myLatLong,
+            map: map
+        });
 
-		ftdl.geocodeLatLng();
+        ftdl.geocodeLatLng();
 
-		marker.addListener('click', function() {
-			map.setZoom(20);
-			map.setCenter(marker.getPosition());
-		});
+        marker.addListener('click', function() {
+            map.setZoom(20);
+            map.setCenter(marker.getPosition());
+        });
 
-		google.maps.event.addListener(map, 'click', function(event) {
-			myLatLong.lat = event.latLng.lat();
-			myLatLong.lng = event.latLng.lng();
-			ftdl.initMap();
-		});
+        google.maps.event.addListener(map, 'click', function(event) {
+            myLatLong.lat = event.latLng.lat();
+            myLatLong.lng = event.latLng.lng();
+            ftdl.initMap();
+        });
 
-		$('#recenter').on('click', function(){
-			map.panTo(marker.getPosition());
-		});
-	},
+        $('#recenter').on('click', function() {
+            map.panTo(marker.getPosition());
+        });
+    },
 
-	findLocation: function(){
-		var address = $('#addresstext').val().trim();
-		if (address.length > 0) {
-			$('#address').text('');
-			address = address.replace(/ /g, '+');
-			var url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + address + '&key=AIzaSyDlqM5HOhxP8DcUtTclMRu0RSvWy9t59qk'
-			$.getJSON(url, function() {
-					console.log('success');
-				})
-			.done(function(data) {
-				var loc = data.results;
-				var locAdd = loc[0].formatted_address;
-				$('#address').text(locAdd);
-				myLatLong.lat = loc[0].geometry.location.lat;
-				myLatLong.lng = loc[0].geometry.location.lng;
-				ftdl.initMap();
-			})
-			.fail(function(error) {
-				console.log(error);
-			});
-		}
-	},
-
-	geocodeLatLng: function(){
-		var addressInfo = "";
-		var geocoder = new google.maps.Geocoder;	
-    geocoder.geocode({'location': myLatLong}, function(results, status) {
-      if (status === 'OK') {
-        if (results[1]) {
-          addressInfo = results[1].formatted_address;
-        } else {
-          addressInfo = 'No results found';
+    findLocation: function() {
+        var address = $('#addresstext').val().trim();
+        if (address.length > 0) {
+            $('#address').text('');
+            address = address.replace(/ /g, '+');
+            var url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + address + '&key=AIzaSyDlqM5HOhxP8DcUtTclMRu0RSvWy9t59qk'
+            $.getJSON(url, function() {
+                    console.log('success');
+                })
+                .done(function(data) {
+                    var loc = data.results;
+                    var locAdd = loc[0].formatted_address;
+                    $('#address').text(locAdd);
+                    myLatLong.lat = loc[0].geometry.location.lat;
+                    myLatLong.lng = loc[0].geometry.location.lng;
+                    ftdl.initMap();
+                })
+                .fail(function(error) {
+                    console.log(error);
+                });
         }
-      } else {
-        addressInfo = 'Geocoder failed due to: ' + status;
-      };
-			$('#clicklat').text(myLatLong.lat.toFixed(4))
-				.attr('data-lat', myLatLong.lat);
-			$('#clicklng').text(myLatLong.lng.toFixed(4))
-				.attr('data-long', myLatLong.lng);
-			if($('#address').text() === ''){
-				$('#address').text(addressInfo);
-			};
-    });
-	},
+    },
 
-	getLatLng: function(){
-		var lat = parseFloat($('#clicklat').attr('data-lat'));
-		var long = parseFloat($('#clicklng').attr('data-long'));
-		var address = $('#address').text();
-		var latLong = { lat: lat, lng: long, add: address };
-		$('#clicklat').removeAttr('data-lat').text('');
-		$('#clicklng').removeAttr('data-long').text('');
-		$('#address').text('');
-		return latLong;
-	},
+    geocodeLatLng: function() {
+        var addressInfo = "";
+        var geocoder = new google.maps.Geocoder;
+        geocoder.geocode({ 'location': myLatLong }, function(results, status) {
+            if (status === 'OK') {
+                if (results[1]) {
+                    addressInfo = results[1].formatted_address;
+                } else {
+                    addressInfo = 'No results found';
+                }
+            } else {
+                addressInfo = 'Geocoder failed due to: ' + status;
+            };
+            $('#clicklat').text(myLatLong.lat.toFixed(4))
+                .attr('data-lat', myLatLong.lat);
+            $('#clicklng').text(myLatLong.lng.toFixed(4))
+                .attr('data-long', myLatLong.lng);
+            if ($('#address').text() === '') {
+                $('#address').text(addressInfo);
+            };
+        });
+    },
+
+    getLatLng: function() {
+        var lat = parseFloat($('#clicklat').attr('data-lat'));
+        var long = parseFloat($('#clicklng').attr('data-long'));
+        var address = $('#address').text();
+        var latLong = { lat: lat, lng: long, add: address };
+        $('#clicklat').removeAttr('data-lat').text('');
+        $('#clicklng').removeAttr('data-long').text('');
+        $('#address').text('');
+        return latLong;
+    },
 
     logOut: function() {
         ftdl.logOutReset();
         ftdl.changeLogInBtn(currentMember);
+        photoArray = [];
+        ftdl.findPhotoID();
+        currentMember = "";
+        currentPhoto = 0;
         loggedIn = false;
         firebase.auth().signOut().catch(function(error) {
             console.log('logout ' + error.message);
         });
+
     },
 
     appendNote: function(todoInfo, id) {
@@ -725,7 +727,6 @@ $(".sortable").sortable({
 
 });
 
-
 ftdl.findPhotoID();
 $(document.body).on('click', '.closeTodo', ftdl.deleteTodo);
 $(document.body).on('click', '.completeTodo', ftdl.completeTodo);
@@ -743,16 +744,16 @@ $('#memberbtn').on('click', function(event) { ftdl.btnAddMember(event) });
 $('#mapModal').on('shown.bs.modal', function() { ftdl.initMap() });
 $('#findlocation').on('click', function() { ftdl.findLocation() });
 $('#loc-confirm').on('click', function() {
-	var latLong = ftdl.getLatLng();
-	// You can use latLong object variable to store
-	// the location information here.
-	// latLong.lat & latLong.lng & latLong.add
+    var latLong = ftdl.getLatLng();
+    // You can use latLong object variable to store
+    // the location information here.
+    // latLong.lat & latLong.lng & latLong.add
 
-	$('#mapModal').modal('hide');
+    $('#mapModal').modal('hide');
 });
 /////
 
-$(".general-stats").on("click","a",function() {
+$(".general-stats").on("click", "a", function() {
 
     //update modal information
 
@@ -760,9 +761,3 @@ $(".general-stats").on("click","a",function() {
 
 
 });
-
-
-
-
-
-
