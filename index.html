@@ -77,14 +77,17 @@
             <div class="row loggedIn">
                 <div class="col-md-8">
                     <div class="panel panel-default">
-											<div class="panel-heading">
-												<!-- ADD TODO ITEM BUTTON -->
-												<p class="panel-title">Today List
-													<button id="addBtn" type="button" class="btn btn-info btn-sm addBtn loggedIn pull-right" data-toggle="modal" data-target="#todoModal">Add To-Do Item</button>
-												</p>
-											</div>
+                        <div class="panel-heading">
+                            <!-- ADD TODO ITEM BUTTON -->
+                            <p class="panel-title">Today List
+                                <button id="addBtn" type="button" class="btn btn-info btn-sm addBtn loggedIn pull-right" data-toggle="modal" data-target="#todoModal">Add To-Do Item</button>
+                            </p>
+                        </div>
                         <div class="panel-body">
                             <div class="today-event-items">
+                            </div>
+                            <div class="timedEvents loggedIn sortable">
+                                <!-- TIMED EVENTS ITEMS APPENDED HERE -->
                             </div>
                             <div class="todoList loggedIn sortable">
                                 <!-- TODO ITEMS APPENDED HERE -->
@@ -99,12 +102,12 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="panel panel-default">
-															<div class="panel-heading">
-																<!-- ADD EVENT BUTTON -->
-																<p class="panel-title">Up Coming List
-																	<button id="addEventBtn" type="button" class="btn btn-info btn-sm addEventBtn loggedIn pull-right" data-toggle="modal" data-target="#eventModal">Add Event Item</button>
-																</p>
-															</div>
+                                <div class="panel-heading">
+                                    <!-- ADD EVENT BUTTON -->
+                                    <p class="panel-title">Up Coming List
+                                        <button id="addEventBtn" type="button" class="btn btn-info btn-sm addEventBtn loggedIn pull-right" data-toggle="modal" data-target="#eventModal">Add Event Item</button>
+                                    </p>
+                                </div>
                                 <div class="panel-body">
                                     <div class="future-items">
                                     </div>
@@ -119,33 +122,24 @@
                                     <h3 class="panel-title">Stats Corner</h3>
                                 </div>
                                 <div class="panel-body">
-
-                                    <div class="list-group general-stats"> 
-
-                                        <a href="#" class="list-group-item totalStats" ></a>
+                                    <div class="list-group general-stats">
+                                        <a href="#" class="list-group-item totalStats"></a>
                                         <a href="#" class="list-group-item completedStats"></a>
-
                                     </div>
-
-                                        <div class="list-group member-stats"> 
-
-                                            <ul>
-
-                                            </ul>
-
-                                        </div>
-
+                                    <div class="list-group member-stats">
+                                        <ul>
+                                        </ul>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- loggedIn row -->
         </div>
-        <!-- container -->
+        <!-- loggedIn row -->
+    </div>
+    <!-- container -->
     </div>
     <!-- page-main -->
     <!-- Footer -->
@@ -229,48 +223,48 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h3 class="modal-title">Add To-Do Item</h3>
                 </div>
-								<div class="modal-body">
-									<form id='submitTodo'>
-										<div class="form-group">
-											<label for="todoName">To-Do Name</label>
-											<input type="text" class="form-control" id="todoName" placeholder="Enter To-Do Task Name" required>
-										</div>
-										<div class="form-group">
-											<label for="todoCatInput">Categories</label>
-											<select class="form-control" id="todoCatInput">
-												<option>Shopping</option>
-												<option>Appointment</option>
-												<option>Pick Up</option>
-												<option>Drop Off</option>
-												<option>Other</option>
-											</select>
-										</div>
-										<div class="form-group dtpicker">
-											<label for="">Timed item? </label>
-											<label class="radio-inline">
-												<input type="radio" name="timedtodo" id="notimed" value="notimed" checked>
-												<span class="fa fa-times"></span>
-											</label>
-											<label class="radio-inline">
-												<input type="radio" name="timedtodo" id="timed" value="timed">
-												<span class="fa fa-clock-o"></span>
-											</label>
-											<input type="text" id="todo-dtpicker" class="hide" value="">
-										</div>
-										<div class="form-group">
-											<label for="locationInput">Enter Location</label>
-											<div class="input-group">
-												<input type="text" class="form-control" id="locationInput" placeholder="Enter Location">
-												<div class="input-group-addon"><i class="material-icons" style="font-size:14px">directions</i></div>
-											</div>
-										</div>
-										<div class="form-group">
-											<label for="todoComments">Description</label>
-											<textarea class="form-control" id="todoComments" rows="3"></textarea>
-										</div>
-										<button id="todobtn" type="button" class="todoSubmit btn btn-primary">Submit</button>
-									</form>
-								</div>
+                <div class="modal-body">
+                    <form id='submitTodo'>
+                        <div class="form-group">
+                            <label for="todoName">To-Do Name</label>
+                            <input type="text" class="form-control" id="todoName" placeholder="Enter To-Do Task Name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="todoCatInput">Categories</label>
+                            <select class="form-control" id="todoCatInput">
+                                <option>Shopping</option>
+                                <option>Appointment</option>
+                                <option>Pick Up</option>
+                                <option>Drop Off</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group dtpicker">
+                            <label for="">Timed item? </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="timedtodo" id="notimed" value="notimed" checked>
+                                <span class="fa fa-times"></span>
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="timedtodo" id="timed" value="timed">
+                                <span class="fa fa-clock-o"></span>
+                            </label>
+                            <input type="text" id="todo-dtpicker" class="hide" value="">
+                        </div>
+                        <div class="form-group">
+                            <label for="locationInput">Enter Location</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="locationInput" placeholder="Enter Location">
+                                <div class="input-group-addon"><i class="material-icons" style="font-size:14px">directions</i></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="todoComments">Description</label>
+                            <textarea class="form-control" id="todoComments" rows="3"></textarea>
+                        </div>
+                        <button id="todobtn" type="button" class="todoSubmit btn btn-primary">Submit</button>
+                    </form>
+                </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
@@ -344,38 +338,37 @@
             </div>
         </div>
     </div>
-	<!-- MAP MODAL-->
-	<div class="modal fade" id="mapModal" role="dialog">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h3 class="modal-title">Location</h3>
-				</div>
-				<div class="modal-body">
-					<form class="form-inline">
-						<div class="form-group">
-							<div class="input-group">
-								<div class="input-group-addon"><span class="fa fa-map-signs"></span></div>
-								<input type="text" class="form-control" id="addresstext" placeholder="Address">
-							</div>
-							<button id="findlocation" type="button" class="btn btn-primary"><span class="fa fa-map-marker" title="Find on map"></span></button>
-							<button id="recenter" type="button" class="btn btn-primary" title="Recenter"><span class="fa fa-dot-circle-o"></span></button>
-							<button id="loc-confirm" type="button" class="btn btn-primary" title="Confirm location"><span class="fa fa-check"></span></button>
-						</div>
-					</form>
-					<div id="map"></div>
-					<div id="mapinfo">
-						<p id="address"></p>
-						<p>
-							<font>Lat: <span id="clicklat"></span>&nbsp;,
-							&nbsp;Long: <span id="clicklng"></span></font>
-						</p>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+    <!-- MAP MODAL-->
+    <div class="modal fade" id="mapModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h3 class="modal-title">Location</h3>
+                </div>
+                <div class="modal-body">
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-addon"><span class="fa fa-map-signs"></span></div>
+                                <input type="text" class="form-control" id="addresstext" placeholder="Address">
+                            </div>
+                            <button id="findlocation" type="button" class="btn btn-primary"><span class="fa fa-map-marker" title="Find on map"></span></button>
+                            <button id="recenter" type="button" class="btn btn-primary" title="Recenter"><span class="fa fa-dot-circle-o"></span></button>
+                            <button id="loc-confirm" type="button" class="btn btn-primary" title="Confirm location"><span class="fa fa-check"></span></button>
+                        </div>
+                    </form>
+                    <div id="map"></div>
+                    <div id="mapinfo">
+                        <p id="address"></p>
+                        <p>
+                            <font>Lat: <span id="clicklat"></span>&nbsp;, &nbsp;Long: <span id="clicklng"></span></font>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- NOTE MODAL-->
     <div class="modal fade" id="noteModal" role="dialog">
         <div class="modal-dialog">
@@ -400,37 +393,25 @@
             </div>
         </div>
     </div>
-
     <!-- Stats Corner Modal -->
-
-         <!-- Modal -->
-
+    <!-- Modal -->
     <div class="modal fade" id="statsModal" role="dialog">
         <div class="modal-dialog">
-    
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title">Details</h4>
                 </div>
-            
                 <div class="modal-body">
                     <p>Some text in the modal.</p>
                 </div>
-                
                 <div class="modal-footer">
-                
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            
                 </div>
-          
             </div>
-      
         </div>
-    
     </div>
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
