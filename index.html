@@ -77,12 +77,12 @@
             <div class="row loggedIn">
                 <div class="col-md-8">
                     <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Today List</h3>
-                            <!-- ADD TODO ITEM BUTTON -->
-                            <!-- <div id="map"></div> -->
-                            <button type="button" class="btn btn-info btn-sm addBtn loggedIn" data-toggle="modal" data-target="#todoModal">Add To-Do Item</button>
-                        </div>
+											<div class="panel-heading">
+												<!-- ADD TODO ITEM BUTTON -->
+												<p class="panel-title">Today List
+													<button id="addBtn" type="button" class="btn btn-info btn-sm addBtn loggedIn pull-right" data-toggle="modal" data-target="#todoModal">Add To-Do Item</button>
+												</p>
+											</div>
                         <div class="panel-body">
                             <div class="today-event-items">
                             </div>
@@ -99,11 +99,12 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h3 class="panel-title">Up Coming List</h3>
-                                    <!-- ADD EVENT BUTTON -->
-                                    <button type="button" class="btn btn-info btn-sm addEventBtn loggedIn" data-toggle="modal" data-target="#eventModal">Add Event Item</button>
-                                </div>
+															<div class="panel-heading">
+																<!-- ADD EVENT BUTTON -->
+																<p class="panel-title">Up Coming List
+																	<button id="addEventBtn" type="button" class="btn btn-info btn-sm addEventBtn loggedIn pull-right" data-toggle="modal" data-target="#eventModal">Add Event Item</button>
+																</p>
+															</div>
                                 <div class="panel-body">
                                     <div class="future-items">
                                     </div>
@@ -228,36 +229,48 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h3 class="modal-title">Add To-Do Item</h3>
                 </div>
-                <div class="modal-body">
-                    <form id='submitTodo'>
-                        <div class="form-group">
-                            <label for="todoName">To-Do Name</label>
-                            <input type="text" class="form-control" id="todoName" placeholder="Enter To-Do Task Name" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="todoCatInput">Categories</label>
-                            <select class="form-control" id="todoCatInput">
-                                <option>Timed Event</option>
-                                <option>Shopping</option>
-                                <option>Pick Up</option>
-                                <option>Drop Off</option>
-                                <option>Other</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="locationInput">Enter Location</label>
-                            <div class="input-group">
-                                <input type="text" class="form-control" id="locationInput" placeholder="Enter Location">
-                                <div class="input-group-addon"><i class="material-icons" style="font-size:14px">directions</i></div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="todoComments">Description</label>
-                            <textarea class="form-control" id="todoComments" rows="3"></textarea>
-                        </div>
-                        <button id="todobtn" type="button" class="todoSubmit btn btn-primary">Submit</button>
-                    </form>
-                </div>
+								<div class="modal-body">
+									<form id='submitTodo'>
+										<div class="form-group">
+											<label for="todoName">To-Do Name</label>
+											<input type="text" class="form-control" id="todoName" placeholder="Enter To-Do Task Name" required>
+										</div>
+										<div class="form-group">
+											<label for="todoCatInput">Categories</label>
+											<select class="form-control" id="todoCatInput">
+												<option>Shopping</option>
+												<option>Appointment</option>
+												<option>Pick Up</option>
+												<option>Drop Off</option>
+												<option>Other</option>
+											</select>
+										</div>
+										<div class="form-group dtpicker">
+											<label for="">Timed item? </label>
+											<label class="radio-inline">
+												<input type="radio" name="timedtodo" id="notimed" value="notimed" checked>
+												<span class="fa fa-times"></span>
+											</label>
+											<label class="radio-inline">
+												<input type="radio" name="timedtodo" id="timed" value="timed">
+												<span class="fa fa-clock-o"></span>
+											</label>
+											<input type="text" id="todo-dtpicker" class="hide" value="">
+										</div>
+										<div class="form-group">
+											<label for="locationInput">Enter Location</label>
+											<div class="input-group">
+												<input type="text" class="form-control" id="locationInput" placeholder="Enter Location">
+												<div class="input-group-addon"><i class="material-icons" style="font-size:14px">directions</i></div>
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="todoComments">Description</label>
+											<textarea class="form-control" id="todoComments" rows="3"></textarea>
+										</div>
+										<button id="todobtn" type="button" class="todoSubmit btn btn-primary">Submit</button>
+									</form>
+								</div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
