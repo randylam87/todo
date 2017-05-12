@@ -761,6 +761,20 @@ $(".general-stats").on("click","a",function() {
 
 });
 
+$('.dtpicker input[type=radio]').change(function(){
+	if($(this).val() === 'timed'){
+		$('#todo-dtpicker').removeClass('hide');
+	} else {
+		$('#todo-dtpicker').addClass('hide');
+	};
+})
+
+$('#todo-dtpicker').datetimepicker({
+	lang:'en',
+	format: 'D, d M Y - H:i:s',
+	dayOfWeekStart : 1,
+	step: 15
+});
 
 
 
