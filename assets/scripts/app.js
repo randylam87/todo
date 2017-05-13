@@ -204,7 +204,7 @@ var ftdl = {
 		var $img1 = $('<img>').attr({'src': 'assets/images/timed_event.jpg', 'title': 'Timed Events'})
 			.addClass('link-icon');
 		var $img2 = $('<img>').attr({
-				'src': 'assets/images/location.png','data-toggle': 'modal', 'data-target': '#mapmodal', 'title': 'Map'})
+				'src': 'assets/images/location.png','data-toggle': 'modal', 'data-target': '#mapmodal', 'title': 'Location','data-address': todoInfo.LocationInfo.address})
 			.addClass('link-icon');
 		var $img3 = $('<img>').attr({ 'src': 'assets/images/check.png', 'todoID': id, 'title': 'Mark as completed'})
 			.addClass('link-icon completeTodo');
@@ -231,7 +231,7 @@ var ftdl = {
 		var $eventDiv = $('<div>').addClass('eventDiv').attr("id", id);
 		var $name = $('<span>').text('Event Name: ' + eventInfo.Name).addClass('listitem');
 		var $imgDiv = $('<div>').addClass('pull-right')
-		var $img1 = $('<img>').attr({'src': 'assets/images/location.png', 'title': 'Location'}).addClass('link-icon');
+		var $img1 = $('<img>').attr({'src': 'assets/images/location.png', 'data-toggle': 'modal', 'data-target': '#mapmodal', 'title': 'Location','data-address': eventInfo.LocationInfo.address}).addClass('link-icon');
 		var $img2 = $('<img>').attr({'src': 'assets/images/delete.png', 'title': 'Delete','todoID': id})
 			.addClass('link-icon closeTodo');
 		$imgDiv.append($img1, $img2);
@@ -644,7 +644,7 @@ $(document.body).on('click', '.completeTodo', ftdl.completeTodo);
 $(document.body).on('click', '.noteTodo', ftdl.appendNote);
 $(document.body).on('click', '#btn-note', ftdl.saveNote);
 $('.btnLogout').bind('click', ftdl.logOut);
-$('#loginbtn').on('click', function(event) { ftdl.loginSubmit(event) });
+$('#loginBtn').on('click', function(event) { ftdl.loginSubmit(event) });
 $('#registerbtn').on('click', function(event) { ftdl.registerSubmit(event) });
 $('#todobtn').on('click', function(event) { ftdl.todoSubmit(event) });
 $('#eventbtn').on('click', function(event) { ftdl.eventSubmit(event) });
