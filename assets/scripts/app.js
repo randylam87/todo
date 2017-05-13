@@ -206,7 +206,7 @@ var ftdl = {
 				.addClass('link-icon');
 			var $img2 = $('<img>').attr({'src': 'assets/images/location.png','data-toggle': 'modal',
 				'data-target': '#mapmodal', 'title': 'Map', 'data-address': todoInfo.LocationInfo.address})
-				.addClass('link-icon');
+				.addClass('link-icon rtrvadd');
 			var $img3 = $('<img>').attr({ 'src': 'assets/images/check.png', 'todoID': id, 'title': 'Mark as completed'})
 				.addClass('link-icon completeTodo');
 			var $img4 = $('<img>').attr({ 'src': 'assets/images/delete.png', 'todoID': id, 'title': 'Delete item'})
@@ -724,6 +724,11 @@ $('.openmap').click(function() {
     var $id = $(this).prev().attr('id');
     $('#data-input').val($id);
     // $('#mapmodal').modal('show');
+});
+
+$('.rtrvadd').click(function() {
+    var $address = $(this).attr('data-address');
+    $('#addresstext').val($address);
 });
 
 $('.dtpicker input[type=radio]').change(function() {
