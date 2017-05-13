@@ -20,6 +20,9 @@ var myLatLong = { lat: 33.644906, lng: -117.834748 };
 
 //Firebase listeners
 //Checks if user is logged in or not
+var workerList = {};
+var workerListItem = {};
+
 firebase.auth().onAuthStateChanged(function(firebaseUser) {
 
 	if (firebaseUser && loggedIn === false) {
@@ -42,79 +45,128 @@ firebase.auth().onAuthStateChanged(function(firebaseUser) {
 
 
 var ftdl = {
-	calStats: function() {
-		database.ref('/Users/' + firebase.auth().currentUser.uid + '/list').on('value', function(snapshot) {
-			if (database.ref('/Users/' + firebase.auth().currentUser.uid + '/list') && currentMember.length > 1) {
-				var todoInfo = snapshot.val();
-				var creatorList = {};
-				var workerList = {};
-				// Getting an array of each key In the snapshot object
-				var listKeyArr = Object.keys(todoInfo);
-				for (var i = 0; i < listKeyArr.length; i++) {
-					var currentKey = listKeyArr[i];
-					var currentObject = todoInfo[currentKey];
-					var worker = currentObject.CompletedBy;
-					var creator = currentObject.Creator;
-					var todoName = currentObject.Name;
-					if (!(workerList[worker])) {
-						workerList[worker] = 1;
-					} else {
-						workerList[worker]++;
-					}
-					if (!(creatorList[creator])) {
-						creatorList[creator] = 1;
-					} else {
-						creatorList[creator]++;
-					}
-				}
-				ftdl.appendStats(creatorList, workerList);
-			}
-		});
-	},
 
-	appendStats: function(creatorList, workerList) {
-		var creatorList = creatorList;
-		var workerList = workerList;
-		var creatorListSorted = [];
-		var workerListSorted = [];
-		var sortUser = function(listUser, userSorted) {
-			for (var user in listUser) {
-				userSorted.push([user, listUser[user]]);
-			}
-			userSorted.sort(function(a, b) {
-				return b[1] - a[1];
-			});
-		};
-		sortUser(creatorList, creatorListSorted);
-		sortUser(workerList, workerListSorted);
-		var totalTodo = 0;
-		var totalCompleted = 0;
-		for (var i = 0; i < creatorListSorted.length; i++) {
-			var currentElement = creatorListSorted[i];
-			var name = currentElement[0];
-			var value = currentElement[1];
-			if (name != 'undefined') {
-				totalTodo += value;
-				// $(".member-stats").append('<li>' + currentKey + ': ' + creatorList[currentKey] + ' errands</li>');
-			}
-			console.log(name + ': ' + value);
-		}
-		$(".member-stats").html('');
-		for (var i = 0; i < workerListSorted.length; i++) {
-			var currentElement = workerListSorted[i];
-			var name = currentElement[0];
-			var value = currentElement[1];
-			if (name != 'undefined') {
-				totalCompleted += value;
-				//<a href="#" class=" totalStats" ></a>
-				$(".member-stats").append('<a href="#" class="list-group-item">' + name + ': completed ' + value + ' errands</a>');
-			}
-			console.log(name + ': ' + value);
-		}
-		$(".totalStats").text("Total: " + totalTodo);
-		$(".completedStats").text("Completed: " + totalCompleted);
-		//Create modal for total and complete
-	},
+    calStats: function() {
+
+        database.ref('/Users/' + firebase.auth().currentUser.uid + '/list').on('value', function(snapshot) {
+
+	        var todoInfo = snapshot.val();
+
+	        workerList = {};
+
+	        workerListItem = {};
+
+	        // Getting an array of each key In the snapshot object
+	        var listKeyArr = Object.keys(todoInfo);
+
+	        for (var i = 0; i < listKeyArr.length; i++) {
+
+	            var currentKey = listKeyArr[i];
+	            var currentObject = todoInfo[currentKey];
+
+	            var worker = currentObject.CompletedBy;
+
+	            var creator = currentObject.Creator;
+
+	            var todoName = currentObject.Name;
+
+	            if (!(workerList[worker])) {
+
+	                workerListItem[worker] = [];
+
+	                workerListItem[worker].push(todoName);
+
+	                workerList[worker] = 1;
+
+	           	}
+
+	            else {
+
+	                 workerListItem[worker].push(todoName);
+
+	                 workerList[worker]++;
+
+	            }
+	          
+	        }
+
+	            ftdl.appendStats(workerList,workerListItem);
+
+    	});
+
+    },
+
+	appendStats: function() {
+
+        var workerListSorted = [];
+
+        var sortUser = function(listUser,userSorted) {
+
+            for (var user in listUser) {
+
+                userSorted.push([user, listUser[user]]);
+            }
+
+            userSorted.sort(function(a, b) {
+            
+                return b[1] - a[1];
+
+            });
+           
+        };
+
+        sortUser(workerList,workerListSorted);
+
+        var totalCompleted = 0;
+        var completedHtml = '';
+
+        $(".member-stats").html('');
+
+        for (var i = 0;i<workerListSorted.length;i++ ) {
+
+            var memberHtml = '';
+
+            var currentElement = workerListSorted[i];
+            console.log(currentElement);
+
+            var name = currentElement[0];
+
+            var value = currentElement[1];
+
+            if (name != 'undefined') {
+
+                totalCompleted += value; 
+
+                memberHtml = '<a href="#" class="list-group-item" data-toggle="collapse" data-target="#'+name+'">' +
+                     name + '<span class="badge">' + value + '</span>' + '<div id="'+name+'" class="collapse">';
+
+                var listItem = workerListItem[name];
+
+                for (var j = 0;j<listItem.length;j++) {
+
+                    completedHtml = completedHtml + '<li  class="list-group-item">'+ listItem[j] +'</li>';
+
+                    memberHtml = memberHtml + '<li  class="list-group-item">'+ listItem[j] +'</li>';
+
+                }
+
+                memberHtml += '</div></a>';
+                $(".member-stats").append(memberHtml);
+              
+            }
+
+        }
+
+
+    	$(".completedStats").html("Completed " + '<span class="badge">'+totalCompleted + '</span>');
+
+        $(".completedStats").append('<div id="totalCompleted" class="collapse">') ;
+
+        $("#totalCompleted").append(completedHtml);
+
+        $("#totalCompleted").append('</div>');
+
+    },
 
 	//function that hides/removes login/registration buttons
 	changeLogInBtn: function(currentMember) {
@@ -200,7 +252,7 @@ var ftdl = {
 			.text(members.member);
 		var memberLi = $('<li><a href="#">' + members.member + '</a></li>');
 		$(".memberSelect").append(memberButton);
-		// $("#header-members").append(memberLi); removing header
+		$("#header-members").append(memberLi); //removing header
 	},
 
 	appendList: function(todoInfo, id, timed) {
