@@ -416,108 +416,6 @@ var ftdl = {
 	body.css("background-image", photoArray[currentPhoto = ++currentPhoto % photoArray.length]);
 	},
 
-	initMap: function() {
-	var map = new google.maps.Map(document.getElementById('map'), {
-	    zoom: 15,
-	    center: myLatLong
-	});
-	var marker = new google.maps.Marker({
-	    position: myLatLong,
-	    map: map
-	});
-
-	ftdl.geocodeLatLng();
-
-	marker.addListener('click', function() {
-	    map.setZoom(20);
-	    map.setCenter(marker.getPosition());
-	});
-
-	google.maps.event.addListener(map, 'click', function(event) {
-	    myLatLong.lat = event.latLng.lat();
-	    myLatLong.lng = event.latLng.lng();
-	    ftdl.initMap();
-	});
-
-	$('#recenter').on('click', function() {
-	    map.panTo(marker.getPosition());
-	});
-	},
-
-	findLocation: function() {
-	var address = $('#addresstext').val().trim();
-	if (address.length > 0) {
-	    $('#address').text('');
-	    address = address.replace(/ /g, '+');
-	    var url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' +
-		address + '&key=AIzaSyDlqM5HOhxP8DcUtTclMRu0RSvWy9t59qk';
-	    $.getJSON(url, function() {
-		    console.log('success');
-		})
-		.done(function(data) {
-		    var loc = data.results;
-		    var locAdd = loc[0].formatted_address;
-		    $('#address').text(locAdd);
-		    myLatLong.lat = loc[0].geometry.location.lat;
-		    myLatLong.lng = loc[0].geometry.location.lng;
-		    ftdl.initMap();
-		})
-		.fail(function(error) {
-		    console.log(error);
-		});
-	}
-	},
-
-	geocodeLatLng: function() {
-	var addressInfo = "";
-	var geocoder = new google.maps.Geocoder;
-	geocoder.geocode({ 'location': myLatLong }, function(results, status) {
-	    if (status === 'OK') {
-		if (results[1]) {
-		    addressInfo = results[1].formatted_address;
-		} else {
-		    addressInfo = 'No results found';
-		}
-	    } else {
-		addressInfo = 'Geocoder failed due to: ' + status;
-	    };
-	    $('#clicklat').text(myLatLong.lat.toFixed(4))
-		.attr('data-lat', myLatLong.lat);
-	    $('#clicklng').text(myLatLong.lng.toFixed(4))
-		.attr('data-long', myLatLong.lng);
-	    if ($('#address').text() === '') {
-		$('#address').text(addressInfo);
-	    };
-	});
-	},
-
-	getLatLng: function() {
-	var lat = parseFloat($('#clicklat').attr('data-lat'));
-	var long = parseFloat($('#clicklng').attr('data-long'));
-	var address = $('#address').text();
-	var latLong = { lat: lat, lng: long, add: address };
-	$('#clicklat').removeAttr('data-lat').text('');
-	$('#clicklng').removeAttr('data-long').text('');
-	$('#address').text('');
-	return latLong;
-	},
-
-	logOut: function() {
-	ftdl.logOutReset();
-	ftdl.changeLogInBtn(currentMember);
-	if (currentMember.length > 0) {
-	    photoArray = [];
-	    ftdl.findPhotoID();
-	    currentPhoto = 0;
-	}
-	currentMember = "";
-	loggedIn = false;
-	firebase.auth().signOut().catch(function(error) {
-	    console.log('logout ' + error.message);
-	});
-
-	},
-
 	appendNote: function(todoInfo, id) {
 	$('#note').val('');
 	var todoNumber = $(this).attr("todoID");
@@ -573,6 +471,107 @@ var ftdl = {
 	database.ref('/Users/' + firebase.auth().currentUser.uid).update({
 	    "list": myData
 	});
+	},
+
+	initMap: function() {
+		var map = new google.maps.Map(document.getElementById('map'), {
+		    zoom: 15,
+		    center: myLatLong
+		});
+		var marker = new google.maps.Marker({
+		    position: myLatLong,
+		    map: map
+		});
+
+		ftdl.geocodeLatLng();
+
+		marker.addListener('click', function() {
+		    map.setZoom(20);
+		    map.setCenter(marker.getPosition());
+		});
+
+		google.maps.event.addListener(map, 'click', function(event) {
+		    myLatLong.lat = event.latLng.lat();
+		    myLatLong.lng = event.latLng.lng();
+		    ftdl.initMap();
+		});
+
+		$('#recenter').on('click', function() {
+		    map.panTo(marker.getPosition());
+		});
+	},
+
+	findLocation: function() {
+		var address = $('#addresstext').val().trim();
+		if (address.length > 0) {
+		    $('#address').text('');
+		    address = address.replace(/ /g, '+');
+		    var url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' +
+			address + '&key=AIzaSyDlqM5HOhxP8DcUtTclMRu0RSvWy9t59qk';
+		    $.getJSON(url, function() {
+			    console.log('success');
+			})
+			.done(function(data) {
+			    var loc = data.results;
+			    var locAdd = loc[0].formatted_address;
+			    $('#address').text(locAdd);
+			    myLatLong.lat = loc[0].geometry.location.lat;
+			    myLatLong.lng = loc[0].geometry.location.lng;
+			    ftdl.initMap();
+			})
+			.fail(function(error) {
+			    console.log(error);
+			});
+		}
+	},
+
+	geocodeLatLng: function() {
+		var addressInfo = "";
+		var geocoder = new google.maps.Geocoder;
+		geocoder.geocode({ 'location': myLatLong }, function(results, status) {
+		    if (status === 'OK') {
+			if (results[1]) {
+			    addressInfo = results[1].formatted_address;
+			} else {
+			    addressInfo = 'No results found';
+			}
+		    } else {
+			addressInfo = 'Geocoder failed due to: ' + status;
+		    };
+		    $('#clicklat').text(myLatLong.lat.toFixed(4))
+			.attr('data-lat', myLatLong.lat);
+		    $('#clicklng').text(myLatLong.lng.toFixed(4))
+			.attr('data-long', myLatLong.lng);
+		    if ($('#address').text() === '') {
+			$('#address').text(addressInfo);
+		    };
+		});
+	},
+
+	getLatLng: function() {
+		var lat = parseFloat($('#clicklat').attr('data-lat'));
+		var long = parseFloat($('#clicklng').attr('data-long'));
+		var address = $('#address').text();
+		var latLong = { lat: lat, lng: long, add: address };
+		$('#clicklat').removeAttr('data-lat').text('');
+		$('#clicklng').removeAttr('data-long').text('');
+		$('#address').text('');
+		return latLong;
+		},
+
+		logOut: function() {
+		ftdl.logOutReset();
+		ftdl.changeLogInBtn(currentMember);
+		if (currentMember.length > 0) {
+		    photoArray = [];
+		    ftdl.findPhotoID();
+		    currentPhoto = 0;
+		}
+		currentMember = "";
+		loggedIn = false;
+		firebase.auth().signOut().catch(function(error) {
+		    console.log('logout ' + error.message);
+		});
 	},
 	
 	retrieveAddress: function() {
@@ -707,7 +706,12 @@ $('#note-input').keypress(function(e) {
 
 
 //Map
-$('#mapmodal').on('shown.bs.modal', function() { ftdl.initMap() });
+$('#mapmodal').on('shown.bs.modal', function() {
+	ftdl.initMap();
+	if ($('#addresstext').val().trim() !== ''){
+	    ftdl.findLocation();
+	};
+});
 $('#findlocation').on('click', function() { ftdl.findLocation() });
 
 $('#loc-confirm').on('click', function() {
