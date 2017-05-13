@@ -712,6 +712,12 @@ $('#mapmodal').on('shown.bs.modal', function() {
 	    ftdl.findLocation();
 	};
 });
+
+$('#mapmodal').on('hidden.bs.modal', function() {
+	$('#addresstext').val('');
+	myLatLong = { lat: 33.644906, lng: -117.834748 };
+});
+
 $('#findlocation').on('click', function() { ftdl.findLocation() });
 
 $('#loc-confirm').on('click', function() {
@@ -719,14 +725,15 @@ $('#loc-confirm').on('click', function() {
     // You can use latLong object variable to store
     // the location information here.
     // latLong.lat & latLong.lng & latLong.add
-    var dataInput = $('#data-input').val();
-    $('#' + dataInput).attr({
-        'data-address': latLong.add,
-        'data-lat': latLong.lat,
-        'data-long': latLong.lng
-    });
-
-    $('#data-input').val('');
+		if($('#data-input').val() !== ''){
+			var dataInput = $('#data-input').val();
+			$('#' + dataInput).attr({
+					'data-address': latLong.add,
+					'data-lat': latLong.lat,
+					'data-long': latLong.lng
+			});
+			$('#data-input').val('');
+		};
     $('#mapmodal').modal('hide');
 });
 
