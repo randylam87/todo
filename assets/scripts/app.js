@@ -52,7 +52,9 @@ var ftdl = {
 
 	        var todoInfo = snapshot.val();
 
+	        workerList = {};
 
+	        workerListItem = {};
 
 	        // Getting an array of each key In the snapshot object
 	        var listKeyArr = Object.keys(todoInfo);
