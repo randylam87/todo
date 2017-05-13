@@ -307,6 +307,7 @@ var ftdl = {
 	var name = $("#eventName").val();
 	var cat = $("#eventCatInput").val();
 	var location = $("#eventlocationinput").val();
+	var eventdate = $('#eventdate').val();
 	var locationinfo = {
 	    lat: parseFloat($("#eventlocationinput").attr('data-lat')),
 	    long: parseFloat($("#eventlocationinput").attr('data-long')),
@@ -319,6 +320,7 @@ var ftdl = {
 	    Location: location,
 	    LocationInfo: locationinfo,
 	    Description: comments,
+			Timed: eventdate,
 	    TimeCreated: Date.now(),
 	    Creator: currentMember,
 	    CompletedBy: ""
@@ -581,7 +583,7 @@ var ftdl = {
 
 	appendList: function(todoInfo, id, timed) {
 		var $todoDiv = $('<div>').addClass('todoDiv').attr("id", id);
-				var $displayTime = $('<p>').addClass('clear descpar').text('Due date: ' + todoInfo.Timed);
+		var $displayTime = $('<p>').addClass('clear descpar').text('Due date: ' + todoInfo.Timed);
 		var $name = $('<span>').text('Item Name: ' + todoInfo.Name).addClass('listitem');		
 		var $imgDiv = $('<div>').addClass('pull-right')
 		var $img1 = $('<img>').attr({'src': 'assets/images/timed_event.jpg', 'title': 'Timed Events'})
@@ -601,14 +603,14 @@ var ftdl = {
 		}
 		$name.append($imgDiv);
 		var $description = $('<p>').addClass('clear descpar').text('Description: ' + todoInfo.Description);
-		$todoDiv.append($name, $description,);
-				if(todoInfo.Timed.length > 0) {
-						$todoDiv.append($displayTime)
-				}
-		if (timed === true) {
-			$(".timedEvents").append($todoDiv);
+		$todoDiv.append($name);
+		if(todoInfo.Timed.length > 0) {
+				$todoDiv.append($displayTime)
 		}
-		if (timed === false) {
+		$todoDiv.append($description,);
+		if (todoInfo.timed.length > 0) {
+			$(".timedEvents").append($todoDiv);
+		} else {
 			$(".todoList").append($todoDiv);
 		}
 	},
@@ -624,7 +626,12 @@ var ftdl = {
 			.addClass('link-icon closeTodo');
 		$imgDiv.append($img1, $img2);
 		var $description = $('<p>').addClass('clear descpar').text('Description: ' + eventInfo.Description);
-		$eventDiv.append($name, $imgDiv, $description);
+		$eventDiv.append($name, $imgDiv);
+		if(eventInfo.Timed.length > 0) {
+			var $displayTime = $('<p>').addClass('clear descpar').text('Event Date: ' + $eventDiv.Timed);
+			$eventDiv.append($displayTime);
+		}
+		$eventDiv.append($description);
 		$(".future-items").append($eventDiv);
 	},
 
