@@ -164,6 +164,11 @@ input[type=radio] {
     font-size: 14px;
 }
 
+.sortable{
+	padding: 10px;
+	border-bottom: 1px solid #eee;
+}
+
 .listitem{
 	margin: 10px 0;
 	font-size: 18px;
@@ -172,7 +177,7 @@ input[type=radio] {
 }
 
 .descpar{
-  margin: 10px 0;
+  margin: 7px 0;
   font-size: 15px;
   font-weight: 500;
   line-height: 1.1;
