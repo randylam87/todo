@@ -631,11 +631,12 @@ var ftdl = {
 			.addClass('link-icon').bind('click', ftdl.retrieveAddress);
 		var $img2 = $('<img>').attr({'src': 'assets/images/delete.png', 'title': 'Delete','todoID': id})
 			.addClass('link-icon closeTodo');
+        var $displayTime = $('<p>').addClass('clear descpar').text('Due date: ' + eventInfo.Timed);
 		$imgDiv.append($img1, $img2);
 		var $description = $('<p>').addClass('clear descpar').text('Description: ' + eventInfo.Description);
 		$eventDiv.append($name, $imgDiv);
 		if(eventInfo.Timed) {
-			var $displayTime = $('<p>').addClass('clear descpar').text('Event Date: ' + $eventDiv.Timed);
+			var $displayTime = $('<p>').addClass('clear descpar').text('Event Date: ' + eventInfo.Timed);
 			$eventDiv.append($displayTime);
 		}
 		$eventDiv.append($description);
