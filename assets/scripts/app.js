@@ -610,9 +610,9 @@ var ftdl = {
 		var $description = $('<p>').addClass('clear descpar').text('Description: ' + todoInfo.Description);
 		$todoDiv.append($name);
 		if(todoInfo.Timed.length > 0) {
-				$todoDiv.append($displayTime)
+			$todoDiv.append($displayTime)
 		}
-		$todoDiv.append($description,);
+		$todoDiv.append($description);
 		if (todoInfo.timed.length > 0) {
 			$(".timedEvents").append($todoDiv);
 		} else {
