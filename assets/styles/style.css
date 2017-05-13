@@ -152,6 +152,10 @@ input[type=radio] {
     font-size: 20px;
 }
 
+#todo-dtpicker{
+  width: 200px;
+}
+
 .currentMemberHeader {
     text-align: center;
 }
