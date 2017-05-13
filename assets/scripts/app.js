@@ -20,6 +20,9 @@ var myLatLong = { lat: 33.644906, lng: -117.834748 };
 
 //Firebase listeners
 //Checks if user is logged in or not
+var workerList = {};
+var workerListItem = {};
+
 firebase.auth().onAuthStateChanged(function(firebaseUser) {
 
 	if (firebaseUser && loggedIn === false) {
@@ -49,9 +52,7 @@ var ftdl = {
 
 	        var todoInfo = snapshot.val();
 
-	        var workerList = {};
 
-	        var workerListItem = {};
 
 	        // Getting an array of each key In the snapshot object
 	        var listKeyArr = Object.keys(todoInfo);
@@ -154,7 +155,8 @@ var ftdl = {
 
         }
 
-        $(".completedStats").html("Completed " + '<span class="badge">'+totalCompleted + '</span>');
+
+    	$(".completedStats").html("Completed " + '<span class="badge">'+totalCompleted + '</span>');
 
         $(".completedStats").append('<div id="totalCompleted" class="collapse">') ;
 
@@ -247,7 +249,7 @@ var ftdl = {
 			.text(members.member);
 		var memberLi = $('<li><a href="#">' + members.member + '</a></li>');
 		$(".memberSelect").append(memberButton);
-		// $("#header-members").append(memberLi); removing header
+		//$("#header-members").append(memberLi); removing header
 	},
 
 	appendList: function(todoInfo, id, timed) {
