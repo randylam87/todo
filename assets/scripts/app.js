@@ -96,7 +96,7 @@ var ftdl = {
 
     },
 
-	appendStats: function(workerList,workerListItem) {
+	appendStats: function() {
 
         var workerListSorted = [];
 
