@@ -149,9 +149,12 @@ input[type=radio] {
 
 .sortable {
     padding: 10px;
-/*    border-bottom: 1px solid #eee;
-*/}
+}
 
+.hline{
+    padding: 10px;
+    border-bottom: 1px solid #eee;  
+}
 .listitem {
     margin: 10px 0;
     font-size: 18px;
