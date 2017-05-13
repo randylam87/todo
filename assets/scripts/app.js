@@ -259,7 +259,9 @@ var ftdl = {
 
 		var $todoDiv = $('<div>').addClass('todoDiv').attr("id", id);
 
-		var $name = $('<h4>').addClass('left');
+		var $name = $('<span>').text('Item Name: ' + todoInfo.Name).addClass('listitem');		
+
+		var $imgDiv = $('<div>').addClass('pull-right')
 
 		var $img1 = $('<img>').attr({'src': 'assets/images/timed_event.jpg', 'title': 'Timed Events'})
 			.addClass('link-icon');
@@ -277,15 +279,15 @@ var ftdl = {
 		var $img5 = $('<img>').attr({ 'src': 'assets/images/notes.png', 'todoID': id, 'data-toggle': 'modal', 'data-target': '#noteModal', 'title': 'Notes' })
 			.addClass('link-icon noteTodo')
 
-		var $span = $('<span>').text(todoInfo.Name);
+		$imgDiv.append($img1, $img2, $img3, $img4, $img5);
 
 		if (todoInfo.Categories != 'Timed Event') {
 			$img1.addClass('hide');
 		}
 
-		$name.append($img1, $img2, $img3, $img4, $img5, $span);
+		$name.append($imgDiv);
 
-		var $description = $('<p>').addClass('clear').text('Description: ' + todoInfo.Description);
+		var $description = $('<p>').addClass('clear descpar').text('Description: ' + todoInfo.Description);
 
 		$todoDiv.append($name, $description);
 
