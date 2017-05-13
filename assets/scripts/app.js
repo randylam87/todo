@@ -231,7 +231,7 @@ var ftdl = {
 		var $eventDiv = $('<div>').addClass('eventDiv').attr("id", id);
 		var $name = $('<span>').text('Event Name: ' + eventInfo.Name).addClass('listitem');
 		var $imgDiv = $('<div>').addClass('pull-right')
-		var $img1 = $('<img>').attr({'src': 'assets/images/location.png', 'title': 'Location'})
+		var $img1 = $('<img>').attr({'src': 'assets/images/location.png', 'title': 'Location'}).addClass('link-icon');
 		var $img2 = $('<img>').attr({'src': 'assets/images/delete.png', 'title': 'Delete','todoID': id})
 			.addClass('link-icon closeTodo');
 		$imgDiv.append($img1, $img2);
