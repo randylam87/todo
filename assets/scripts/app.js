@@ -42,7 +42,6 @@ firebase.auth().onAuthStateChanged(function(firebaseUser) {
 
 
 var ftdl = {
-
 	calStats: function() {
 		database.ref('/Users/' + firebase.auth().currentUser.uid + '/list').on('value', function(snapshot) {
 			if (database.ref('/Users/' + firebase.auth().currentUser.uid + '/list') && currentMember.length > 1) {
