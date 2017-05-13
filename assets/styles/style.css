@@ -1,22 +1,17 @@
 html {
     height: 100%;
     min-width: 320px;
-    /*background: #f4f4f4 url(../images/bg.jpg) repeat top left;*/
-    /*background: #f4f4f4 url(../images/family2.jpeg);
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;*/
 }
 
 body {
     height: 100%;
-    /*background: #f4f4f4 url(../images/bg.jpg) repeat top left;*/
     background: #f4f4f4 url(../images/family2.jpeg);
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
     background-color: honeydew;
     transition: background 0.5s linear;
+    font-family: 'Raleway', sans-serif;
 }
 
 img {
@@ -43,8 +38,11 @@ img {
     border-radius: 12px;
 }
 
-.container-fluid .jumbotron h1 {
-    font-family: 'Lato', sans-serif;
+.container-fluid .jumbotron h1,
+.welcomeHeader,
+.panel-heading,
+h3 {
+    font-family: 'Roboto Condensed', sans-serif;
 }
 
 .container-fluid .jumbotron p {
@@ -75,33 +73,17 @@ img {
     margin: 0 5px 5px;
 }
 
-.firstPagejumbo {
+.firstPagejumbo,
+.completedList {
     display: none;
 }
 
-.timedEvents > div {
-    border: solid 1px orange;
+.timedEvents > div > .listitem{
+    color: orange;
 }
 
 .panel-default>.panel-heading {
     line-height: 32px;
-}
-
-.footer {
-    background-color: #666;
-    color: #ccc;
-    position: fixed;
-    width: 100%;
-    padding: 2vh;
-    bottom: 0;
-    /*    line-height: 40px;*/
-    border-top: 1px solid #ccc;
-    text-align: center;
-    font-size: 14px
-}
-
-.footer p {
-    margin: 0;
 }
 
 .completedList {
@@ -152,8 +134,8 @@ input[type=radio] {
     font-size: 20px;
 }
 
-#todo-dtpicker{
-  width: 200px;
+#todo-dtpicker {
+    width: 200px;
 }
 
 .currentMemberHeader {
@@ -164,36 +146,44 @@ input[type=radio] {
     font-size: 14px;
 }
 
-.sortable{
-	padding: 10px;
-	border-bottom: 1px solid #eee;
+.sortable {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
 }
 
-.listitem{
-	margin: 10px 0;
-	font-size: 18px;
-	font-weight: 500;
-  line-height: 1.8; 
+.listitem {
+    margin: 10px 0;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.8;
 }
 
-.descpar{
-  margin: 7px 0;
-  font-size: 15px;
-  font-weight: 500;
-  line-height: 1.1;
+.descpar {
+    margin: 7px 0;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1.1;
 }
 
-.regBtn,
-.signBtn {
+.btn-primary {
     background-color: #0070B9;
     color: white;
+}
+
+.btn-info {
+    background-color: #4286f4;
+    color: white;
+}
+
+.panel-default > .panel-heading {
+  background-color: #f2f2f2;
 }
 
 @media only screen and (min-width: 992px) {
     .page-main {
         background-image: url('../images/family2.jpeg');
         background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+        background-repeat: no-repeat;
+        background-size: cover;
     }
 }

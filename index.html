@@ -2,440 +2,420 @@
 <html lang="en">
 
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Family To Do List</title>
-	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Dancing+Script|Lato|Oxygen|Raleway" rel="stylesheet">
-	<link rel="stylesheet" href="assets/styles/jquery.datetimepicker.min.css">
-	<link rel="stylesheet" href="assets/styles/style.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Family To Do List</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Dancing+Script|Roboto+Condensed|Raleway" rel="stylesheet">
+    <link rel="stylesheet" href="assets/styles/jquery.datetimepicker.min.css">
+    <link rel="stylesheet" href="assets/styles/style.css">
 </head>
 
 <body>
-	<!-- FIRST PAGE (Register/Login) -->
-	<div class="container-fluid page page-registration">
-		<!-- INITIAL JUMBOTRON SCREEN -->
-		<div class="jumbotron text-center loggedOut firstPagejumbo">
-			<h1>UCI Family To-Do Web App</h1>
-			<p>"The most important time is family time"</p>
-			<!-- REGISTER BUTTON -->
-			<button type="button" class="btn btn-lg regBtn" data-toggle="modal" data-target="#registerModal">Register</button>
-			<!-- Sign In BUTTON -->
-			<button type="button" class="btn btn-lg signBtn" data-toggle="modal" data-target="#signInModal">Sign In</button>
-		</div>
-	</div>
-	<!-- SECOND PAGE (Add/Select Member) -->
-	<div class="container-fluid page page-members">
-		<!-- MEMBER SELECTION -->
-		<div class="row memberDiv">
-			<div class="col-md-12">
-				<div class="panel panel-default">
-					<div class="panel-heading">Members
-						<button type="button" class="pull-right btn btn-danger btnLogout loggedIn" title="Log Out">
-							<span class="fa fa-sign-out"></span>
-						</button>
-						<button id="add-member" type="button" class="pull-right add-member btn btn-primary" data-toggle="modal" data-target="#membermodal" title="Add Member">
-							<span class="fa fa-plus"></span>
-						</button>
-					</div>
-					<div class="panel-body">
-						<div class="memberSelect">
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- THIRD PAGE (Main Page) -->
-	<div class="page page-main">
-		<input type="hidden" id="current-member" value="">
-		<nav class="navbar navbar-default">
-			<div class="container-fluid">
-				<div class="navbar-header">
-					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-						<span class="sr-only">Toggle navigation</span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-					</button>
-					<!-- <div class="navbar-text currentMemberHeader text-center"></div> -->
-					<a class="navbar-brand currentMemberHeader" href="#"></a>
-				</div>
-				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-					<form class="navbar-form navbar-right">
-						<!-- LOG OUT BUTTON -->
-						<button type="button" class='btn btn-danger btnLogout loggedIn'>Log Out</button>
-					</form>
-					<ul id="header-members" class="nav navbar-nav navbar-right"></ul>
-				</div>
-				<!-- /.navbar-collapse -->
-			</div>
-			<!-- /.container-fluid -->
-		</nav>
-		<!-- PAGE AFTER FULL LOGIN -->
-		<div class="container">
-			<div class="row loggedIn">
-				<div class="col-md-8">
-					<div class="panel panel-default">
-						<div class="panel-heading">
-							<!-- ADD TODO ITEM BUTTON -->
-							<p class="panel-title">Today List
-								<button id="addBtn" type="button" class="btn btn-info btn-sm addBtn loggedIn pull-right" data-toggle="modal" data-target="#todoModal">Add To-Do Item</button>
-							</p>
-						</div>
-						<div class="panel-body">
-							<div class="today-event-items">
-							</div>
-							<div class="timedEvents loggedIn sortable">
-								<!-- TIMED EVENTS ITEMS APPENDED HERE -->
-							</div>
-							<div class="todoList loggedIn sortable">
-								<!-- TODO ITEMS APPENDED HERE -->
-							</div>
-							<div class="completedList loggedIn">
-								<!-- COMPLETED TODO ITEMS APPENDED HERE -->
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="row">
-						<div class="col-md-12">
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<!-- ADD EVENT BUTTON -->
-									<p class="panel-title">Up Coming List
-										<button id="addEventBtn" type="button" class="btn btn-info btn-sm addEventBtn loggedIn pull-right" data-toggle="modal" data-target="#eventModal">Add Event Item</button>
-									</p>
-								</div>
-								<div class="panel-body">
-									<div class="future-items">
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-12">
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<h3 class="panel-title">Stats Corner</h3>
-								</div>
-								<div class="panel-body">
-									<div class="list-group general-stats"> 
-
-										<!-- <a href="#" class="list-group-item totalStats" ></a> -->
-										<a href="#" class="list-group-item completedStats" data-toggle="collapse" data-target="#totalCompleted">No Data</a>
-
-									</div>
-									
-									<div class="list-group member-stats"> 
-
-
-									</div>
-										
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- loggedIn row -->
-	</div>
-	<!-- container -->
-	</div>
-	<!-- page-main -->
-	<!-- Footer -->
-	<div class="footer">
-		<div class="container">
-			<p class="text-center">&copy; Copyright
-				<script>
-				document.write(new Date().getFullYear())
-				</script>
-			</p>
-		</div>
-	</div>
-	<!-- Register MODAL -->
-	<div class="modal fade" id="registerModal" role="dialog">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h3 class="modal-title">Register</h3>
-				</div>
-				<div class="modal-body">
-					<form id="register">
-						<div class="form-group">
-							<label for="familyReg">Family's Name</label>
-							<input type="text" class="form-control regForm" id="familyReg" placeholder="Enter Family Name" required>
-						</div>
-						<div class="form-group">
-							<label for="memberReg">Your Name</label>
-							<input type="text" class="form-control regForm" id="memberReg" placeholder="Enter Your Name" required>
-						</div>
-						<div class="form-group">
-							<label for="emailReg">E-mail</label>
-							<input type="email" class="form-control regForm" id="emailReg" required>
-						</div>
-						<div class="form-group">
-							<label for="pwReg">Password:</label>
-							<input type="password" class="form-control regForm" id="pwReg" required>
-						</div>
-						<button id="registerbtn" type="button" class="btnRegister btn btn-primary">Register</button>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- Sign In MODAL-->
-	<div class="modal fade" id="signInModal" role="dialog">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h3 class="modal-title">Sign In</h3>
-				</div>
-				<div class="modal-body">
-					<form id="login">
-						<div class="form-group">
-							<label for="emailSignIn">E-mail</label>
-							<input type="email" class="form-control" id="emailSignIn" required>
-						</div>
-						<div class="form-group">
-							<label for="pwSignIn">Password:</label>
-							<input type="password" class="form-control" id="pwSignIn" required>
-						</div>
-						<button id="loginbtn" type="button" class="btnLogin btn btn-primary">Sign In</button>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- PAGE 3 MODALS -->
-	<!-- ADD TODO ITEM MODAL-->
-	<div class="modal fade" id="todoModal" role="dialog">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h3 class="modal-title">Add To-Do Item</h3>
-				</div>
-				<div class="modal-body">
-					<form id='submittodo'>
-						<div class="form-group">
-							<label for="todoName">To-Do Name</label>
-							<input type="text" class="form-control" id="todoName" placeholder="Enter To-Do Task Name" required>
-						</div>
-						<div class="form-group">
-							<label for="todoCatInput">Categories</label>
-							<select class="form-control" id="todoCatInput">
-								<option>Shopping</option>
-								<option>Appointment</option>
-								<option>Pick Up</option>
-								<option>Drop Off</option>
-								<option>Other</option>
-							</select>
-						</div>
-						<div class="form-group dtpicker">
-							<label for="">Timed item? </label>
-							<label class="radio-inline">
-							  <input type="radio" name="timedtodo" id="notimed" value="notimed" checked>
-							  <span class="fa fa-times"></span>
-							</label>
-							<label class="radio-inline">
-							  <input type="radio" name="timedtodo" id="timed" value="timed">
-							  <span class="fa fa-clock-o"></span>
-							</label>
-							<input type="text" id="todo-dtpicker" class="hide" value="">
-						</div>
-						<div class="form-group">
-							<label for="locationinput">Enter the location and find the address on Map.</label>
-							<div class="input-group">
-								<input type="text" id="locationinput" class="form-control" placeholder="Enter Location">
-								<div class="input-group-addon link-icon openmap" data-toggle="modal" data-target="#mapmodal">
-									<span class="fa fa-location-arrow"></span>
-								</div>
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="todoComments">Description</label>
-							<textarea class="form-control" id="todoComments" rows="3"></textarea>
-						</div>
-						<button id="todobtn" type="button" class="todoSubmit btn btn-primary">Submit</button>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- ADD EVENT MODAL-->
-	<div class="modal fade" id="eventModal" role="dialog">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h3 class="modal-title">Add Event Item</h3>
-				</div>
-				<div class="modal-body">
-					<form id='submitevent'>
-						<div class="form-group">
-							<label for="eventName">To-Do Name</label>
-							<input type="text" class="form-control" id="eventName" placeholder="Enter Event Name" required>
-						</div>
-						<div class="form-group">
-							<label for="eventdate">Event Date &amp; Time</label>
-							<input type="text" id="eventdate" class="form-control" placeholder="Date" required>
-						</div>
-						<div class="form-group">
-							<label for="eventCatInput">Categories</label>
-							<select class="form-control" id="eventCatInput">
-								<option>Birthday</option>
-								<option>Wedding</option>
-								<option>Anniversary</option>
-								<option>Holiday</option>
-								<option>Other</option>
-							</select>
-						</div>
-						<div class="form-group">
-							<label for="eventlocationinput">Enter the location and find the address on Map.</label>
-							<div class="input-group">
-								<input type="text" id="eventlocationinput" class="form-control" placeholder="Enter Location">
-								<div class="input-group-addon link-icon openmap" data-toggle="modal" data-target="#mapmodal">
-									<span class="fa fa-location-arrow"></span>
-								</div>
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="eventComments">Description</label>
-							<textarea class="form-control" id="eventComments" rows="3"></textarea>
-						</div>
-						<button id="eventbtn" type="button" class="eventSubmit btn btn-primary">Submit</button>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- ADD MEMBER MODAL-->
-	<div class="modal fade" id="membermodal" role="dialog">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h3 class="modal-title">Add a Family Member</h3>
-				</div>
-				<div class="modal-body">
-					<form class="add-member">
-						<div class="form-group">
-							<label for="memberAdd">Family Member's Name</label>
-							<input type="text" class="form-control" id="memberAdd" placeholder="Enter Family Name" required>
-						</div>
-						<button id="memberbtn" type="button" class="btn btn-primary">Add Member</button>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- MAP MODAL-->
-	<div class="modal fade" id="mapmodal" role="dialog">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<input type="hidden" id="data-input" value="">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h3 class="modal-title">Location</h3>
-				</div>
-				<div class="modal-body">
-					<form class="form-inline">
-						<div class="form-group">
-							<div class="input-group">
-								<div class="input-group-addon"><span class="fa fa-map-signs"></span></div>
-								<input type="text" class="form-control" id="addresstext" placeholder="Address">
-							</div>
-							<button id="findlocation" type="button" class="btn btn-primary"><span class="fa fa-map-marker" title="Find on map"></span></button>
-							<button id="recenter" type="button" class="btn btn-primary" title="Recenter"><span class="fa fa-dot-circle-o"></span></button>
-							<button id="loc-confirm" type="button" class="btn btn-primary" title="Confirm location"><span class="fa fa-check"></span></button>
-						</div>
-					</form>
-					<div id="map"></div>
-					<div id="mapinfo">
-						<p id="address"></p>
-						<p>
-							<font>Lat: <span id="clicklat"></span>&nbsp;, &nbsp;Long: <span id="clicklng"></span></font>
-						</p>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- NOTE MODAL-->
-	<div class="modal fade" id="noteModal" role="dialog">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h3 class="modal-title note-title"></h3>
-				</div>
-				<div class="modal-body">
-					<div class="row">
-						<div class="note-display col-lg-12"></div>
-					</div>
-				</div>
-				<div class='modal-footer'>
-					<form id='note-input'>
-						<div class='form-group'>
-							<input type="text" class="form-control" id="note" placeholder="Please enter text...">
-						</div>
-						<button type="button" class="btn btn-primary align-left" id='btn-note'>Add Note</button>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- Stats Corner Modal -->
-	<!-- Modal -->
-	<div class="modal fade" id="statsModal" role="dialog">
-		<div class="modal-dialog">
-			<!-- Modal content-->
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h4 class="modal-title">Details</h4>
-				</div>
-				<div class="modal-body">
-					<p>Some text in the modal.</p>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				</div>
-			</div>
-		</div>
-	</div>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-	<script src="assets/scripts/moment.js"></script>
-	<script src="assets/scripts/jquery.datetimepicker.full.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBfTYa8j8QJw6aDJoshnn5dVEWDBf5HS9Y&amp;callback=ftdl.initMap" async defer></script>
-	<script src="assets/scripts/app.js"></script>
+    <!-- FIRST PAGE (Register/Login) -->
+    <div class="container-fluid page page-registration">
+        <!-- INITIAL JUMBOTRON SCREEN -->
+        <div class="jumbotron text-center loggedOut firstPagejumbo">
+            <h1>Family To-Do Web App</h1>
+            <p>"The most important time is family time"</p>
+            <!-- REGISTER BUTTON -->
+            <button type="button" class="btn btn-lg regBtn btn-primary" data-toggle="modal" data-target="#registerModal">Register</button>
+            <!-- Sign In BUTTON -->
+            <button type="button" class="btn btn-lg signBtn btn-primary" data-toggle="modal" data-target="#signInModal">Sign In</button>
+        </div>
+    </div>
+    <!-- SECOND PAGE (Add/Select Member) -->
+    <div class="container-fluid page page-members">
+        <!-- MEMBER SELECTION -->
+        <div class="row memberDiv">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Members
+                        <button type="button" class="pull-right btn btn-danger btnLogout loggedIn" title="Log Out">
+                            <span class="fa fa-sign-out"></span>
+                        </button>
+                        <button id="add-member" type="button" class="pull-right add-member btn btn-primary" data-toggle="modal" data-target="#membermodal" title="Add Member">
+                            <span class="fa fa-plus"></span>
+                        </button>
+                    </div>
+                    <div class="panel-body">
+                        <div class="memberSelect">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- THIRD PAGE (Main Page) -->
+    <div class="page page-main">
+        <input type="hidden" id="current-member" value="">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <!-- <div class="navbar-text currentMemberHeader text-center"></div> -->
+                    <a class="navbar-brand currentMemberHeader" href="#"></a>
+                </div>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <form class="navbar-form navbar-right">
+                        <!-- LOG OUT BUTTON -->
+                        <button type="button" class='btn btn-danger btnLogout loggedIn'>Log Out</button>
+                    </form>
+                    <ul id="header-members" class="nav navbar-nav navbar-right"></ul>
+                </div>
+                <!-- /.navbar-collapse -->
+            </div>
+            <!-- /.container-fluid -->
+        </nav>
+        <!-- PAGE AFTER FULL LOGIN -->
+        <div class="container">
+            <div class="row loggedIn">
+                <div class="col-md-8">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <!-- ADD TODO ITEM BUTTON -->
+                            <p class="panel-title">To-Do List
+                                <button id="addBtn" type="button" class="btn btn-info btn-sm addBtn loggedIn pull-right" data-toggle="modal" data-target="#todoModal">Add To-Do Item</button>
+                            </p>
+                        </div>
+                        <div class="panel-body">
+                            <div class="today-event-items">
+                            </div>
+                            <div class="timedEvents loggedIn sortable">
+                                <!-- TIMED EVENTS ITEMS APPENDED HERE -->
+                            </div>
+                            <div class="todoList loggedIn sortable">
+                                <!-- TODO ITEMS APPENDED HERE -->
+                            </div>
+                            <div class="completedList loggedIn">
+                                <!-- COMPLETED TODO ITEMS APPENDED HERE **FUTURE USE**-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <!-- ADD EVENT BUTTON -->
+                                    <p class="panel-title">Events
+                                        <button id="addEventBtn" type="button" class="btn btn-info btn-sm addEventBtn loggedIn pull-right" data-toggle="modal" data-target="#eventModal">Add Event Item</button>
+                                    </p>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="future-items">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Completed Task Leaderboard</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="list-group member-stats">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- loggedIn row -->
+    </div>
+    <!-- container -->
+    </div>
+    <!-- page-main -->
+    <!-- Register MODAL -->
+    <div class="modal fade" id="registerModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h3 class="modal-title">Register</h3>
+                </div>
+                <div class="modal-body">
+                    <form id="register">
+                        <div class="form-group">
+                            <label for="familyReg">Family's Name</label>
+                            <input type="text" class="form-control regForm" id="familyReg" placeholder="Enter Family Name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="memberReg">Your Name</label>
+                            <input type="text" class="form-control regForm" id="memberReg" placeholder="Enter Your Name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="emailReg">E-mail</label>
+                            <input type="email" class="form-control regForm" id="emailReg" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="pwReg">Password:</label>
+                            <input type="password" class="form-control regForm" id="pwReg" required>
+                        </div>
+                        <button id="registerbtn" type="button" class="btnRegister btn btn-primary">Register</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Sign In MODAL-->
+    <div class="modal fade" id="signInModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h3 class="modal-title">Sign In</h3>
+                </div>
+                <div class="modal-body">
+                    <form id="login">
+                        <div class="form-group">
+                            <label for="emailSignIn">E-mail</label>
+                            <input type="email" class="form-control" id="emailSignIn" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="pwSignIn">Password:</label>
+                            <input type="password" class="form-control" id="pwSignIn" required>
+                        </div>
+                        <button id="loginBtn" type="button" class="btnLogin btn btn-primary">Sign In</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- PAGE 3 MODALS -->
+    <!-- ADD TODO ITEM MODAL-->
+    <div class="modal fade" id="todoModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h3 class="modal-title">Add To-Do Item</h3>
+                </div>
+                <div class="modal-body">
+                    <form id='submittodo'>
+                        <div class="form-group">
+                            <label for="todoName">To-Do Name</label>
+                            <input type="text" class="form-control" id="todoName" placeholder="Enter To-Do Task Name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="todoCatInput">Categories</label>
+                            <select class="form-control" id="todoCatInput">
+                                <option>Shopping</option>
+                                <option>Appointment</option>
+                                <option>Pick Up</option>
+                                <option>Drop Off</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group dtpicker">
+                            <label for="">Timed item? </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="timedtodo" id="notimed" value="notimed" checked>
+                                <span class="fa fa-times"></span>
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="timedtodo" id="timed" value="timed">
+                                <span class="fa fa-clock-o"></span>
+                            </label>
+                            <input type="text" id="todo-dtpicker" class="hide" value="">
+                        </div>
+                        <div class="form-group">
+                            <label for="locationinput">Enter the location and find the address on Map.</label>
+                            <div class="input-group">
+                                <input type="text" id="locationinput" class="form-control" placeholder="Enter Location">
+                                <div class="input-group-addon link-icon openmap" data-toggle="modal" data-target="#mapmodal">
+                                    <span class="fa fa-location-arrow"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="todoComments">Description</label>
+                            <textarea class="form-control" id="todoComments" rows="3"></textarea>
+                        </div>
+                        <button id="todobtn" type="button" class="todoSubmit btn btn-primary">Submit</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ADD EVENT MODAL-->
+    <div class="modal fade" id="eventModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h3 class="modal-title">Add Event Item</h3>
+                </div>
+                <div class="modal-body">
+                    <form id='submitevent'>
+                        <div class="form-group">
+                            <label for="eventName">To-Do Name</label>
+                            <input type="text" class="form-control" id="eventName" placeholder="Enter Event Name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="eventdate">Event Date &amp; Time</label>
+                            <input type="text" id="eventdate" class="form-control" placeholder="Date" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="eventCatInput">Categories</label>
+                            <select class="form-control" id="eventCatInput">
+                                <option>Birthday</option>
+                                <option>Wedding</option>
+                                <option>Anniversary</option>
+                                <option>Holiday</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="eventlocationinput">Enter the location and find the address on Map.</label>
+                            <div class="input-group">
+                                <input type="text" id="eventlocationinput" class="form-control" placeholder="Enter Location">
+                                <div class="input-group-addon link-icon openmap" data-toggle="modal" data-target="#mapmodal">
+                                    <span class="fa fa-location-arrow"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="eventComments">Description</label>
+                            <textarea class="form-control" id="eventComments" rows="3"></textarea>
+                        </div>
+                        <button id="eventbtn" type="button" class="eventSubmit btn btn-primary">Submit</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ADD MEMBER MODAL-->
+    <div class="modal fade" id="membermodal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h3 class="modal-title">Add a Family Member</h3>
+                </div>
+                <div class="modal-body">
+                    <form class="add-member">
+                        <div class="form-group">
+                            <label for="memberAdd">Family Member's Name</label>
+                            <input type="text" class="form-control" id="memberAdd" placeholder="Enter Family Name" required>
+                        </div>
+                        <button id="memberbtn" type="button" class="btn btn-primary">Add Member</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- MAP MODAL-->
+    <div class="modal fade" id="mapmodal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <input type="hidden" id="data-input" value="">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h3 class="modal-title">Location</h3>
+                </div>
+                <div class="modal-body">
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-addon"><span class="fa fa-map-signs"></span></div>
+                                <input type="text" class="form-control" id="addresstext" placeholder="Address">
+                            </div>
+                            <button id="findlocation" type="button" class="btn btn-primary"><span class="fa fa-map-marker" title="Find on map"></span></button>
+                            <button id="recenter" type="button" class="btn btn-primary" title="Recenter"><span class="fa fa-dot-circle-o"></span></button>
+                            <button id="loc-confirm" type="button" class="btn btn-primary" title="Confirm location"><span class="fa fa-check"></span></button>
+                        </div>
+                    </form>
+                    <div id="map"></div>
+                    <div id="mapinfo">
+                        <p id="address"></p>
+                        <p>
+                            <font>Lat: <span id="clicklat"></span>&nbsp;, &nbsp;Long: <span id="clicklng"></span></font>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- NOTE MODAL-->
+    <div class="modal fade" id="noteModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h3 class="modal-title note-title"></h3>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="note-display col-lg-12"></div>
+                    </div>
+                </div>
+                <div class='modal-footer'>
+                    <div id='note-input'>
+                        <div class='form-group'>
+                            <input type="text" class="form-control" id="note" placeholder="Please enter text...">
+                        </div>
+                        <button type="button" class="btn btn-primary align-left" id='btn-note'>Add Note</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Stats Corner Modal -->
+    <!-- Modal -->
+    <div class="modal fade" id="statsModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Details</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Some text in the modal.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="assets/scripts/moment.js"></script>
+    <script src="assets/scripts/jquery.datetimepicker.full.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBfTYa8j8QJw6aDJoshnn5dVEWDBf5HS9Y&amp;callback=ftdl.initMap" async defer></script>
+    <script src="assets/scripts/app.js"></script>
 </body>
 
 </html>
