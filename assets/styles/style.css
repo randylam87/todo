@@ -164,6 +164,20 @@ input[type=radio] {
     font-size: 14px;
 }
 
+.listitem{
+	margin: 10px 0;
+	font-size: 18px;
+	font-weight: 500;
+  line-height: 1.8; 
+}
+
+.descpar{
+  margin: 10px 0;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.1;
+}
+
 .regBtn,
 .signBtn {
     background-color: #0070B9;
