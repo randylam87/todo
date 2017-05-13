@@ -45,7 +45,7 @@ var ftdl = {
 
 	calStats: function() {
 		database.ref('/Users/' + firebase.auth().currentUser.uid + '/list').on('value', function(snapshot) {
-			if (database.ref('/Users/' + firebase.auth().currentUser.uid + '/list')) {
+			if (database.ref('/Users/' + firebase.auth().currentUser.uid + '/list') && currentMember.length > 1) {
 				var todoInfo = snapshot.val();
 				var creatorList = {};
 				var workerList = {};
@@ -121,7 +121,7 @@ var ftdl = {
 	changeLogInBtn: function(currentMember) {
 		if (currentMember.length > 0) {
 			ftdl.showPage3();
-			$(".currentMemberHeader").html('Welcome ' + currentMember + "!");
+			$(".currentMemberHeader").html('<div>Welcome ' + currentMember + " to the " + firebase.auth().currentUser.displayName + ' family to-do list!</div>');
 		}
 	},
 
@@ -209,23 +209,20 @@ var ftdl = {
 
 		var $name = $('<h4>').addClass('left');
 
-		var $img1 = $('<img>').attr('src', 'assets/images/timed_event.jpg')
+		var $img1 = $('<img>').attr({'src': 'assets/images/timed_event.jpg', 'title': 'Timed Events'})
 			.addClass('link-icon');
 
 		var $img2 = $('<img>').attr({
-				'src': 'assets/images/location.png',
-				'data-toggle': 'modal',
-				'data-target': '#mapModal'
-			})
+				'src': 'assets/images/location.png','data-toggle': 'modal', 'data-target': '#mapModal', 'title': 'Map'})
 			.addClass('link-icon');
 
-		var $img3 = $('<img>').attr({ 'src': 'assets/images/check.png', 'todoID': id })
+		var $img3 = $('<img>').attr({ 'src': 'assets/images/check.png', 'todoID': id, 'title': 'Mark as completed'})
 			.addClass('link-icon completeTodo');
 
-		var $img4 = $('<img>').attr({ 'src': 'assets/images/delete.png', 'todoID': id })
+		var $img4 = $('<img>').attr({ 'src': 'assets/images/delete.png', 'todoID': id, 'title': 'Delete item'})
 			.addClass('link-icon closeTodo');
 
-		var $img5 = $('<img>').attr({ 'src': 'assets/images/notes.png', 'todoID': id, 'data-toggle': 'modal', 'data-target': '#noteModal' })
+		var $img5 = $('<img>').attr({ 'src': 'assets/images/notes.png', 'todoID': id, 'data-toggle': 'modal', 'data-target': '#noteModal', 'title': 'Notes' })
 			.addClass('link-icon noteTodo')
 
 		var $span = $('<span>').text(todoInfo.Name);
@@ -247,6 +244,7 @@ var ftdl = {
 		if (timed === false) {
 			$(".todoList").append($todoDiv);
 		}
+
 	},
 
 	appendComplete: function(completeInfo, id) {
@@ -436,6 +434,7 @@ var ftdl = {
 		bgInterval = undefined;
 		photoArray = [];
 		$('body').css("background-image", "none");
+
 	},
 
 	findPhotoID: function() {
@@ -665,7 +664,46 @@ $('#registerbtn').on('click', function(event) { ftdl.registerSubmit(event) });
 $('#todobtn').on('click', function(event) { ftdl.todoSubmit(event) });
 $('#eventbtn').on('click', function(event) { ftdl.eventSubmit(event) });
 $('#memberbtn').on('click', function(event) { ftdl.btnAddMember(event) });
-// $('#btn-note').on('click', function(event) { ftdl.saveNote(event) });
+//on enter keypress listeners
+$('#register').keypress(function(e) {
+	var key = e.which;
+	if (key == 13) // the enter key code
+	{
+		ftdl.registerSubmit(event);
+	}
+});
+$('#login').keypress(function(e) {
+	var key = e.which;
+	if (key == 13) // the enter key code
+	{
+		ftdl.loginSubmit(event);
+	}
+});
+$('.add-member').keypress(function(e) {
+	var key = e.which;
+	if (key == 13) // the enter key code
+	{
+		ftdl.btnAddMember(event);
+	}
+});
+
+$('#submitTodo').keypress(function(e) {
+	var key = e.which;
+	if (key == 13) // the enter key code
+	{
+		ftdl.todoSubmit(event);
+	}
+});
+
+$('#submitEvent').keypress(function(e) {
+	var key = e.which;
+	if (key == 13) // the enter key code
+	{
+		ftdl.eventSubmit(event);
+	}
+});
+
+
 
 //Map
 $('#mapModal').on('shown.bs.modal', function() { ftdl.initMap() });
@@ -701,3 +739,5 @@ $('.dtpicker input[type=radio]').change(function() {
 // 	dayOfWeekStart: 1,
 // 	step: 15
 // });
+
+
