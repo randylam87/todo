@@ -197,59 +197,60 @@ var ftdl = {
         $("#header-members").append(memberLi); //removing header
     },
 
-    appendList: function(todoInfo, id, timed) {
-        var $todoDiv = $('<div>').addClass('todoDiv').attr("id", id);
-        var $name = $('<span>').text('Name: ' + todoInfo.Name).addClass('listitem');
-        var $imgDiv = $('<div>').addClass('pull-right')
-        var $img1 = $('<img>').attr({ 'src': 'assets/images/timed_event.jpg', 'title': 'Timed Events' }).addClass('link-icon');
-        var $img2 = $('<img>').attr({'src': 'assets/images/location.png','data-toggle': 'modal','data-target': '#mapModal','title': 'Map'}).addClass('link-icon');
-        var $img3 = $('<img>').attr({ 'src': 'assets/images/check.png', 'todoID': id, 'title': 'Mark as completed' }).addClass('link-icon completeTodo');
-        var $img4 = $('<img>').attr({ 'src': 'assets/images/delete.png', 'todoID': id, 'title': 'Delete item' }).addClass('link-icon closeTodo');
-        var $img5 = $('<img>').attr({ 'src': 'assets/images/notes.png', 'todoID': id, 'data-toggle': 'modal', 'data-target': '#noteModal', 'title': 'Notes' }).addClass('link-icon noteTodo')
+	appendList: function(todoInfo, id, timed) {
+		var $todoDiv = $('<div>').addClass('todoDiv').attr("id", id);
+		var $name = $('<span>').text('Item Name: ' + todoInfo.Name).addClass('listitem');		
+		var $imgDiv = $('<div>').addClass('pull-right')
+		var $img1 = $('<img>').attr({'src': 'assets/images/timed_event.jpg', 'title': 'Timed Events'})
+			.addClass('link-icon');
+		var $img2 = $('<img>').attr({
+				'src': 'assets/images/location.png','data-toggle': 'modal', 'data-target': '#mapModal', 'title': 'Map'})
+			.addClass('link-icon');
+		var $img3 = $('<img>').attr({ 'src': 'assets/images/check.png', 'todoID': id, 'title': 'Mark as completed'})
+			.addClass('link-icon completeTodo');
+		var $img4 = $('<img>').attr({ 'src': 'assets/images/delete.png', 'todoID': id, 'title': 'Delete item'})
+			.addClass('link-icon closeTodo');
+		var $img5 = $('<img>').attr({ 'src': 'assets/images/notes.png', 'todoID': id, 'data-toggle': 'modal', 'data-target': '#noteModal', 'title': 'Notes' })
+			.addClass('link-icon noteTodo')
+		$imgDiv.append($img1, $img2, $img3, $img4, $img5);
+		if (todoInfo.Categories != 'Timed Event') {
+			$img1.addClass('hide');
+		}
+		$name.append($imgDiv);
+		var $description = $('<p>').addClass('clear descpar').text('Description: ' + todoInfo.Description);
+		$todoDiv.append($name, $description);
+		if (timed === true) {
+			$(".timedEvents").append($todoDiv);
+		}
+		if (timed === false) {
+			$(".todoList").append($todoDiv);
+		}
+	},
 
-        $imgDiv.append($img1, $img2, $img3, $img4, $img5);
+	appendEvent: function(eventInfo, id) {
+		var $eventDiv = $('<div>').addClass('eventDiv').attr("id", id);
+		var $name = $('<span>').text('Event Name: ' + eventInfo.Name).addClass('listitem');
+		var $imgDiv = $('<div>').addClass('pull-right')
+		var $img1 = $('<img>').attr({'src': 'assets/images/location.png', 'title': 'Location'})
+		var $img2 = $('<img>').attr({'src': 'assets/images/delete.png', 'title': 'Delete','todoID': id})
+			.addClass('link-icon closeTodo');
+		$imgDiv.append($img1, $img2);
+		var $description = $('<p>').addClass('clear descpar').text('Description: ' + eventInfo.Description);
+		$eventDiv.append($name, $imgDiv, $description);
+		$(".future-items").append($eventDiv);
+	},
 
-        if (todoInfo.Categories != 'Timed Event') {
-            $img1.addClass('hide');
-        }
-
-        $name.append($imgDiv);
-
-        var $description = $('<p>').addClass('clear descpar').text('Description: ' + todoInfo.Description);
-
-        $todoDiv.append($name, $description);
-
-        if (timed === true) {
-            $(".timedEvents").append($todoDiv);
-        }
-        if (timed === false) {
-            $(".todoList").append($todoDiv);
-        }
-
-    },
-
-    appendComplete: function(completeInfo, id) {
-        var completeDiv = $("<div class='eventDiv'>");
-        var name = $('<h4 class="left">' + '<img src="assets/images/check.png" todoID="' + id + '"></img>' + completeInfo.Name + "</h4>");
-        var description = $('<p class="clear"> Completed By: ' + completeInfo.CompletedBy + "</p>");
-        completeDiv.attr("id", id);
-        completeDiv.append(name);
-        completeDiv.append(description);
-        $(".completedList").append(completeDiv);
-    },
-
-    appendEvent: function(eventInfo, id) {
-        var eventDiv = $("<div class='eventDiv'>");
-        var catIcon;
-        var name = $('<h4 class="left">' + '</img><img src="assets/images/location.png"></img>' + '<img src="assets/images/delete.png" todoID="' + id + '" class="closeTodo">' + '</img>' + eventInfo.Name + "</h4>");
-        var description = $('<p class="clear"> Description: ' + eventInfo.Description + "</p>");
-
-        eventDiv.attr("id", id);
-        eventDiv.append(name);
-        eventDiv.append(description);
-        $(".future-items").append(eventDiv);
-
-    },
+	appendComplete: function(completeInfo, id) {
+		var $completeDiv = $('<div>').addClass('eventDiv').attr("id", id);
+		var $name = $('<span>').text('Item Name: ' + completeInfo.Name).addClass('listitem');
+		var $imgDiv = $('<div>').addClass('pull-right')
+		var $img1 = $('<img>').attr({'src': 'assets/images/check.png', 'title': 'Completed','todoID': id})
+			.addClass('link-icon');
+		$imgDiv.append($img1);
+		var $description = $('<p>').addClass('clear descpar').text('Completed By: ' + completeInfo.CompletedBy);
+		$completeDiv.append($name, $imgDiv, $description);
+		$(".completedList").append($completeDiv);
+	},
 
     deleteTodo: function() {
         var todoNumber = $(this).attr("todoID");
