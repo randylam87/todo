@@ -5,11 +5,11 @@ html {
 
 body {
     height: 100%;
-    background: #f4f4f4 url(../images/family2.jpeg);
+    background: url(../images/bg.gif) repeat top left;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    background-color: honeydew;
+/*     background-color: honeydew; */
     transition: background 0.5s linear;
     font-family: 'Raleway', sans-serif;
 }
