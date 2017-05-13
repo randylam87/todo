@@ -269,65 +269,70 @@ var ftdl = {
 
 	//TODO SUBMIT BUTTON
 	todoSubmit: function(e) {
-	e.preventDefault();
-	$('#todoModal').modal('hide');
-	var name = $("#todoName").val();
-	var cat = $("#todoCatInput").val();
-	var location = $("#locationinput").val();
-	var locationinfo = {
-	    lat: parseFloat($("#locationinput").attr('data-lat')),
-	    long: parseFloat($("#locationinput").attr('data-long')),
-	    address: $("#locationinput").attr('data-address')
-	};
-	var comments = $("#todoComments").val();
-	var todoTime = $("#todo-dtpicker").val();
-	database.ref('/Users/' + firebase.auth().currentUser.uid + '/list').push({
-	    Name: name,
-	    Categories: cat,
-	    Location: location,
-	    LocationInfo: locationinfo,
-	    Timed: todoTime,
-	    TimeCreated: Date.now(),
-	    Description: comments,
-	    Creator: currentMember,
-	    Status: "not complete"
-	});
+		e.preventDefault();
+		$('#todoModal').modal('hide');
+		var name = $("#todoName").val();
+		var cat = $("#todoCatInput").val();
+		var location = $("#locationinput").val();
+		var locationinfo = {
+				lat: parseFloat($("#locationinput").attr('data-lat')),
+				long: parseFloat($("#locationinput").attr('data-long')),
+				address: $("#locationinput").attr('data-address')
+		};
+		var comments = $("#todoComments").val();
+		var todoTime = $("#todo-dtpicker").val();
+		database.ref('/Users/' + firebase.auth().currentUser.uid + '/list').push({
+				Name: name,
+				Categories: cat,
+				Location: location,
+				LocationInfo: locationinfo,
+				Timed: todoTime,
+				TimeCreated: Date.now(),
+				Description: comments,
+				Creator: currentMember,
+				Status: "not complete"
+		});
 
-	$("#locationinput").removeAttr('data-lat');
-	$("#locationinput").removeAttr('data-long');
-	$("#locationinput").removeAttr('data-address');
+		$("#locationinput").removeAttr('data-lat');
+		$("#locationinput").removeAttr('data-long');
+		$("#locationinput").removeAttr('data-address');
 
-	$("#submittodo").trigger('reset');
+		$("#submittodo").trigger('reset');
 	},
 
 	//EVENT SUBMIT BUTTON
 	eventSubmit: function(e) {
-	e.preventDefault();
-	$('#eventModal').modal('hide');
-	var name = $("#eventName").val();
-	var cat = $("#eventCatInput").val();
-	var location = $("#eventlocationinput").val();
-	var eventdate = $('#eventdate').val();
-	var locationinfo = {
-	    lat: parseFloat($("#eventlocationinput").attr('data-lat')),
-	    long: parseFloat($("#eventlocationinput").attr('data-long')),
-	    address: $("#eventlocationinput").attr('data-address')
-	};
-	var comments = $("#eventComments").val();
-	database.ref('/Users/' + firebase.auth().currentUser.uid + '/event').push({
-	    Name: name,
-	    Categories: cat,
-	    Location: location,
-	    LocationInfo: locationinfo,
-	    Description: comments,
-			Timed: eventdate,
-	    TimeCreated: Date.now(),
-	    Creator: currentMember,
-	    CompletedBy: ""
-
-	});
-
-	$("#submitevent").trigger('reset');
+		e.preventDefault();
+		$('#eventModal').modal('hide');
+		var name = $("#eventName").val();
+		var cat = $("#eventCatInput").val();
+		var location = $("#eventlocationinput").val();
+		var eventdate = $('#eventdate').val();
+		var locationinfo = {
+				lat: parseFloat($("#eventlocationinput").attr('data-lat')),
+				long: parseFloat($("#eventlocationinput").attr('data-long')),
+				address: $("#eventlocationinput").attr('data-address')
+		};
+		if($.type(locationinfo.lat) !== 'number'){
+			locationinfo = {
+				lat: 0,
+				long: 0,
+				address: ''
+			};
+		};
+		var comments = $("#eventComments").val();
+		database.ref('/Users/' + firebase.auth().currentUser.uid + '/event').push({
+				Name: name,
+				Categories: cat,
+				Location: location,
+				LocationInfo: locationinfo,
+				Description: comments,
+				Timed: eventdate,
+				TimeCreated: Date.now(),
+				Creator: currentMember,
+				CompletedBy: ""
+		});
+		$("#submitevent").trigger('reset');
 	},
 
 	//ADD MEMBER BUTTON
@@ -369,48 +374,48 @@ var ftdl = {
 	},
 
 	findPhotoID: function() {
-	$.ajax({
-	    url: "https://api.flickr.com/services/rest/?",
-	    data: {
-		method: "flickr.photos.search",
-		api_key: "5a14553fa4191a526048889fe5a012bf",
-		format: "json",
-		user_id: "154480674@N02",
-		nojsoncallback: "?"
-	    }
-	}).done(function(response) {
-	    for (i = 0; i < 5; i++) {
-		ftdl.getPhotoFromID(response.photos.photo[i].id);
-	    }
-	});
+		$.ajax({
+				url: "https://api.flickr.com/services/rest/?",
+				data: {
+			method: "flickr.photos.search",
+			api_key: "5a14553fa4191a526048889fe5a012bf",
+			format: "json",
+			user_id: "154480674@N02",
+			nojsoncallback: "?"
+				}
+		}).done(function(response) {
+				for (i = 0; i < 5; i++) {
+			ftdl.getPhotoFromID(response.photos.photo[i].id);
+				}
+		});
 	},
 
 	getPhotoFromID: function(photoID) {
 
 	$.ajax({
 	    url: "https://api.flickr.com/services/rest/?",
-	    data: {
-		method: "flickr.photos.getSizes",
-		api_key: "5a14553fa4191a526048889fe5a012bf",
-		format: "json",
-		photo_id: photoID,
-		nojsoncallback: "?"
-	    }
+				data: {
+					method: "flickr.photos.getSizes",
+					api_key: "5a14553fa4191a526048889fe5a012bf",
+					format: "json",
+					photo_id: photoID,
+					nojsoncallback: "?"
+	    	}
 	}).done(function(response) {
-	    if (photoArray.length < 6) {
-		photoArray.push("url(" + response.sizes.size[9].source + ")");
-		ftdl.setPhotoAsBG();
-	    }
-	});
+	   if (photoArray.length < 6) {
+			photoArray.push("url(" + response.sizes.size[9].source + ")");
+			ftdl.setPhotoAsBG();
+				}
+		});
 	},
 
 	setPhotoAsBG: function() {
-	if (photoArray.length == 5) {
-	    var body = $('body');
-	    bgInterval = setInterval(ftdl.nextBackground, 10000);
-	    body.css('background-image', photoArray[0]);
+		if (photoArray.length == 5) {
+		    var body = $('body');
+		    bgInterval = setInterval(ftdl.nextBackground, 10000);
+		    body.css('background-image', photoArray[0]);
 
-	}
+		}
 	},
 
 	nextBackground: function() {
