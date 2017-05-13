@@ -199,6 +199,7 @@ var ftdl = {
 			$(".completedList").empty();
 			$(".timedEvents").empty();
 			snapshot.forEach(function(childSnapshot) {
+				console.log(childSnapshot.val());
 				if (childSnapshot.val().Status == "completed") {
 					ftdl.appendComplete(childSnapshot.val(), childSnapshot.key);
 				} else if (childSnapshot.val().Timed.length > 0) {
@@ -650,6 +651,7 @@ var ftdl = {
 		})
 		$('#btn-note').attr("todoID", todoNumber) //SAVES THE ITEM'S ID PER LIST ITEM
 		if (database.ref('/Users/' + firebase.auth().currentUser.uid + '/list/' + todoNumber + '/note')) { //Checks if notes already exist
+			$('.note-display').empty();
 			//Chat listener
 			database.ref('/Users/' + firebase.auth().currentUser.uid + '/list/' + todoNumber + '/note').off(); //Removes any pre-existing listners
 			database.ref('/Users/' + firebase.auth().currentUser.uid + '/list/' + todoNumber + '/note').on("child_added", function(snapshot) {
@@ -753,7 +755,13 @@ $('#submitEvent').keypress(function(e) {
 		ftdl.eventSubmit(event);
 	}
 });
-
+$('#note-input').keypress(function(e) {
+    var key = e.which;
+    if (key == 13) // the enter key code
+    {
+        $('#btn-note').click();
+    }
+});
 
 
 //Map

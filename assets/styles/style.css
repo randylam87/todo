@@ -16,6 +16,7 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
     background-color: honeydew;
+    transition: background 0.5s linear;
 }
 
 img {
@@ -36,6 +37,19 @@ img {
     background: rgb(200, 54, 54);
     /* This is for ie8 and below */
     background: rgba(255, 255, 255, 0.5);
+}
+
+.container-fluid .jumbotron {
+    border-radius: 12px;
+}
+
+.container-fluid .jumbotron h1 {
+    font-family: 'Lato', sans-serif;
+}
+
+.container-fluid .jumbotron p {
+    font-family: 'Dancing Script', cursive;
+    font-weight: bold;
 }
 
 .page-registration {
@@ -80,7 +94,7 @@ img {
     width: 100%;
     padding: 2vh;
     bottom: 0;
-/*    line-height: 40px;*/
+    /*    line-height: 40px;*/
     border-top: 1px solid #ccc;
     text-align: center;
     font-size: 14px
@@ -115,8 +129,9 @@ img {
     margin: 0;
 }
 
-#page-main {
+.page-main {
     padding-bottom: 40px;
+    height: 100%;
 }
 
 .note-title {
@@ -140,6 +155,22 @@ input[type=radio] {
 .currentMemberHeader {
     text-align: center;
 }
-.memberHeaderText{
+
+.memberHeaderText {
     font-size: 14px;
+}
+
+.regBtn,
+.signBtn {
+    background-color: #0070B9;
+    color: white;
+}
+
+@media only screen and (min-width: 992px) {
+    .page-main {
+        background-image: url('../images/family2.jpeg');
+        background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    }
 }
