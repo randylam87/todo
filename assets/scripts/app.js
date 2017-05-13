@@ -410,7 +410,7 @@ var ftdl = {
 		$('#todoModal').modal('hide');
 		var name = $("#todoName").val();
 		var cat = $("#todoCatInput").val();
-		var location = $("#locationInput").val();
+		var location = $("#locationinput").val();
 		var locationinfo = {
 			lat: parseFloat($("#locationinput").attr('data-lat')),
 			long: parseFloat($("#locationinput").attr('data-long')),
@@ -446,7 +446,7 @@ var ftdl = {
 		$('#eventModal').modal('hide');
 		var name = $("#eventName").val();
 		var cat = $("#eventCatInput").val();
-		var location = $("#eventLocationInput").val();
+		var location = $("#eventlocationinput").val();
 		var locationinfo = {
 			lat: parseFloat($("#eventlocationinput").attr('data-lat')),
 			long: parseFloat($("#eventlocationinput").attr('data-long')),
