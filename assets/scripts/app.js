@@ -204,7 +204,7 @@ var ftdl = {
 		var $img1 = $('<img>').attr({'src': 'assets/images/timed_event.jpg', 'title': 'Timed Events'})
 			.addClass('link-icon');
 		var $img2 = $('<img>').attr({
-				'src': 'assets/images/location.png','data-toggle': 'modal', 'data-target': '#mapModal', 'title': 'Map'})
+				'src': 'assets/images/location.png','data-toggle': 'modal', 'data-target': '#mapmodal', 'title': 'Map'})
 			.addClass('link-icon');
 		var $img3 = $('<img>').attr({ 'src': 'assets/images/check.png', 'todoID': id, 'title': 'Mark as completed'})
 			.addClass('link-icon completeTodo');
