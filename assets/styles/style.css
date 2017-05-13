@@ -16,6 +16,7 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
     background-color: honeydew;
+    transition: background 0.5s linear;
 }
 
 img {
