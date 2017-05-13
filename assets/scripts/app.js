@@ -279,6 +279,10 @@ var ftdl = {
 				long: parseFloat($("#locationinput").attr('data-long')),
 				address: $("#locationinput").attr('data-address')
 		};
+		if($.type(locationinfo.lat) !== 'number'){
+			locationinfo.lat = 0;
+			locationinfo.long = 0;
+		};
 		var comments = $("#todoComments").val();
 		var todoTime = $("#todo-dtpicker").val();
 		database.ref('/Users/' + firebase.auth().currentUser.uid + '/list').push({
@@ -314,11 +318,8 @@ var ftdl = {
 				address: $("#eventlocationinput").attr('data-address')
 		};
 		if($.type(locationinfo.lat) !== 'number'){
-			locationinfo = {
-				lat: 0,
-				long: 0,
-				address: ''
-			};
+			locationinfo.lat = 0;
+			locationinfo.long = 0;
 		};
 		var comments = $("#eventComments").val();
 		database.ref('/Users/' + firebase.auth().currentUser.uid + '/event').push({
@@ -337,40 +338,39 @@ var ftdl = {
 
 	//ADD MEMBER BUTTON
 	btnAddMember: function(e) {
-	e.preventDefault();
-	var member = $("#memberAdd").val();
-	database.ref('/Users/' + firebase.auth().currentUser.uid + '/members').push({
-	    member: member
-	});
-	$('#membermodal').modal('hide');
+		e.preventDefault();
+		var member = $("#memberAdd").val();
+		database.ref('/Users/' + firebase.auth().currentUser.uid + '/members').push({
+				member: member
+		});
+		$('#membermodal').modal('hide');
 	},
 
 	//CHOOSE MEMBER
 	chooseMember: function() {
-	currentMember = $(this).attr('data-member');
-	$('#current-member').val(currentMember);
-	ftdl.changeLogInBtn(currentMember);
+		currentMember = $(this).attr('data-member');
+		$('#current-member').val(currentMember);
+		ftdl.changeLogInBtn(currentMember);
 	},
 
 	showPage1: function() {
-	$('.page').hide();
-	$('.page-registration').show();
-	$('.firstPagejumbo').show();
+		$('.page').hide();
+		$('.page-registration').show();
+		$('.firstPagejumbo').show();
 	},
 
 	showPage2: function() {
-	$('.page').hide();
-	$('.page-members').show();
+		$('.page').hide();
+		$('.page-members').show();
 	},
 
 	showPage3: function() {
-	$('.page').hide();
-	$('.page-main').show();
-	clearInterval(bgInterval);
-	bgInterval = undefined;
-	photoArray = [];
-	$('body').css("background-image", "none");
-
+		$('.page').hide();
+		$('.page-main').show();
+		clearInterval(bgInterval);
+		bgInterval = undefined;
+		photoArray = [];
+		$('body').css("background-image", "none");
 	},
 
 	findPhotoID: function() {
