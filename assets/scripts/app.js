@@ -35,8 +35,7 @@ firebase.auth().onAuthStateChanged(function(firebaseUser) {
         ftdl.eventAdd();
         ftdl.eventRemove();
         ftdl.membersAdd();
-        ftdl.calStats();
-        currentMember = $('#current-member').val();
+        // currentMember = $('#current-member').val();
         ftdl.changeLogInBtn(currentMember);
     } else if (firebaseUser === null) {
         ftdl.showPage1();
@@ -133,6 +132,8 @@ var ftdl = {
 	    var completeInfo = snapshot.val();
 	    var id = snapshot.key; //THIS IS THE ID PER LIST ITEM
 	    ftdl.listAdd(completeInfo, id);
+        ftdl.calStats();
+
 	});
 	},
 
@@ -461,6 +462,7 @@ var ftdl = {
 	$(".todoList").empty();
 	$('.future-items').empty();
 	$('#header-members').empty();
+    $('.member-stats').empty();
 	},
 
 	getData: function() {
@@ -589,7 +591,7 @@ var ftdl = {
 	appendList: function(todoInfo, id, timed) {
 		var $todoDiv = $('<div>').addClass('todoDiv').attr("id", id);
 		var $displayTime = $('<p>').addClass('clear descpar').text('Due date: ' + todoInfo.Timed);
-		var $name = $('<span>').text('Item Name: ' + todoInfo.Name).addClass('listitem');		
+		var $name = $('<span>').text('Task Name: ' + todoInfo.Name).addClass('listitem');		
 		var $imgDiv = $('<div>').addClass('pull-right')
 		var $img1 = $('<img>').attr({'src': 'assets/images/timed_event.jpg', 'title': 'Timed Events'})
 			.addClass('link-icon');
@@ -613,7 +615,7 @@ var ftdl = {
 			$todoDiv.append($displayTime)
 		}
 		$todoDiv.append($description);
-		if (todoInfo.timed.length > 0) {
+		if (todoInfo.Timed.length > 0) {
 			$(".timedEvents").append($todoDiv);
 		} else {
 			$(".todoList").append($todoDiv);
@@ -632,7 +634,7 @@ var ftdl = {
 		$imgDiv.append($img1, $img2);
 		var $description = $('<p>').addClass('clear descpar').text('Description: ' + eventInfo.Description);
 		$eventDiv.append($name, $imgDiv);
-		if(eventInfo.Timed.length > 0) {
+		if(eventInfo.Timed) {
 			var $displayTime = $('<p>').addClass('clear descpar').text('Event Date: ' + $eventDiv.Timed);
 			$eventDiv.append($displayTime);
 		}

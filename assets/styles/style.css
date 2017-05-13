@@ -148,8 +148,8 @@ input[type=radio] {
 
 .sortable {
     padding: 10px;
-    border-bottom: 1px solid #eee;
-}
+/*    border-bottom: 1px solid #eee;
+*/}
 
 .listitem {
     margin: 10px 0;
@@ -187,3 +187,8 @@ input[type=radio] {
         background-size: cover;
     }
 }
+
+.list-group-item:first-child > .badge {
+    background-color:red;
+}
+
