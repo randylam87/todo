@@ -46,127 +46,127 @@ firebase.auth().onAuthStateChanged(function(firebaseUser) {
 
 var ftdl = {
 
-    calStats: function() {
+		calStats: function() {
 
-        database.ref('/Users/' + firebase.auth().currentUser.uid + '/list').on('value', function(snapshot) {
+				database.ref('/Users/' + firebase.auth().currentUser.uid + '/list').on('value', function(snapshot) {
 
-	        var todoInfo = snapshot.val();
+					var todoInfo = snapshot.val();
 
-	        workerList = {};
+					workerList = {};
 
-	        workerListItem = {};
+					workerListItem = {};
 
-	        // Getting an array of each key In the snapshot object
-	        var listKeyArr = Object.keys(todoInfo);
+					// Getting an array of each key In the snapshot object
+					var listKeyArr = Object.keys(todoInfo);
 
-	        for (var i = 0; i < listKeyArr.length; i++) {
+					for (var i = 0; i < listKeyArr.length; i++) {
 
-	            var currentKey = listKeyArr[i];
-	            var currentObject = todoInfo[currentKey];
+							var currentKey = listKeyArr[i];
+							var currentObject = todoInfo[currentKey];
 
-	            var worker = currentObject.CompletedBy;
+							var worker = currentObject.CompletedBy;
 
-	            var creator = currentObject.Creator;
+							var creator = currentObject.Creator;
 
-	            var todoName = currentObject.Name;
+							var todoName = currentObject.Name;
 
-	            if (!(workerList[worker])) {
+							if (!(workerList[worker])) {
 
-	                workerListItem[worker] = [];
+									workerListItem[worker] = [];
 
-	                workerListItem[worker].push(todoName);
+									workerListItem[worker].push(todoName);
 
-	                workerList[worker] = 1;
+									workerList[worker] = 1;
 
-	           	}
+							}
 
-	            else {
+							else {
 
-	                 workerListItem[worker].push(todoName);
+									 workerListItem[worker].push(todoName);
 
-	                 workerList[worker]++;
+									 workerList[worker]++;
 
-	            }
-	          
-	        }
+							}
+						
+					}
 
-	            ftdl.appendStats(workerList,workerListItem);
+							ftdl.appendStats(workerList,workerListItem);
 
-    	});
+			});
 
-    },
+		},
 
 	appendStats: function() {
 
-        var workerListSorted = [];
+				var workerListSorted = [];
 
-        var sortUser = function(listUser,userSorted) {
+				var sortUser = function(listUser,userSorted) {
 
-            for (var user in listUser) {
+						for (var user in listUser) {
 
-                userSorted.push([user, listUser[user]]);
-            }
+								userSorted.push([user, listUser[user]]);
+						}
 
-            userSorted.sort(function(a, b) {
-            
-                return b[1] - a[1];
+						userSorted.sort(function(a, b) {
+						
+								return b[1] - a[1];
 
-            });
-           
-        };
+						});
+					 
+				};
 
-        sortUser(workerList,workerListSorted);
+				sortUser(workerList,workerListSorted);
 
-        var totalCompleted = 0;
-        var completedHtml = '';
+				var totalCompleted = 0;
+				var completedHtml = '';
 
-        $(".member-stats").html('');
+				$(".member-stats").html('');
 
-        for (var i = 0;i<workerListSorted.length;i++ ) {
+				for (var i = 0;i<workerListSorted.length;i++ ) {
 
-            var memberHtml = '';
+						var memberHtml = '';
 
-            var currentElement = workerListSorted[i];
-            console.log(currentElement);
+						var currentElement = workerListSorted[i];
+						console.log(currentElement);
 
-            var name = currentElement[0];
+						var name = currentElement[0];
 
-            var value = currentElement[1];
+						var value = currentElement[1];
 
-            if (name != 'undefined') {
+						if (name != 'undefined') {
 
-                totalCompleted += value; 
+								totalCompleted += value; 
 
-                memberHtml = '<a href="#" class="list-group-item" data-toggle="collapse" data-target="#'+name+'">' +
-                     name + '<span class="badge">' + value + '</span>' + '<div id="'+name+'" class="collapse">';
+								memberHtml = '<a href="#" class="list-group-item" data-toggle="collapse" data-target="#'+name+'">' +
+										 name + '<span class="badge">' + value + '</span>' + '<div id="'+name+'" class="collapse">';
 
-                var listItem = workerListItem[name];
+								var listItem = workerListItem[name];
 
-                for (var j = 0;j<listItem.length;j++) {
+								for (var j = 0;j<listItem.length;j++) {
 
-                    completedHtml = completedHtml + '<li  class="list-group-item">'+ listItem[j] +'</li>';
+										completedHtml = completedHtml + '<li  class="list-group-item">'+ listItem[j] +'</li>';
 
-                    memberHtml = memberHtml + '<li  class="list-group-item">'+ listItem[j] +'</li>';
+										memberHtml = memberHtml + '<li  class="list-group-item">'+ listItem[j] +'</li>';
 
-                }
+								}
 
-                memberHtml += '</div></a>';
-                $(".member-stats").append(memberHtml);
-              
-            }
+								memberHtml += '</div></a>';
+								$(".member-stats").append(memberHtml);
+							
+						}
 
-        }
+				}
 
 
-    	$(".completedStats").html("Completed " + '<span class="badge">'+totalCompleted + '</span>');
+			$(".completedStats").html("Completed " + '<span class="badge">'+totalCompleted + '</span>');
 
-        $(".completedStats").append('<div id="totalCompleted" class="collapse">') ;
+				$(".completedStats").append('<div id="totalCompleted" class="collapse">') ;
 
-        $("#totalCompleted").append(completedHtml);
+				$("#totalCompleted").append(completedHtml);
 
-        $("#totalCompleted").append('</div>');
+				$("#totalCompleted").append('</div>');
 
-    },
+		},
 
 	//function that hides/removes login/registration buttons
 	changeLogInBtn: function(currentMember) {
@@ -368,7 +368,7 @@ var ftdl = {
 				console.log(error);
 			});
 		$("#signInModal").modal("hide");
-		$("#form").trigger('reset');
+		$("#login").trigger('reset');
 	},
 
 	//REGISTER BUTTON
@@ -401,7 +401,7 @@ var ftdl = {
 			console.log(error.message);
 		});
 		$("#registerModal").modal("hide");
-		$("#form").trigger('reset');
+		$("#register").trigger('reset');
 	},
 
 	//TODO SUBMIT BUTTON
@@ -411,22 +411,33 @@ var ftdl = {
 		var name = $("#todoName").val();
 		var cat = $("#todoCatInput").val();
 		var location = $("#locationInput").val();
+		var locationinfo = {
+			lat: parseFloat($("#locationinput").attr('data-lat')),
+			long: parseFloat($("#locationinput").attr('data-long')),
+			address: $("#locationinput").attr('data-address')
+		};		
 		var comments = $("#todoComments").val();
 		var todoTime = $("#todo-dtpicker").val();
 		database.ref('/Users/' + firebase.auth().currentUser.uid + '/list').push({
 			Name: name,
 			Categories: cat,
 			Location: location,
+			LocationInfo: locationinfo,			
 			Timed: todoTime,
 			TimeCreated: Date.now(),
 			Description: comments,
 			Creator: currentMember,
 			Status: "not complete"
 		});
-		var name = $("#todoName").val('');
-		var cat = $("#todoCatInput").val('');
-		var location = $("#locationInput").val('');
-		var comments = $("#todoComments").val('');
+		// $("#todoName").val('');
+		// $("#todoCatInput").val('');
+		// $("#locationinput").val('');
+		$("#locationinput").removeAttr('data-lat');
+		$("#locationinput").removeAttr('data-long');
+		$("#locationinput").removeAttr('data-address');
+		// $("#todoComments").val('');
+		
+		$("#submittodo").trigger('reset');
 	},
 
 	//EVENT SUBMIT BUTTON
@@ -436,11 +447,17 @@ var ftdl = {
 		var name = $("#eventName").val();
 		var cat = $("#eventCatInput").val();
 		var location = $("#eventLocationInput").val();
+		var locationinfo = {
+			lat: parseFloat($("#eventlocationinput").attr('data-lat')),
+			long: parseFloat($("#eventlocationinput").attr('data-long')),
+			address: $("#eventlocationinput").attr('data-address')
+		};	
 		var comments = $("#eventComments").val();
 		database.ref('/Users/' + firebase.auth().currentUser.uid + '/event').push({
 			Name: name,
 			Categories: cat,
 			Location: location,
+			LocationInfo: locationinfo,
 			Description: comments,
 			TimeCreated: Date.now(),
 			Creator: currentMember,
@@ -448,7 +465,7 @@ var ftdl = {
 
 		});
 
-		$("#form").trigger('reset');
+		$("#submitevent").trigger('reset');
 	},
 
 	//ADD MEMBER BUTTON
@@ -573,7 +590,8 @@ var ftdl = {
 		if (address.length > 0) {
 			$('#address').text('');
 			address = address.replace(/ /g, '+');
-			var url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + address + '&key=AIzaSyDlqM5HOhxP8DcUtTclMRu0RSvWy9t59qk'
+			var url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' +
+				address + '&key=AIzaSyDlqM5HOhxP8DcUtTclMRu0RSvWy9t59qk';
 			$.getJSON(url, function() {
 					console.log('success');
 				})
@@ -703,7 +721,6 @@ $(".sortable").sortable({
 	stop: function(event, ui) {
 		ftdl.setTodoIndex();
 	}
-
 });
 
 ftdl.findPhotoID();
@@ -756,47 +773,79 @@ $('#submitEvent').keypress(function(e) {
 	}
 });
 $('#note-input').keypress(function(e) {
-    var key = e.which;
-    if (key == 13) // the enter key code
-    {
-        $('#btn-note').click();
-    }
+		var key = e.which;
+		if (key == 13) // the enter key code
+		{
+				$('#btn-note').click();
+		}
 });
 
 
 //Map
-$('#mapModal').on('shown.bs.modal', function() { ftdl.initMap() });
+$('#mapmodal').on('shown.bs.modal', function() { ftdl.initMap() });
 $('#findlocation').on('click', function() { ftdl.findLocation() });
+
 $('#loc-confirm').on('click', function() {
 	var latLong = ftdl.getLatLng();
 	// You can use latLong object variable to store
 	// the location information here.
 	// latLong.lat & latLong.lng & latLong.add
+	var dataInput = $('#data-input').val();
+	$('#' + dataInput).attr({'data-address': latLong.add,
+		'data-lat': latLong.lat,
+		'data-long': latLong.lng});
 
-	$('#mapModal').modal('hide');
-});
-/////
-
-$(".general-stats").on("click", "a", function() {
-
-	//update modal information
-
+	$('#data-input').val('');
+	$('#mapmodal').modal('hide');
 });
 
+$('.openmap').click(function(){
+	var $id = $(this).prev().attr('id');
+	$('#data-input').val($id);
+	// $('#mapmodal').modal('show');
+});
 
-$('.dtpicker input[type=radio]').change(function() {
-	if ($(this).val() === 'timed') {
+$('.dtpicker input[type=radio]').change(function(){
+	if($(this).val() === 'timed'){
 		$('#todo-dtpicker').removeClass('hide');
 	} else {
 		$('#todo-dtpicker').addClass('hide');
 	};
 })
 
-// $('#todo-dtpicker').datetimepicker({
-// 	lang: 'en',
-// 	format: 'D, d M Y - H:i:s',
-// 	dayOfWeekStart: 1,
-// 	step: 15
+// $.datetimepicker.setDateFormatter({
+//     parseDate: function (date, format) {
+//         var d = moment(date, format);
+//         return d.isValid() ? d.toDate() : false;
+//     },
+    
+//     formatDate: function (date, format) {
+//         return moment(date).format(format);
+//     }
 // });
 
+var dtOptions = {
+	lang:'en',
+	// format:'ddd, MMM DD, YYYY h:mm A',
+	dayOfWeekStart : 1,
+	step: 15	
+};
+// $.datetimepicker.setLocale('en');
+$('#todo-dtpicker').datetimepicker(dtOptions);
 
+$('#eventdate').datetimepicker(dtOptions);
+
+function getTodayDate(){
+	var today = new Date();
+	var dd = today.getDate();
+	var mm = today.getMonth()+1; //January is 0!
+	var yyyy = today.getFullYear();
+	if(dd<10) {
+		dd='0'+dd
+	} 
+	if(mm<10) {
+		mm='0'+mm
+	} 
+	today = mm+'/'+dd+'/'+yyyy;
+	return today;
+}
