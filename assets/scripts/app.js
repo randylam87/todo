@@ -635,7 +635,7 @@ var ftdl = {
 		$imgDiv.append($img1, $img2);
 		var $description = $('<p>').addClass('clear descpar').text('Description: ' + eventInfo.Description);
 		$eventDiv.append($name, $imgDiv);
-		if(eventInfo.Timed) {
+		if(eventInfo.Timed.length > 0) {
 			var $displayTime = $('<p>').addClass('clear descpar').text('Event Date: ' + eventInfo.Timed);
 			$eventDiv.append($displayTime);
 		}
