@@ -144,3 +144,9 @@ input[type=radio] {
 .memberHeaderText{
     font-size: 14px;
 }
+
+.regBtn,
+.signBtn {
+    background-color: #0070B9;
+    color: white;
+}
