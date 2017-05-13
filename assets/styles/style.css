@@ -78,8 +78,9 @@ img {
     color: #ccc;
     position: fixed;
     width: 100%;
+    padding: 2vh;
     bottom: 0;
-    line-height: 40px;
+/*    line-height: 40px;*/
     border-top: 1px solid #ccc;
     text-align: center;
     font-size: 14px
@@ -134,4 +135,11 @@ input[type=radio] {
 .radio-inline {
     padding-left: 50px;
     font-size: 20px;
+}
+
+.currentMemberHeader {
+    text-align: center;
+}
+.memberHeaderText{
+    font-size: 14px;
 }
