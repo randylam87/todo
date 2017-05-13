@@ -589,7 +589,7 @@ var ftdl = {
 	},
 
 	appendList: function(todoInfo, id, timed) {
-		var $todoDiv = $('<div>').addClass('todoDiv').attr("id", id);
+		var $todoDiv = $('<div>').addClass('todoDiv hline').attr("id", id);
 		var $displayTime = $('<p>').addClass('clear descpar').text('Due date: ' + todoInfo.Timed);
 		var $name = $('<span>').text('Task Name: ' + todoInfo.Name).addClass('listitem');		
 		var $imgDiv = $('<div>').addClass('pull-right')
@@ -623,7 +623,7 @@ var ftdl = {
 	},
 
 	appendEvent: function(eventInfo, id) {
-		var $eventDiv = $('<div>').addClass('eventDiv').attr("id", id);
+		var $eventDiv = $('<div>').addClass('eventDiv hline').attr("id", id);
 		var $name = $('<span>').text('Event Name: ' + eventInfo.Name).addClass('listitem');
 		var $imgDiv = $('<div>').addClass('pull-right')
 		var $img1 = $('<img>').attr({'src': 'assets/images/location.png', 'data-toggle': 'modal',
