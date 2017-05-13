@@ -200,7 +200,7 @@ var ftdl = {
 			.text(members.member);
 		var memberLi = $('<li><a href="#">' + members.member + '</a></li>');
 		$(".memberSelect").append(memberButton);
-		$("#header-members").append(memberLi);
+		// $("#header-members").append(memberLi); removing header
 	},
 
 	appendList: function(todoInfo, id, timed) {
