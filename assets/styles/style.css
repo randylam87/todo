@@ -39,6 +39,19 @@ img {
     background: rgba(255, 255, 255, 0.5);
 }
 
+.container-fluid .jumbotron {
+    border-radius: 12px;
+}
+
+.container-fluid .jumbotron h1 {
+    font-family: 'Lato', sans-serif;
+}
+
+.container-fluid .jumbotron p {
+    font-family: 'Dancing Script', cursive;
+    font-weight: bold;
+}
+
 .page-registration {
     display: flex;
     justify-content: center;
@@ -81,7 +94,7 @@ img {
     width: 100%;
     padding: 2vh;
     bottom: 0;
-/*    line-height: 40px;*/
+    /*    line-height: 40px;*/
     border-top: 1px solid #ccc;
     text-align: center;
     font-size: 14px
@@ -116,7 +129,7 @@ img {
     margin: 0;
 }
 
-#page-main {
+.page-main {
     padding-bottom: 40px;
 }
 
@@ -141,7 +154,8 @@ input[type=radio] {
 .currentMemberHeader {
     text-align: center;
 }
-.memberHeaderText{
+
+.memberHeaderText {
     font-size: 14px;
 }
 
@@ -150,3 +164,15 @@ input[type=radio] {
     background-color: #0070B9;
     color: white;
 }
+
+/*@media only screen and (min-width: 992px) {
+    .page-main {
+        background-image: url(' https://previews.123rf.com/images/stockbroker/stockbroker1507/stockbroker150701160/42118650-Multi-Generation-African-American-Family-Relaxing-In-Park-Stock-Photo.jpg')
+    }
+}
+
+.page-main {
+    padding-bottom: 40px;
+    height: 100%;
+}
+*/

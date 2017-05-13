@@ -147,6 +147,7 @@ var ftdl = {
 			$(".completedList").empty();
 			$(".timedEvents").empty();
 			snapshot.forEach(function(childSnapshot) {
+				console.log(childSnapshot.val());
 				if (childSnapshot.val().Status == "completed") {
 					ftdl.appendComplete(childSnapshot.val(), childSnapshot.key);
 				} else if (childSnapshot.val().Timed.length > 0) {
@@ -701,7 +702,13 @@ $('#submitEvent').keypress(function(e) {
 		ftdl.eventSubmit(event);
 	}
 });
-
+$('#note-input').keypress(function(e) {
+    var key = e.which;
+    if (key == 13) // the enter key code
+    {
+        $('#btn-note').click();
+    }
+});
 
 
 //Map
