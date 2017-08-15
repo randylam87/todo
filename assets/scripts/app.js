@@ -695,6 +695,8 @@ var ftdl = {
 	}
 }; //End of ftdl Object
 
+$('#helpModal').modal('show');
+
 $(".sortable").sortable({
 	stop: function (event, ui) {
 		ftdl.setTodoIndex();

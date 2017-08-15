@@ -1,6 +1,11 @@
 html {
     height: 100%;
     min-width: 320px;
+    background: url("../images/family2.jpeg") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 }
 
 body {
@@ -8,7 +13,7 @@ body {
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    background-color: honeydew; 
+    background-color: transparent;
     transition: background 0.5s linear;
     font-family: 'Raleway', sans-serif;
 }
@@ -77,7 +82,7 @@ h3 {
     display: none;
 }
 
-.timedEvents > div > .listitem{
+.timedEvents>div>.listitem {
     color: orange;
 }
 
@@ -150,10 +155,11 @@ input[type=radio] {
     padding: 10px;
 }
 
-.hline{
+.hline {
     padding: 10px;
-    border-bottom: 1px solid #eee;  
+    border-bottom: 1px solid #eee;
 }
+
 .listitem {
     margin: 10px 0;
     font-size: 18px;
@@ -178,20 +184,19 @@ input[type=radio] {
     color: white;
 }
 
-.panel-default > .panel-heading {
-  background-color: #f2f2f2;
+.panel-default>.panel-heading {
+    background-color: #f2f2f2;
 }
 
 @media only screen and (min-width: 992px) {
     .page-main {
-        background-image: url('../images/family2.jpeg');
+        /* background-image: url('../images/family2.jpeg'); */
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
     }
 }
 
-.list-group-item:first-child > .badge {
-    background-color:red;
+.list-group-item:first-child>.badge {
+    background-color: red;
 }
-

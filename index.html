@@ -37,7 +37,8 @@
                         <button type="button" class="pull-right btn btn-danger btnLogout loggedIn" title="Log Out">
                             <span class="fa fa-sign-out"></span>
                         </button>
-                        <button id="add-member" type="button" class="pull-right add-member btn btn-primary" data-toggle="modal" data-target="#membermodal" title="Add Member">
+                        <button id="add-member" type="button" class="pull-right add-member btn btn-primary" data-toggle="modal" data-target="#membermodal"
+                            title="Add Member">
                             <span class="fa fa-plus"></span>
                         </button>
                     </div>
@@ -55,7 +56,8 @@
         <nav class="navbar navbar-default">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+                        aria-expanded="false">
                         <span class="sr-only">Toggle navigation</span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
@@ -408,13 +410,45 @@
             </div>
         </div>
     </div>
+
+    <!-- Help Modal -->
+    <div class="modal fade" id="helpModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h2 class="modal-title">Welcome</h2>
+                </div>
+                <div class="modal-body">
+                    <p>You are welcome to use our test account to test the app.</p>
+                    <p>Email: johnsmith@test.com
+                        <br/> Password: password
+                    </p>
+                    <p><strong>Features:</strong>
+                        <br/> - Task are sortable, just drag with mouse.
+                        <br/> -
+                        <span style="color: orange;">Timed task</span> can only be sorted with other <span style="color: orange;">timed task</span>.
+                        <br/> - Each task has its own chat feature.
+                        <br/> - Completed task are logged in the bottom right.
+                        <br/> - All task require a location name and location plot.
+                        <br/> - Netflix account style - Share with family.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script src="assets/scripts/moment.js"></script>
     <script src="assets/scripts/jquery.datetimepicker.full.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBfTYa8j8QJw6aDJoshnn5dVEWDBf5HS9Y&amp;callback=ftdl.initMap" async defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBfTYa8j8QJw6aDJoshnn5dVEWDBf5HS9Y&amp;callback=ftdl.initMap"
+        async defer></script>
     <script src="assets/scripts/app.js"></script>
 </body>
 
