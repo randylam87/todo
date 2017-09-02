@@ -1,6 +1,6 @@
 // Initialize Firebase
 var config = {
-    apiKey: "AIzaSyBT5T-S1v14s7OcV1dGro-2v6JQCVHZOXA",
+    apiKey: "AIzaSyBfTYa8j8QJw6aDJoshnn5dVEWDBf5HS9Y",
     authDomain: "family-to-do-list-5ca3b.firebaseapp.com",
     databaseURL: "https://family-to-do-list-5ca3b.firebaseio.com",
     projectId: "family-to-do-list-5ca3b",
