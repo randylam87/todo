@@ -38,3 +38,4 @@ The **Family To-Do List's** main focus was on **real-time** family organization.
 - Adjust jQueryUI sortable function to only sort when a section of the div is clicked (so users can copy/paste text)
 - Remove required field on location
 - Conditionally render a different notes button only if there are no notes
+- Restructure code to a more object oriented style in order to allow the todo list to be configured for not just families.
