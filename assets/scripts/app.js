@@ -1,12 +1,13 @@
 // Initialize Firebase
 var config = {
-    apiKey: "AIzaSyBfTYa8j8QJw6aDJoshnn5dVEWDBf5HS9Y",
-    authDomain: "family-to-do-list.firebaseapp.com",
-    databaseURL: "https://family-to-do-list.firebaseio.com",
-    projectId: "family-to-do-list",
-    storageBucket: "family-to-do-list.appspot.com",
-    messagingSenderId: "824898029703"
-  };
+	apiKey: "AIzaSyBfTYa8j8QJw6aDJoshnn5dVEWDBf5HS9Y",
+	atuhDomain: "family-to-do-list.firebaseapp.com",
+	databaseURL: "https://family-to-do-list.firebaseio.com",
+	projectId: "family-to-do-list",
+	storageBucket: "family-to-do-list.appspot.com",
+	messagingSenderId: "824898029703"
+};
+
 firebase.initializeApp(config);
 var database = firebase.database();
 var familyRef = database.ref();
