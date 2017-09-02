@@ -26,8 +26,15 @@ The **Family To-Do List's** main focus was on **real-time** family organization.
 - Google Firebase
 - HTML
 - CSS
-- Twitter Bootstrap
+- Bootstrap 3
 
 ### APIs
 - Location plotting with Google Maps API
 - Background image cycle with Flickr API
+
+### Future Improvements
+- Adjust date time to show standard format instead of military time
+- Add edit functionality on todo item descriptions
+- Adjust jQueryUI sortable function to only sort when a section of the div is clicked (so users can copy/paste text)
+- Remove required field on location
+- Conditionally render a different notes button only if there are no notes
