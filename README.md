@@ -6,8 +6,8 @@ The **Family To-Do List's** main focus was on **real-time** family organization.
 
 ### Developers
 - Team: 
-  - Dennis Nguyen
   - Randy Lam
+  - Dennis Nguyen
   - Amir Izadoanah
   - Trong Do
 
